@@ -5,6 +5,29 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RocedesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="POrder">
+          <Key>
+            <PropertyRef Name="Id_Order" />
+          </Key>
+          <Property Name="Id_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Cliente" Type="int" />
+          <Property Name="Id_Style" Type="int" />
+          <Property Name="POrder" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Bundles" Type="int" />
+          <Property Name="Id_Planta" Type="int" />
+          <Property Name="Id_Linea" Type="int" />
+          <Property Name="Semana" Type="int" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="Id_Linea2" Type="int" />
+          <Property Name="Describir" Type="nchar" MaxLength="10" />
+          <Property Name="AfterIntex" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="POrderClient" Type="nvarchar" MaxLength="50" />
+          <Property Name="washed" Type="bit" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -18,6 +41,7 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityContainer Name="RocedesModelStoreContainer">
+          <EntitySet Name="POrder" EntityType="Self.POrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -26,6 +50,7 @@
       <Schema Namespace="RocedesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="RocedesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Usuario" EntityType="RocedesModel.Usuario" />
+          <EntitySet Name="POrder" EntityType="RocedesModel.POrder" />
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -38,6 +63,29 @@
           <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CodBar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="POrder">
+          <Key>
+            <PropertyRef Name="Id_Order" />
+          </Key>
+          <Property Name="Id_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Cliente" Type="Int32" />
+          <Property Name="Id_Style" Type="Int32" />
+          <Property Name="POrder1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Bundles" Type="Int32" />
+          <Property Name="Id_Planta" Type="Int32" />
+          <Property Name="Id_Linea" Type="Int32" />
+          <Property Name="Semana" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Linea2" Type="Int32" />
+          <Property Name="Describir" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AfterIntex" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="POrderClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="washed" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -55,6 +103,30 @@
                 <ScalarProperty Name="Pass" ColumnName="Pass" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POrder">
+            <EntityTypeMapping TypeName="RocedesModel.POrder">
+              <MappingFragment StoreEntitySet="POrder">
+                <ScalarProperty Name="washed" ColumnName="washed" />
+                <ScalarProperty Name="POrderClient" ColumnName="POrderClient" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AfterIntex" ColumnName="AfterIntex" />
+                <ScalarProperty Name="Describir" ColumnName="Describir" />
+                <ScalarProperty Name="Id_Linea2" ColumnName="Id_Linea2" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Semana" ColumnName="Semana" />
+                <ScalarProperty Name="Id_Linea" ColumnName="Id_Linea" />
+                <ScalarProperty Name="Id_Planta" ColumnName="Id_Planta" />
+                <ScalarProperty Name="Bundles" ColumnName="Bundles" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="POrder1" ColumnName="POrder" />
+                <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

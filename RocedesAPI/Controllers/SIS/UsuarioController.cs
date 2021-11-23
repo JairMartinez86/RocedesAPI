@@ -16,8 +16,6 @@ namespace RocedesAPI.Controllers
 {
     public class UsuarioController : ApiController
     {
-        private RocedesEntities _Conexion = null;
-
         //GET api/Get
         [HttpGet]
         public string Get(string usr, string pwd)
