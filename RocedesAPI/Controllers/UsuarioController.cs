@@ -183,7 +183,7 @@ namespace RocedesAPI.Controllers
                 {
                     using (var _Conexion = new RocedesEntities())
                     {
-                        int x = _Conexion.Usuario.ToList().FindAll(s => s.Login == Registro.Login.TrimStart().TrimEnd() ||  (s.CodBar != string.Empty && s.CodBar == Registro.CodBar.TrimStart().TrimEnd())).Count();
+                        int x = _Conexion.Usuario.ToList().FindAll(s => s.Login == Registro.Login.TrimStart().TrimEnd() ||  (s.Login != Registro.Login && s.CodBar != string.Empty && s.CodBar == Registro.CodBar.TrimStart().TrimEnd())).Count();
 
                         if(x == 0)
                         {
