@@ -2,4 +2,5 @@
 .vs/
 .suo
 .sqlite
-*.cache
+RocedesAPI.csprojAssemblyReference.cache
+.suo
