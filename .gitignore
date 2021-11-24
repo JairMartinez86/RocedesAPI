@@ -1,7 +1,7 @@
-.vs\RocedesAPI\v16\.suo
+.vs/RocedesAPI/v16/.suo
 .vs/
 .suo
 .sqlite
-RocedesAPI\obj\Debug\RocedesAPI.csprojAssemblyReference.cache
+RocedesAPI/obj/Debug/RocedesAPI.csprojAssemblyReference.cache
 .suo
 *.cache
