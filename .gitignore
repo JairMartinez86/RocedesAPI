@@ -4,3 +4,4 @@
 .sqlite
 RocedesAPI.csprojAssemblyReference.cache
 .suo
+*.cache
