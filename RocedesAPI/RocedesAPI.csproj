@@ -228,10 +228,14 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Cls\Cls_Mensaje.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\Auditoria\POrderController.cs" />
+    <Compile Include="Controllers\SIS\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\POrder.cs">
+      <DependentUpon>UsuarioModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>UsuarioModel.tt</DependentUpon>
@@ -324,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\POrder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

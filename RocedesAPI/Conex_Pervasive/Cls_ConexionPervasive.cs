@@ -28,6 +28,7 @@ namespace RocedesAPI.Conex_Pervasive
 
                 PsqlDataAdapter _Adp = new PsqlDataAdapter();
                 _Adp.SelectCommand = new PsqlCommand(Query, _Cnx);
+                _Adp.SelectCommand.CommandTimeout = 360;
                 _Cnx.Open();
                 _Adp.Fill(dt);
                 _Cnx.Close();
@@ -36,6 +37,7 @@ namespace RocedesAPI.Conex_Pervasive
             }
             catch(Exception ex)
             {
+                _Cnx.Close();
                 return null;
             }
 

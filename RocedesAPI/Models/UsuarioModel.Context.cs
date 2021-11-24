@@ -26,5 +26,6 @@ namespace RocedesAPI.Models
         }
     
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<POrder> POrder { get; set; }
     }
 }

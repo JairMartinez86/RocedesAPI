@@ -14,5 +14,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="POrder">
+      <EntityTypeMapping TypeName="RocedesModel.POrder">
+        <MappingFragment StoreEntitySet="POrder">
+          <ScalarProperty Name="washed" ColumnName="washed" />
+          <ScalarProperty Name="POrderClient" ColumnName="POrderClient" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="AfterIntex" ColumnName="AfterIntex" />
+          <ScalarProperty Name="Describir" ColumnName="Describir" />
+          <ScalarProperty Name="Id_Linea2" ColumnName="Id_Linea2" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Semana" ColumnName="Semana" />
+          <ScalarProperty Name="Id_Linea" ColumnName="Id_Linea" />
+          <ScalarProperty Name="Id_Planta" ColumnName="Id_Planta" />
+          <ScalarProperty Name="Bundles" ColumnName="Bundles" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="POrder1" ColumnName="POrder" />
+          <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
+          <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+          <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
