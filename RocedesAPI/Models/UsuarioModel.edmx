@@ -28,6 +28,40 @@
           <Property Name="POrderClient" Type="nvarchar" MaxLength="50" />
           <Property Name="washed" Type="bit" />
         </EntityType>
+        <EntityType Name="BundleBoxing">
+          <Key>
+            <PropertyRef Name="IdBundleBoxing" />
+          </Key>
+          <Property Name="IdBundleBoxing" Type="int" Nullable="false" />
+          <Property Name="NoMesa" Type="int" Nullable="false" />
+          <Property Name="Serial" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Seccion" Type="int" Nullable="false" />
+          <Property Name="Bulto" Type="int" Nullable="false" />
+          <Property Name="Capaje" Type="int" Nullable="false" />
+          <Property Name="IdSaco" Type="int" Nullable="false" />
+          <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Oper" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IdUsuarioTermina" Type="int" />
+          <Property Name="FechaTermina" Type="datetime2" Precision="7" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioInactiva" Type="int" />
+          <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="BundleBoxing_Saco">
+          <Key>
+            <PropertyRef Name="IdSaco" />
+          </Key>
+          <Property Name="IdSaco" Type="int" Nullable="false" />
+          <Property Name="Saco" Type="int" Nullable="false" />
+          <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seccion" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCrea" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -40,9 +74,27 @@
           <Property Name="CodBar" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_BundleBoxing_BundleBoxing_Saco">
+          <End Role="BundleBoxing_Saco" Type="Self.BundleBoxing_Saco" Multiplicity="1" />
+          <End Role="BundleBoxing" Type="Self.BundleBoxing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BundleBoxing_Saco">
+              <PropertyRef Name="IdSaco" />
+            </Principal>
+            <Dependent Role="BundleBoxing">
+              <PropertyRef Name="IdSaco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RocedesModelStoreContainer">
           <EntitySet Name="POrder" EntityType="Self.POrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
+          <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="Self.FK_BundleBoxing_BundleBoxing_Saco">
+            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
+            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -51,6 +103,12 @@
         <EntityContainer Name="RocedesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Usuario" EntityType="RocedesModel.Usuario" />
           <EntitySet Name="POrder" EntityType="RocedesModel.POrder" />
+          <EntitySet Name="BundleBoxing" EntityType="RocedesModel.BundleBoxing" />
+          <EntitySet Name="BundleBoxing_Saco" EntityType="RocedesModel.BundleBoxing_Saco" />
+          <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="RocedesModel.FK_BundleBoxing_BundleBoxing_Saco">
+            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
+            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -87,6 +145,54 @@
           <Property Name="POrderClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="washed" Type="Boolean" />
         </EntityType>
+        <EntityType Name="BundleBoxing">
+          <Key>
+            <PropertyRef Name="IdBundleBoxing" />
+          </Key>
+          <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" />
+          <Property Name="NoMesa" Type="Int32" Nullable="false" />
+          <Property Name="Serial" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Seccion" Type="Int32" Nullable="false" />
+          <Property Name="Bulto" Type="Int32" Nullable="false" />
+          <Property Name="Capaje" Type="Int32" Nullable="false" />
+          <Property Name="IdSaco" Type="Int32" Nullable="false" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Oper" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IdUsuarioTermina" Type="Int32" />
+          <Property Name="FechaTermina" Type="DateTime" Precision="7" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioInactiva" Type="Int32" />
+          <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="BundleBoxing_Saco" Relationship="RocedesModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing" ToRole="BundleBoxing_Saco" />
+        </EntityType>
+        <EntityType Name="BundleBoxing_Saco">
+          <Key>
+            <PropertyRef Name="IdSaco" />
+          </Key>
+          <Property Name="IdSaco" Type="Int32" Nullable="false" />
+          <Property Name="Saco" Type="Int32" Nullable="false" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Seccion" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BundleBoxing" Relationship="RocedesModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing_Saco" ToRole="BundleBoxing" />
+        </EntityType>
+        <Association Name="FK_BundleBoxing_BundleBoxing_Saco">
+          <End Type="RocedesModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="1" />
+          <End Type="RocedesModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BundleBoxing_Saco">
+              <PropertyRef Name="IdSaco" />
+            </Principal>
+            <Dependent Role="BundleBoxing">
+              <PropertyRef Name="IdSaco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -127,6 +233,42 @@
                 <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
                 <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
                 <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BundleBoxing">
+            <EntityTypeMapping TypeName="RocedesModel.BundleBoxing">
+              <MappingFragment StoreEntitySet="BundleBoxing">
+                <ScalarProperty Name="FechaInactivo" ColumnName="FechaInactivo" />
+                <ScalarProperty Name="IdUsuarioInactiva" ColumnName="IdUsuarioInactiva" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaTermina" ColumnName="FechaTermina" />
+                <ScalarProperty Name="IdUsuarioTermina" ColumnName="IdUsuarioTermina" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Oper" ColumnName="Oper" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+                <ScalarProperty Name="Capaje" ColumnName="Capaje" />
+                <ScalarProperty Name="Bulto" ColumnName="Bulto" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
+                <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BundleBoxing_Saco">
+            <EntityTypeMapping TypeName="RocedesModel.BundleBoxing_Saco">
+              <MappingFragment StoreEntitySet="BundleBoxing_Saco">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="Saco" ColumnName="Saco" />
+                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

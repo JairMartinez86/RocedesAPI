@@ -234,6 +234,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BundleBoxing.cs">
+      <DependentUpon>UsuarioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BundleBoxing_Saco.cs">
+      <DependentUpon>UsuarioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
     <Compile Include="Models\POrder.cs">
       <DependentUpon>UsuarioModel.tt</DependentUpon>
     </Compile>

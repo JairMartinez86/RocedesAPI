@@ -7,6 +7,9 @@
       <Diagram DiagramId="893018f4938a4f169f147e380bd0efca" Name="Diagram1">
         <EntityTypeShape EntityType="RocedesModel.Usuario" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="RocedesModel.POrder" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RocedesModel.BundleBoxing" Width="1.5" PointX="7.625" PointY="1" />
+        <EntityTypeShape EntityType="RocedesModel.BundleBoxing_Saco" Width="1.5" PointX="5.375" PointY="2" />
+        <AssociationConnector Association="RocedesModel.FK_BundleBoxing_BundleBoxing_Saco" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -27,5 +27,7 @@ namespace RocedesAPI.Models
     
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<POrder> POrder { get; set; }
+        public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
+        public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
     }
 }

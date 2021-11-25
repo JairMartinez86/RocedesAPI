@@ -15,7 +15,7 @@ namespace RocedesAPI.Conex_Pervasive
 
         public Cls_ConexionPervasive()
         {
-            _Cnx = new PsqlConnection("Server DSN=INTELSERVER;Host=192.168.14.50");
+            _Cnx = new PsqlConnection("Server DSN=INTELSERVER;Host=192.168.200.202");
         }
 
 
@@ -28,7 +28,6 @@ namespace RocedesAPI.Conex_Pervasive
 
                 PsqlDataAdapter _Adp = new PsqlDataAdapter();
                 _Adp.SelectCommand = new PsqlCommand(Query, _Cnx);
-                _Adp.SelectCommand.CommandTimeout = 360;
                 _Cnx.Open();
                 _Adp.Fill(dt);
                 _Cnx.Close();

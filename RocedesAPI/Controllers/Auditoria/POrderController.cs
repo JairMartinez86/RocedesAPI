@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using RocedesAPI.Conex_Pervasive;
 using RocedesAPI.Models;
+using RocedesAPI.Models.Cls.INV;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -56,24 +57,69 @@ namespace RocedesAPI.Controllers
         public string GetSerial2(string corte)
         {
             string json = string.Empty;
-
+            //MP350028-1
             try
             {
-                string sql = $"SELECT S.prodno, S.operno FROM SERIAL2  AS S WHERE RTRIM(LTRIM(S.prodno)) LIKE '%{corte}' AND LENGTH(S.prodno) = {corte.Length}";
+                string sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno  \n" +
+                    $"FROM SERIAL2 AS S \n" +
+                    $"INNER JOIN OPER AS OP ON OP.operno = S.operno \n" +
+                     $"INNER JOIN BUNDLE AS BD ON BD.prodno = S.prodno AND BD.bundleno = S.bundleno \n" +
+                    $"WHERE S.prodno = '{corte}' " +
+                    $"GROUP BY  S.serialno,  OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno";
 
                 Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
                 DataTable tbl = _Cnx.GetDatos(sql);
 
-                List<Usuario> lst = (from q in tbl.AsEnumerable()
-                                     select new Usuario()
-                                     {
-                                         Login = q.Field<string>("EMPNO"),
-                                         Nombres = q.Field<string>("firstname"),
-                                         Apellidos = q.Field<string>("lastname")
-                                     }).ToList();
+               
 
-                if (lst.Count > 0)
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+                if (tbl.Rows.Count > 0)
+                {
+
+
+
+                    using (var _Conexion = new RocedesEntities())
+                    {
+                        List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte == corte && b.Activo).ToList();
+
+
+                        var ltsBoxingCustom = (from s in tbl.AsEnumerable()
+                                               join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), Serial = s.Field<int>("serialno") } equals new { _Corte = b.Corte, Serial = b.Serial } into SerialesUnion
+                                               from sb in SerialesUnion.DefaultIfEmpty()
+                                               select new
+                                               {
+                                                   Serial = s.Field<int>("serialno"),
+                                                   Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),
+                                                   Bulto = s.Field<int>("bundleno"),
+                                                   Capaje = s.Field<Int16>("qty"),
+                                                   Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
+                                                   Oper = s.Field<string>("operno").TrimStart().TrimEnd(),
+                                                   Escaneado =  (sb != null) ? true: false
+                                               }).ToList();
+
+                        //List<BundleBoxingCustom> ltsBoxingCustom = (from q in tbl.AsEnumerable()
+                        //                                            join 
+                        //                                            select new BundleBoxingCustom()
+                        //                                            {
+                        //                                                Serial = q.Field<int>("serialno"),
+                        //                                                Nombre = q.Field<string>("Descr").TrimStart().TrimEnd(),
+                        //                                                Bulto = q.Field<int>("bundleno"),
+                        //                                                Capaje = q.Field<Int16>("qty"),
+                        //                                                Corte = q.Field<string>("prodno").TrimStart().TrimEnd(),
+                        //                                                Oper = q.Field<string>("operno").TrimStart().TrimEnd(),
+
+                        //                                            }).ToList();
+
+
+
+
+
+                        json = Cls.Cls_Mensaje.Tojson(ltsBoxingCustom, ltsBoxingCustom.Count, string.Empty, string.Empty, 0);
+                    }
+
+
+                    
+                }
+                    
                 else
                     json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro no encontrado.", 0);
 
