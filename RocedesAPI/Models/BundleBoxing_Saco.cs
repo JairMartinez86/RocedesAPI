@@ -26,6 +26,8 @@ namespace RocedesAPI.Models
         public int Seccion { get; set; }
         public int IdUsuarioCrea { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public bool Abierto { get; set; }
+        public Nullable<int> IdUsuarioAbre { get; set; }
         public bool Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

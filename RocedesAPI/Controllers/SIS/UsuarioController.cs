@@ -48,7 +48,7 @@ namespace RocedesAPI.Controllers
             }
             catch(Exception ex)
             {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.InnerException.Message, 1);
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
             }
             
             return json;
@@ -91,25 +91,29 @@ namespace RocedesAPI.Controllers
                 string sql = "select top 1 empno,estatus,module,lastname,firstname,badgeno,loc1,loc2 from employee where badgeno = '" + codbar + "'";
 
                 Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
-                DataTable tbl = _Cnx.GetDatos(sql);
+                DataTable tbl = _Cnx.GetDatos(sql, out json);
 
-                List<Usuario> lst = (from q in tbl.AsEnumerable()
-                                     select new Usuario()
-                                     {
-                                         Login = q.Field<string>("EMPNO"),
-                                         Nombres = q.Field<string>("firstname"),
-                                         Apellidos = q.Field<string>("lastname")
-                                     }).ToList();
+                if(tbl != null)
+                {
+                    List<Usuario> lst = (from q in tbl.AsEnumerable()
+                                         select new Usuario()
+                                         {
+                                             Login = q.Field<string>("EMPNO"),
+                                             Nombres = q.Field<string>("firstname"),
+                                             Apellidos = q.Field<string>("lastname")
+                                         }).ToList();
 
-                if(lst.Count > 0)
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-                else
-                    json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro no encontrado.", 0);
+                    if (lst.Count > 0)
+                        json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+                    else
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro no encontrado.", 0);
+                }
+               
 
             }
             catch(Exception ex)
             {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.InnerException.Message, 1);
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
             }
 
 
@@ -138,7 +142,7 @@ namespace RocedesAPI.Controllers
             }
             catch (Exception ex)
             {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.InnerException.Message, 1);
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
             }
 
 
@@ -209,7 +213,7 @@ namespace RocedesAPI.Controllers
                 }
                 catch(Exception ex)
                 {
-                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.InnerException.Message, 1);
+                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
                 }
                 
             }
@@ -268,7 +272,7 @@ namespace RocedesAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.InnerException.Message, 1);
+                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
                 }
 
             }

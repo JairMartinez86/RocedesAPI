@@ -229,6 +229,7 @@
     <Compile Include="Cls\Cls_Mensaje.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Auditoria\POrderController.cs" />
+    <Compile Include="Controllers\INV\BundleBoxingController.cs" />
     <Compile Include="Controllers\SIS\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -335,6 +336,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BundleBoning\" />
     <Folder Include="Views\POrder\" />
   </ItemGroup>
   <ItemGroup>

@@ -15,12 +15,13 @@ namespace RocedesAPI.Conex_Pervasive
 
         public Cls_ConexionPervasive()
         {
-            _Cnx = new PsqlConnection("Server DSN=INTELSERVER;Host=192.168.200.202");
+            _Cnx = new PsqlConnection("Server DSN=INTELSERVER;Host=192.168.14.50");
         }
 
 
-        public DataTable GetDatos(string Query)
+        public DataTable GetDatos(string Query, out string Mensaje )
         {
+            Mensaje = string.Empty;
 
             try
             {
@@ -37,6 +38,7 @@ namespace RocedesAPI.Conex_Pervasive
             catch(Exception ex)
             {
                 _Cnx.Close();
+                Mensaje = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
                 return null;
             }
 

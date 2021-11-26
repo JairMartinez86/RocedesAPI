@@ -60,6 +60,8 @@
           <Property Name="Seccion" Type="int" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="int" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Abierto" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioAbre" Type="int" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
@@ -178,6 +180,8 @@
           <Property Name="Seccion" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Abierto" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioAbre" Type="Int32" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BundleBoxing" Relationship="RocedesModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing_Saco" ToRole="BundleBoxing" />
         </EntityType>
@@ -263,6 +267,8 @@
             <EntityTypeMapping TypeName="RocedesModel.BundleBoxing_Saco">
               <MappingFragment StoreEntitySet="BundleBoxing_Saco">
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdUsuarioAbre" ColumnName="IdUsuarioAbre" />
+                <ScalarProperty Name="Abierto" ColumnName="Abierto" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
                 <ScalarProperty Name="Seccion" ColumnName="Seccion" />
