@@ -32,7 +32,7 @@
           <Key>
             <PropertyRef Name="IdBundleBoxing" />
           </Key>
-          <Property Name="IdBundleBoxing" Type="int" Nullable="false" />
+          <Property Name="IdBundleBoxing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NoMesa" Type="int" Nullable="false" />
           <Property Name="Serial" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
@@ -54,7 +54,7 @@
           <Key>
             <PropertyRef Name="IdSaco" />
           </Key>
-          <Property Name="IdSaco" Type="int" Nullable="false" />
+          <Property Name="IdSaco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Saco" Type="int" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Seccion" Type="int" Nullable="false" />
@@ -151,7 +151,7 @@
           <Key>
             <PropertyRef Name="IdBundleBoxing" />
           </Key>
-          <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" />
+          <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NoMesa" Type="Int32" Nullable="false" />
           <Property Name="Serial" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -174,7 +174,7 @@
           <Key>
             <PropertyRef Name="IdSaco" />
           </Key>
-          <Property Name="IdSaco" Type="Int32" Nullable="false" />
+          <Property Name="IdSaco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Saco" Type="Int32" Nullable="false" />
           <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Seccion" Type="Int32" Nullable="false" />
