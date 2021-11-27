@@ -29,7 +29,7 @@ namespace RocedesAPI.Controllers
             string json = string.Empty;
             try
             {
-                using (var _Conexion = new RocedesEntities())
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                 {
 
                     var query = (from _q in _Conexion.Usuario.AsEnumerable()
@@ -133,7 +133,7 @@ namespace RocedesAPI.Controllers
 
             try
             {
-                using (var _Conexion = new RocedesEntities())
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                 {
                     List<Usuario> lst = _Conexion.Usuario.ToList();
 
@@ -183,7 +183,7 @@ namespace RocedesAPI.Controllers
 
                 try
                 {
-                    using (var _Conexion = new RocedesEntities())
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     {
                         int x = _Conexion.Usuario.ToList().FindAll(s => s.Login == Registro.Login.TrimStart().TrimEnd() ||  (s.Login != Registro.Login && s.CodBar != string.Empty && s.CodBar == Registro.CodBar.TrimStart().TrimEnd())).Count();
 
@@ -251,7 +251,7 @@ namespace RocedesAPI.Controllers
 
                 try
                 {
-                    using (var _Conexion = new RocedesEntities())
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     {
                         Usuario u = _Conexion.Usuario.ToList().Find(s => s.IdUsuario == Registro.IdUsuario);
 

@@ -13,10 +13,10 @@ namespace RocedesAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RocedesEntities : DbContext
+    public partial class AuditoriaEntities : DbContext
     {
-        public RocedesEntities()
-            : base("name=RocedesEntities")
+        public AuditoriaEntities()
+            : base("name=AuditoriaEntities")
         {
         }
     
@@ -25,9 +25,9 @@ namespace RocedesAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<POrder> POrder { get; set; }
         public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
         public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

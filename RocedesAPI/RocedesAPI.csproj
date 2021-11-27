@@ -236,35 +236,35 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BundleBoxing.cs">
-      <DependentUpon>UsuarioModel.tt</DependentUpon>
+      <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BundleBoxing_Saco.cs">
-      <DependentUpon>UsuarioModel.tt</DependentUpon>
+      <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoEstado.cs" />
+    <Compile Include="Conex_Pervasive\Cls_ConexionPervasive.cs" />
     <Compile Include="Models\POrder.cs">
-      <DependentUpon>UsuarioModel.tt</DependentUpon>
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RocedesModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RocedesModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RocedesModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RocedesModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RocedesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">
-      <DependentUpon>UsuarioModel.tt</DependentUpon>
+      <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UsuarioModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UsuarioModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UsuarioModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UsuarioModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UsuarioModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UsuarioModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Conex_Pervasive\Cls_ConexionPervasive.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -276,15 +276,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\UsuarioModel.Context.tt">
+    <Content Include="Models\RocedesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UsuarioModel.Context.cs</LastGenOutput>
-      <DependentUpon>UsuarioModel.edmx</DependentUpon>
+      <DependentUpon>RocedesModel.edmx</DependentUpon>
+      <LastGenOutput>RocedesModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\UsuarioModel.tt">
+    <Content Include="Models\RocedesModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UsuarioModel.edmx</DependentUpon>
-      <LastGenOutput>UsuarioModel.cs</LastGenOutput>
+      <DependentUpon>RocedesModel.edmx</DependentUpon>
+      <LastGenOutput>RocedesModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -307,12 +307,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\UsuarioModel.edmx">
+    <EntityDeploy Include="Models\RocedesModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UsuarioModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>RocedesModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\UsuarioModel.edmx.diagram">
-      <DependentUpon>UsuarioModel.edmx</DependentUpon>
+    <Content Include="Models\RocedesModel.edmx.diagram">
+      <DependentUpon>RocedesModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

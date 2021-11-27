@@ -25,7 +25,7 @@ namespace RocedesAPI.Controllers
 
             try
             {
-                using (RocedesEntities _Cnx = new RocedesEntities())
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
                     var _Query = (from q in _Cnx.POrder
                                  where q.POrder1.TrimEnd().TrimStart().ToLower().StartsWith(corte.TrimStart().TrimEnd().ToLower())
@@ -78,7 +78,7 @@ namespace RocedesAPI.Controllers
 
 
 
-                        using (var _Conexion = new RocedesEntities())
+                        using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                         {
                             List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte == corte && b.Activo).ToList();
 

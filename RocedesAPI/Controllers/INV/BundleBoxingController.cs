@@ -25,7 +25,7 @@ namespace RocedesAPI.Controllers.INV
 
             try
             {
-                using (RocedesEntities _Cnx = new RocedesEntities())
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
        
                     var lst = (from b in _Cnx.BundleBoxing
@@ -89,7 +89,7 @@ namespace RocedesAPI.Controllers.INV
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
                 {
-                    using (var _Conexion = new RocedesEntities())
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     {
 
                         int IdUsuario = _Conexion.Usuario.ToList().Find(u => u.Login == Datos.Login).IdUsuario;
@@ -219,5 +219,65 @@ namespace RocedesAPI.Controllers.INV
 
         }
 
+
+        [Route("api/BundleBoxing/Saco")]
+        [HttpPost]
+        public IHttpActionResult Pieza(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(GuardarPieza(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string GuardarPieza(string d)
+        {
+            string json = string.Empty;
+
+            BundleBoxingCustom Datos = JsonConvert.DeserializeObject<BundleBoxingCustom>(d);
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+            {
+                using(AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+                    BundleBoxing Boxing = _Conexion.BundleBoxing.FirstOrDefault(b => b.Corte == Datos.Corte && b.Serial == Datos.Serial && b.Oper == Datos.Oper && b.Activo);
+
+                    if(Boxing != null)
+                    {
+                        json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, $"Serial # <b>{Datos.Serial}</b> escaneado.", 0);
+                        return json;
+                    }
+
+                    Boxing = new BundleBoxing
+                    {
+                        Serial = Datos.Serial,
+                        Nombre = Datos.Nombre,
+                        Seccion = Datos.Seccion,
+                        Bulto = Datos.Bulto,
+                        Capaje = Datos.Capaje,
+                        IdSaco = _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Saco == Datos.Saco && sc.Corte == Datos.Corte && sc.Seccion == Datos.Seccion).IdSaco,
+                        Corte = Datos.Corte,
+                        Oper = Datos.Oper,
+                        IdUsuario = _Conexion.Usuario.FirstOrDefault(u => u.Login == "").IdUsuario,
+                        FechaRegistro = DateTime.Now
+                    };
+
+
+
+
+
+
+                }
+            }
+
+            return json;
+        }
     }
 }
