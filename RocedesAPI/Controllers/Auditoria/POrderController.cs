@@ -100,25 +100,7 @@ namespace RocedesAPI.Controllers
                                                        Escaneado = (sb != null) ? true : false
                                                    }).ToList();
 
-                            //var ltsBoxingCustom = (from s in tbl.AsEnumerable()
-                            //                       join sc in _Conexion.BundleBoxing_Saco.DefaultIfEmpty() on s.Field<string>("prodno") equals corte
-                            //                       join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), Serial = s.Field<int>("serialno"), _IdSaco = sc.IdSaco} equals new { _Corte = b.Corte, Serial = b.Serial, _IdSaco = b.IdSaco } into SerialesUnion
-                            //                       from sb in SerialesUnion.DefaultIfEmpty()
-                            //                       select new
-                            //                       {
-                            //                           Serial = s.Field<int>("serialno"),                                            
-                            //                           Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),                                             
-                            //                           Bulto = s.Field<int>("bundleno"),                                           
-                            //                           Capaje = s.Field<Int16>("qty"),                                             
-                            //                           Saco = (sb != null) ? sc.Saco : 0,
-                            //                           Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),                                           
-                            //                           Oper = s.Field<string>("operno").TrimStart().TrimEnd(),                                       
-                            //                           Escaneado = (sb != null) ? true : false                                           
-                            //                       }).ToList();
-
-
-
-
+           
 
 
 

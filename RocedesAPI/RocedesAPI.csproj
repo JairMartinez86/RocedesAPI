@@ -242,6 +242,7 @@
       <DependentUpon>UsuarioModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
+    <Compile Include="Models\Cls\INV\SacoEstado.cs" />
     <Compile Include="Models\POrder.cs">
       <DependentUpon>UsuarioModel.tt</DependentUpon>
     </Compile>

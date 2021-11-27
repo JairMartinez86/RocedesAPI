@@ -63,12 +63,12 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/BundleBoxing/Saco")]
         [HttpPost]
-        public IHttpActionResult Saco(string usuario, string corte, string seccion, string saco)
+        public IHttpActionResult Saco(string d)
         {
             if (ModelState.IsValid)
             {
 
-                return Ok(GuardarSaco(usuario,  corte, seccion, saco));
+                return Ok(GuardarSaco(d));
 
             }
             else
@@ -78,18 +78,12 @@ namespace RocedesAPI.Controllers.INV
 
         }
 
-        private string GuardarSaco(string usuario, string corte, string seccion, string saco)
+        private string GuardarSaco(string d)
         {
             string json = string.Empty;
-            int int_Seccion = 0;
-            int int_Saco = 0;
-     
 
 
-            if (seccion != string.Empty) int_Seccion = Convert.ToInt32(seccion);
-            if (saco != "0") int_Saco = Convert.ToInt32(saco);
-
-
+            SacoEstado Datos = JsonConvert.DeserializeObject<SacoEstado>(d);
 
             try
             {
@@ -98,26 +92,41 @@ namespace RocedesAPI.Controllers.INV
                     using (var _Conexion = new RocedesEntities())
                     {
 
-                        int IdUsuario = _Conexion.Usuario.ToList().Find(u => u.Login == usuario).IdUsuario;
+                        int IdUsuario = _Conexion.Usuario.ToList().Find(u => u.Login == Datos.Login).IdUsuario;
 
                         BundleBoxing_Saco Registro = null;
 
 
-                        if (saco == "0")
+                        if (Datos.Saco == 0)
                         {
                             var _Saco = (from sc in _Conexion.BundleBoxing_Saco
-                                         where sc.Corte == corte && sc.IdUsuarioAbre == IdUsuario && sc.Abierto
+                                         where sc.Corte == Datos.Corte && sc.IdUsuarioAbre == IdUsuario && sc.Abierto
                                          select sc.Saco
                                      ).ToList();
 
+                      
 
                             if (_Saco.Count == 0)
                             {
+
+                                _Saco = (from sc in _Conexion.BundleBoxing_Saco
+                                       where !_Conexion.BundleBoxing.Any( b => b.IdSaco == sc.IdSaco)
+                                       select sc.Saco).ToList();
+
+
+                                if(_Saco.Count > 0)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"<p>El saco # <b>{_Saco[0].ToString()}</b> se encuentra vacio.<br>Utilize el saco vacio.</p>", 1);
+                                    return json;
+                                }
+
+
+
                                 Registro = new BundleBoxing_Saco()
                                 {
                                     Saco = -1,
-                                    Corte = corte,
-                                    Seccion = int_Seccion,
+                                    Corte = Datos.Corte,
+                                    Seccion = Datos.Seccion,
                                     IdUsuarioCrea = IdUsuario,
                                     FechaRegistro = DateTime.Now,
                                     IdUsuarioAbre = IdUsuario,
@@ -133,7 +142,7 @@ namespace RocedesAPI.Controllers.INV
           
 
                                 var _Query = (from b in _Conexion.BundleBoxing_Saco
-                                              where b.Seccion == int_Seccion && b.Corte == corte && b.Activo
+                                              where b.Seccion == Datos.Seccion && b.Corte == Datos.Corte && b.Activo
                                               group b by b.Corte into SacoGroup
                                               select new
                                               {
@@ -150,15 +159,35 @@ namespace RocedesAPI.Controllers.INV
                             else
                             {
                                 json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # {_Saco[0].ToString()} se encuentra abierto, Primero cierre el saco para crear uno nuevo.", 1);
+                                return json;
+
                             }
 
 
                         }
                         else
                         {
-                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.IdUsuarioAbre == IdUsuario && b.Corte == corte && b.Saco == int_Saco && b.Activo);
-                            Registro.IdUsuarioAbre = null;
-                            Registro.Abierto = false;
+                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.Corte == Datos.Corte && b.Saco == Datos.Saco && b.Activo);
+
+                            if(Registro != null)
+                            {
+                                Registro.IdUsuarioAbre =  ((Datos.Estado == "Abrir")?  IdUsuario :  (int?)null);
+                                Registro.Abierto = ((Datos.Estado == "Abrir") ? true : false);
+                            }
+                            else
+                            {
+                                if(Datos.Estado != "Cerrar")
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # {Datos.Saco} no se encuentra registrado", 1);
+                                }
+                                else
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, $"Saco # {Datos.Saco} cerado.", 0);
+                                    
+                                }
+                                return json;
+                            }
+                           
 
                         }
 
