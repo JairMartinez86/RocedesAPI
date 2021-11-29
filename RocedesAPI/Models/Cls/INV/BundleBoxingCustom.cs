@@ -8,15 +8,18 @@ namespace RocedesAPI.Models.Cls.INV
     public class BundleBoxingCustom
     {
 
-        public int Serial { get; set; }
-        public string Nombre { get; set; }
-        public int Seccion { get; set; }
-        public int Bulto { get; set; }
-        public Int16 Capaje { get; set; }
-        public Nullable<int> Saco { get; set; }
-        public string Corte { get; set; }
-        public string Oper { get; set; }
-        public bool Escaneado { get; set; }
-  
+        public int Serial = 0;
+        public string Nombre = string.Empty;
+        public int Seccion = 0;
+        public int Bulto = 0;
+        public Int16 Capaje = 0;
+        public int Saco = 0;
+        public int Mesa = 0;
+        public string Corte = string.Empty;
+        public string Estilo = string.Empty;
+        public string Oper = string.Empty;
+        public bool Escaneado = false;
+        public string Login = string.Empty;
+
     }
 }

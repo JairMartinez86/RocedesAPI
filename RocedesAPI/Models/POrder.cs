@@ -32,5 +32,7 @@ namespace RocedesAPI.Models
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public string POrderClient { get; set; }
         public Nullable<bool> washed { get; set; }
+    
+        public virtual Style Style { get; set; }
     }
 }

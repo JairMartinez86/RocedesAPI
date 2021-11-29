@@ -36,6 +36,7 @@ namespace RocedesAPI.Controllers
                                  where _q.Activo == true && _q.Login == usr && _q.Pass == pwd
                                  select new
                                  {
+                                     Nombre = string.Concat(_q.Nombres, " ", _q.Apellidos),
                                      Fecha = DateTime.Now
                                  }).ToList();
 

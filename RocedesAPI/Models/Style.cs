@@ -12,26 +12,22 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BundleBoxing_Saco
+    public partial class Style
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BundleBoxing_Saco()
+        public Style()
         {
-            this.BundleBoxing = new HashSet<BundleBoxing>();
+            this.POrder = new HashSet<POrder>();
         }
     
-        public int IdSaco { get; set; }
-        public int Saco { get; set; }
-        public int NoMesa { get; set; }
-        public string Corte { get; set; }
-        public int Seccion { get; set; }
-        public int IdUsuarioCrea { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        public bool Abierto { get; set; }
-        public Nullable<int> IdUsuarioAbre { get; set; }
-        public bool Activo { get; set; }
+        public int Id_Style { get; set; }
+        public string Style1 { get; set; }
+        public Nullable<bool> washed { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> Id_Cliente { get; set; }
+        public Nullable<int> idtipoTendido { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BundleBoxing> BundleBoxing { get; set; }
+        public virtual ICollection<POrder> POrder { get; set; }
     }
 }

@@ -13,25 +13,6 @@ namespace RocedesAPI.Cls
         {
             string json = string.Empty;
 
-            string str_mensaje = Mensaje;
-           // Mensaje = string.Empty;
-
-            /*int x = 0;
-            foreach(char c in str_mensaje)
-            {
-                if(x == 70)
-                {
-                    Mensaje += "<br>";
-                    x = 0;
-                }
-
-                Mensaje += c;
-
-                x++;
-
-            }*/
-
-
 
             if (o != null)
             {

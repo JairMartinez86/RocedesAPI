@@ -28,11 +28,13 @@ namespace RocedesAPI.Controllers
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
                     var _Query = (from q in _Cnx.POrder
+                                  join  s in _Cnx.Style on q.Id_Style equals s.Id_Style
                                  where q.POrder1.TrimEnd().TrimStart().ToLower().StartsWith(corte.TrimStart().TrimEnd().ToLower())
                                  orderby q.POrder1, q.POrder1.TrimStart().TrimEnd().Length 
                                   select new
                                  {
-                                     Corte = q.POrder1
+                                     Corte = q.POrder1,
+                                     Style = s.Style1
                                  }).Take(20).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(_Query, _Query.Count, string.Empty, string.Empty, 0);
@@ -54,7 +56,7 @@ namespace RocedesAPI.Controllers
 
         [Route("api/Auditoria/GetSerial2")]
         [HttpGet]
-        public string GetSerial2(string corte)
+        public string GetSerial2(string corte, string estilo)
         {
             string json = string.Empty;
             //MP350028-1
@@ -95,7 +97,9 @@ namespace RocedesAPI.Controllers
                                                        Bulto = s.Field<int>("bundleno"),
                                                        Capaje = s.Field<Int16>("qty"),
                                                        Saco = (sb != null) ? sc.Saco : 0,
+                                                       Mesa = (sc != null) ? sb.NoMesa : 0,
                                                        Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
+                                                       Estilo = (sb != null) ? SerialesUnion.First( x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
                                                        Oper = s.Field<string>("operno").TrimStart().TrimEnd(),
                                                        Escaneado = (sb != null) ? true : false
                                                    }).ToList();

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AuditoriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AuditoriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="POrder">
           <Key>
             <PropertyRef Name="Id_Order" />
@@ -28,6 +28,17 @@
           <Property Name="POrderClient" Type="nvarchar" MaxLength="50" />
           <Property Name="washed" Type="bit" />
         </EntityType>
+        <EntityType Name="Style">
+          <Key>
+            <PropertyRef Name="Id_Style" />
+          </Key>
+          <Property Name="Id_Style" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Style" Type="nvarchar" MaxLength="50" />
+          <Property Name="washed" Type="bit" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Id_Cliente" Type="int" />
+          <Property Name="idtipoTendido" Type="int" />
+        </EntityType>
         <EntityType Name="BundleBoxing">
           <Key>
             <PropertyRef Name="IdBundleBoxing" />
@@ -41,6 +52,7 @@
           <Property Name="Capaje" Type="int" Nullable="false" />
           <Property Name="IdSaco" Type="int" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estilo" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Oper" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
@@ -56,6 +68,7 @@
           </Key>
           <Property Name="IdSaco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Saco" Type="int" Nullable="false" />
+          <Property Name="NoMesa" Type="int" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Seccion" Type="int" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="int" Nullable="false" />
@@ -88,8 +101,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_POrder_Style">
+          <End Role="Style" Type="Self.Style" Multiplicity="0..1" />
+          <End Role="POrder" Type="Self.POrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Style">
+              <PropertyRef Name="Id_Style" />
+            </Principal>
+            <Dependent Role="POrder">
+              <PropertyRef Name="Id_Style" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AuditoriaModelStoreContainer">
           <EntitySet Name="POrder" EntityType="Self.POrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
@@ -97,9 +123,12 @@
             <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
             <End Role="BundleBoxing" EntitySet="BundleBoxing" />
           </AssociationSet>
+          <AssociationSet Name="FK_POrder_Style" Association="Self.FK_POrder_Style">
+            <End Role="Style" EntitySet="Style" />
+            <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AuditoriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -125,7 +154,59 @@
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="POrderClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="washed" Type="Boolean" />
+          <NavigationProperty Name="Style" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="POrder" ToRole="Style" />
         </EntityType>
+        <EntityContainer Name="AuditoriaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="POrder" EntityType="Self.POrder" />
+          <EntitySet Name="Usuario" EntityType="AuditoriaModel.Usuario" />
+          <EntitySet Name="Style" EntityType="AuditoriaModel.Style" />
+          <AssociationSet Name="FK_POrder_Style" Association="AuditoriaModel.FK_POrder_Style">
+            <End Role="Style" EntitySet="Style" />
+            <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
+          <EntitySet Name="BundleBoxing" EntityType="AuditoriaModel.BundleBoxing" />
+          <EntitySet Name="BundleBoxing_Saco" EntityType="AuditoriaModel.BundleBoxing_Saco" />
+          <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco">
+            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
+            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CodBar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Style">
+          <Key>
+            <PropertyRef Name="Id_Style" />
+          </Key>
+          <Property Name="Id_Style" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Style1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="washed" Type="Boolean" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Id_Cliente" Type="Int32" />
+          <Property Name="idtipoTendido" Type="Int32" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="Style" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_POrder_Style">
+          <End Type="AuditoriaModel.Style" Role="Style" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Style">
+              <PropertyRef Name="Id_Style" />
+            </Principal>
+            <Dependent Role="POrder">
+              <PropertyRef Name="Id_Style" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="BundleBoxing">
           <Key>
             <PropertyRef Name="IdBundleBoxing" />
@@ -133,13 +214,14 @@
           <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NoMesa" Type="Int32" Nullable="false" />
           <Property Name="Serial" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Seccion" Type="Int32" Nullable="false" />
           <Property Name="Bulto" Type="Int32" Nullable="false" />
           <Property Name="Capaje" Type="Int32" Nullable="false" />
           <Property Name="IdSaco" Type="Int32" Nullable="false" />
-          <Property Name="Corte" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Oper" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Oper" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="IdUsuarioTermina" Type="Int32" />
@@ -147,7 +229,7 @@
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="BundleBoxing_Saco" Relationship="Self.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing" ToRole="BundleBoxing_Saco" />
+          <NavigationProperty Name="BundleBoxing_Saco" Relationship="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing" ToRole="BundleBoxing_Saco" />
         </EntityType>
         <EntityType Name="BundleBoxing_Saco">
           <Key>
@@ -155,30 +237,19 @@
           </Key>
           <Property Name="IdSaco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Saco" Type="Int32" Nullable="false" />
-          <Property Name="Corte" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NoMesa" Type="Int32" Nullable="false" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Seccion" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Abierto" Type="Boolean" Nullable="false" />
           <Property Name="IdUsuarioAbre" Type="Int32" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="BundleBoxing" Relationship="Self.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing_Saco" ToRole="BundleBoxing" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-          </Key>
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nombres" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CodBar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BundleBoxing" Relationship="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing_Saco" ToRole="BundleBoxing" />
         </EntityType>
         <Association Name="FK_BundleBoxing_BundleBoxing_Saco">
-          <End Role="BundleBoxing_Saco" Type="Self.BundleBoxing_Saco" Multiplicity="1" />
-          <End Role="BundleBoxing" Type="Self.BundleBoxing" Multiplicity="*" />
+          <End Type="AuditoriaModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="1" />
+          <End Type="AuditoriaModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BundleBoxing_Saco">
               <PropertyRef Name="IdSaco" />
@@ -188,16 +259,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AuditoriaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="POrder" EntityType="Self.POrder" />
-          <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" />
-          <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="Self.FK_BundleBoxing_BundleBoxing_Saco">
-            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
-            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -228,54 +289,68 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="AuditoriaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="CodBar" ColumnName="CodBar" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Style">
+            <EntityTypeMapping TypeName="AuditoriaModel.Style">
+              <MappingFragment StoreEntitySet="Style">
+                <ScalarProperty Name="idtipoTendido" ColumnName="idtipoTendido" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="washed" ColumnName="washed" />
+                <ScalarProperty Name="Style1" ColumnName="Style" />
+                <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BundleBoxing">
             <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing">
               <MappingFragment StoreEntitySet="BundleBoxing">
-                <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
-                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
-                <ScalarProperty Name="Serial" ColumnName="Serial" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
-                <ScalarProperty Name="Bulto" ColumnName="Bulto" />
-                <ScalarProperty Name="Capaje" ColumnName="Capaje" />
-                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
-                <ScalarProperty Name="Corte" ColumnName="Corte" />
-                <ScalarProperty Name="Oper" ColumnName="Oper" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="IdUsuarioTermina" ColumnName="IdUsuarioTermina" />
-                <ScalarProperty Name="FechaTermina" ColumnName="FechaTermina" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdUsuarioInactiva" ColumnName="IdUsuarioInactiva" />
                 <ScalarProperty Name="FechaInactivo" ColumnName="FechaInactivo" />
+                <ScalarProperty Name="IdUsuarioInactiva" ColumnName="IdUsuarioInactiva" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaTermina" ColumnName="FechaTermina" />
+                <ScalarProperty Name="IdUsuarioTermina" ColumnName="IdUsuarioTermina" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Oper" ColumnName="Oper" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+                <ScalarProperty Name="Capaje" ColumnName="Capaje" />
+                <ScalarProperty Name="Bulto" ColumnName="Bulto" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
+                <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BundleBoxing_Saco">
             <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing_Saco">
               <MappingFragment StoreEntitySet="BundleBoxing_Saco">
-                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
-                <ScalarProperty Name="Saco" ColumnName="Saco" />
-                <ScalarProperty Name="Corte" ColumnName="Corte" />
-                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
-                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="Abierto" ColumnName="Abierto" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="IdUsuarioAbre" ColumnName="IdUsuarioAbre" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="AuditoriaModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Pass" ColumnName="Pass" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="CodBar" ColumnName="CodBar" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Abierto" ColumnName="Abierto" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
+                <ScalarProperty Name="Saco" ColumnName="Saco" />
+                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
