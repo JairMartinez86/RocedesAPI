@@ -57,6 +57,42 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
+        [Route("api/BundleBoxing/GetBundleBoxing")]
+        [HttpGet]
+        public string GetBundleBoxing(string corte, string estilo)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                {
+
+                    var lst = (from b in _Cnx.BundleBoxing
+                               where b.Corte == corte && b.Estilo == estilo && b.Activo
+                               select new
+                               {
+                                   Serial = b.Serial,
+                                   Bulto = b.Bulto,
+                               }).ToList();
+
+
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
 
 
 
@@ -97,10 +133,10 @@ namespace RocedesAPI.Controllers.INV
                         BundleBoxing_Saco Registro = null;
 
 
-                        if (Datos.Saco == 0)
+                        if (Datos.Saco == 0 && Datos.Estado != "Cerrar")
                         {
                             var _Saco = (from sc in _Conexion.BundleBoxing_Saco
-                                         where sc.Corte == Datos.Corte && sc.IdUsuarioAbre == IdUsuario && sc.Abierto
+                                         where sc.Corte == Datos.Corte && sc.NoMesa == Datos.Mesa && sc.IdUsuarioAbre == IdUsuario && sc.Abierto
                                          select sc.Saco
                                      ).ToList();
 
@@ -110,7 +146,7 @@ namespace RocedesAPI.Controllers.INV
                             {
 
                                 _Saco = (from sc in _Conexion.BundleBoxing_Saco
-                                         where !_Conexion.BundleBoxing.Any(b => b.IdSaco == sc.IdSaco)
+                                         where !_Conexion.BundleBoxing.Any(b => b.IdSaco == sc.IdSaco) && sc.NoMesa == Datos.Mesa
                                          select sc.Saco).ToList();
 
 
@@ -125,6 +161,7 @@ namespace RocedesAPI.Controllers.INV
                                 Registro = new BundleBoxing_Saco()
                                 {
                                     Saco = -1,
+                                    NoMesa = Datos.Mesa,
                                     Corte = Datos.Corte,
                                     Seccion = Datos.Seccion,
                                     IdUsuarioCrea = IdUsuario,
@@ -171,8 +208,18 @@ namespace RocedesAPI.Controllers.INV
 
                             if (Registro != null)
                             {
-                                Registro.IdUsuarioAbre = ((Datos.Estado == "Abrir") ? IdUsuario : (int?)null);
-                                Registro.Abierto = ((Datos.Estado == "Abrir") ? true : false);
+                                if(Registro.NoMesa == Datos.Mesa)
+                                {
+                                    Registro.IdUsuarioAbre = ((Datos.Estado == "Abrir") ? IdUsuario : (int?)null);
+                                    Registro.Abierto = ((Datos.Estado == "Abrir") ? true : false);
+                                }
+                                else
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Datos.Saco}</b> pertenece a la mesa # <b>{ Registro.NoMesa}</b>", 1);
+                                    return json;
+                                }
+
+                                
                             }
                             else
                             {
