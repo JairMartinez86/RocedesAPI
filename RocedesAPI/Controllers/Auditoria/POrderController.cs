@@ -17,8 +17,52 @@ namespace RocedesAPI.Controllers
     public class POrderController : ApiController
     {
        
-        [Route("api/Auditoria/GetAutoPOrder")]
+        [Route("api/Auditoria/GetAutoCorte")]
         [HttpGet]
+        public string GetAutoCorte(string corte, bool esSeccion)
+        {
+            if (esSeccion)
+                return GetAutoPOrderSeccion(corte);
+
+            return GetAutoPOrder(corte);
+        }
+
+  
+        public string GetAutoPOrderSeccion(string corte)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                {
+                    var _Query = (from q in _Cnx.POrder
+                                  join s in _Cnx.Style on q.Id_Style equals s.Id_Style
+                                  where q.POrder1.TrimEnd().TrimStart().ToLower().StartsWith(corte.TrimStart().TrimEnd().ToLower())
+                                  orderby q.POrder1, q.POrder1.TrimStart().TrimEnd().Length
+                                  select new
+                                  {
+                                      Corte = q.POrder1,
+                                      CorteCompleto = q.POrderClient,
+                                      Style = s.Style1
+                                  }).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(_Query, _Query.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
         public string GetAutoPOrder(string corte)
         {
             string json = string.Empty;
@@ -28,30 +72,32 @@ namespace RocedesAPI.Controllers
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
                     var _Query = (from q in _Cnx.POrder
-                                  join  s in _Cnx.Style on q.Id_Style equals s.Id_Style
-                                 where q.POrder1.TrimEnd().TrimStart().ToLower().StartsWith(corte.TrimStart().TrimEnd().ToLower())
-                                 orderby q.POrder1, q.POrder1.TrimStart().TrimEnd().Length 
+                                  join s in _Cnx.Style on q.Id_Style equals s.Id_Style
+                                  where q.POrderClient.TrimEnd().TrimStart().ToLower().StartsWith(corte.TrimStart().TrimEnd().ToLower())
+                                  group q by q.POrderClient into grupo
+                                  orderby grupo.Key.TrimStart().TrimEnd().Length
                                   select new
-                                 {
-                                     Corte = q.POrder1,
-                                     Style = s.Style1
-                                 }).Take(20).ToList();
+                                  {
+                                      Corte = grupo.Key
+                                  }).Take(20).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(_Query, _Query.Count, string.Empty, string.Empty, 0);
 
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
             }
 
-           
 
 
-                return json;
+
+            return json;
         }
+
+
 
 
         [Route("api/Auditoria/GetSerial2")]
@@ -86,6 +132,7 @@ namespace RocedesAPI.Controllers
 
 
                             var ltsBoxingCustom = (from s in tbl.AsEnumerable()
+                                                   join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
                                                    join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), Serial = s.Field<int>("serialno")} equals new { _Corte = b.Corte, Serial = b.Serial} into SerialesUnion
                                                    from sb in SerialesUnion.DefaultIfEmpty()
                                                    join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
@@ -95,10 +142,11 @@ namespace RocedesAPI.Controllers
                                                        Serial = s.Field<int>("serialno"),
                                                        Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),
                                                        Bulto = s.Field<int>("bundleno"),
-                                                       Capaje = s.Field<Int16>("qty"),
+                                                       Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
                                                        Saco = (sb != null) ? sc.Saco : 0,
                                                        Mesa = (sc != null) ? sb.NoMesa : 0,
                                                        Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
+                                                       CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
                                                        Estilo = (sb != null) ? SerialesUnion.First( x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
                                                        Oper = s.Field<string>("operno").TrimStart().TrimEnd(),
                                                        Escaneado = (sb != null) ? true : false

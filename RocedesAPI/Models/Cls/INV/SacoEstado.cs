@@ -13,5 +13,6 @@ namespace RocedesAPI.Models.Cls.INV
         public int Seccion = 0;
         public string Estado = string.Empty;
         public string Login = string.Empty;
+        public string CorteCompleto = string.Empty;
     }
 }

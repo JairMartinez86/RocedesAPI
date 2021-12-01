@@ -24,6 +24,7 @@ namespace RocedesAPI.Models
         public int Saco { get; set; }
         public int NoMesa { get; set; }
         public string Corte { get; set; }
+        public string CorteCompleto { get; set; }
         public int Seccion { get; set; }
         public int IdUsuarioCrea { get; set; }
         public System.DateTime FechaRegistro { get; set; }

@@ -23,6 +23,7 @@ namespace RocedesAPI.Models
         public int Capaje { get; set; }
         public int IdSaco { get; set; }
         public string Corte { get; set; }
+        public string CorteCompleto { get; set; }
         public string Estilo { get; set; }
         public string Oper { get; set; }
         public int IdUsuario { get; set; }

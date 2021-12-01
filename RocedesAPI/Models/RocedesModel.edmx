@@ -52,6 +52,7 @@
           <Property Name="Capaje" Type="int" Nullable="false" />
           <Property Name="IdSaco" Type="int" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CorteCompleto" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Estilo" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Oper" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
@@ -70,6 +71,7 @@
           <Property Name="Saco" Type="int" Nullable="false" />
           <Property Name="NoMesa" Type="int" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CorteCompleto" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Seccion" Type="int" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="int" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
@@ -220,6 +222,7 @@
           <Property Name="Capaje" Type="Int32" Nullable="false" />
           <Property Name="IdSaco" Type="Int32" Nullable="false" />
           <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Oper" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
@@ -239,6 +242,7 @@
           <Property Name="Saco" Type="Int32" Nullable="false" />
           <Property Name="NoMesa" Type="Int32" Nullable="false" />
           <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Seccion" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
@@ -326,6 +330,7 @@
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Oper" ColumnName="Oper" />
                 <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
                 <ScalarProperty Name="Corte" ColumnName="Corte" />
                 <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
                 <ScalarProperty Name="Capaje" ColumnName="Capaje" />
@@ -347,6 +352,7 @@
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
                 <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
                 <ScalarProperty Name="Corte" ColumnName="Corte" />
                 <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
                 <ScalarProperty Name="Saco" ColumnName="Saco" />
