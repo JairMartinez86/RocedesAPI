@@ -21,6 +21,7 @@ namespace RocedesAPI.Models
         public int Seccion { get; set; }
         public int Bulto { get; set; }
         public int Capaje { get; set; }
+        public int Yarda { get; set; }
         public int IdSaco { get; set; }
         public string Corte { get; set; }
         public string CorteCompleto { get; set; }

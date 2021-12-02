@@ -10,8 +10,9 @@
         <EntityTypeShape EntityType="AuditoriaModel.Style" Width="1.5" PointX="3.5" PointY="1.875" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Style" />
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3" PointY="7.125" />
-        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="0.75" PointY="8" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" />
+        <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

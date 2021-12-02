@@ -245,6 +245,9 @@
     <Compile Include="Models\Cls\INV\BundleBoxing_SacoCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoEstado.cs" />
     <Compile Include="Conex_Pervasive\Cls_ConexionPervasive.cs" />
+    <Compile Include="Models\Material.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\POrder.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>

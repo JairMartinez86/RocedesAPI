@@ -144,6 +144,7 @@ namespace RocedesAPI.Controllers
                                                        Bulto = s.Field<int>("bundleno"),
                                                        Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
                                                        Saco = (sb != null) ? sc.Saco : 0,
+                                                       Yarda = (sc != null) ? sb.Yarda : 0,
                                                        Mesa = (sc != null) ? sb.NoMesa : 0,
                                                        Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
                                                        CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),

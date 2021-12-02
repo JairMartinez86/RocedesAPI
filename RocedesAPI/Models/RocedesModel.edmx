@@ -50,6 +50,7 @@
           <Property Name="Seccion" Type="int" Nullable="false" />
           <Property Name="Bulto" Type="int" Nullable="false" />
           <Property Name="Capaje" Type="int" Nullable="false" />
+          <Property Name="Yarda" Type="int" Nullable="false" />
           <Property Name="IdSaco" Type="int" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CorteCompleto" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -77,6 +78,15 @@
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Abierto" Type="bit" Nullable="false" />
           <Property Name="IdUsuarioAbre" Type="int" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Material" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="IdPresentacionSerial" Type="int" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
@@ -120,6 +130,7 @@
           <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
           <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="Self.FK_BundleBoxing_BundleBoxing_Saco">
             <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
@@ -172,6 +183,7 @@
             <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
             <End Role="BundleBoxing" EntitySet="BundleBoxing" />
           </AssociationSet>
+          <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -220,6 +232,7 @@
           <Property Name="Seccion" Type="Int32" Nullable="false" />
           <Property Name="Bulto" Type="Int32" Nullable="false" />
           <Property Name="Capaje" Type="Int32" Nullable="false" />
+          <Property Name="Yarda" Type="Int32" Nullable="false" />
           <Property Name="IdSaco" Type="Int32" Nullable="false" />
           <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -263,6 +276,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Material1" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -333,6 +355,7 @@
                 <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
                 <ScalarProperty Name="Corte" ColumnName="Corte" />
                 <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+                <ScalarProperty Name="Yarda" ColumnName="Yarda" />
                 <ScalarProperty Name="Capaje" ColumnName="Capaje" />
                 <ScalarProperty Name="Bulto" ColumnName="Bulto" />
                 <ScalarProperty Name="Seccion" ColumnName="Seccion" />
@@ -357,6 +380,16 @@
                 <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
                 <ScalarProperty Name="Saco" ColumnName="Saco" />
                 <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="AuditoriaModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
+                <ScalarProperty Name="Material1" ColumnName="Material" />
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
