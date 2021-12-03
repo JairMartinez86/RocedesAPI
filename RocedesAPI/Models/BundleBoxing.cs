@@ -34,6 +34,7 @@ namespace RocedesAPI.Models
         public bool Activo { get; set; }
         public Nullable<int> IdUsuarioInactiva { get; set; }
         public Nullable<System.DateTime> FechaInactivo { get; set; }
+        public System.Guid ID { get; set; }
     
         public virtual BundleBoxing_Saco BundleBoxing_Saco { get; set; }
     }

@@ -374,5 +374,80 @@ namespace RocedesAPI.Controllers.INV
 
             return json;
         }
+
+
+
+        [Route("api/BundleBoxing/GenerarSerial")]
+        [HttpPost]
+        public IHttpActionResult GenerarSerial(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(GuardarSerial(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string GuardarSerial(string d)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                SerialBoxingCustom Datos = JsonConvert.DeserializeObject<SerialBoxingCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+                        SerialComplemento Registro = new SerialComplemento
+                        {
+                            Serial = Datos.Serial,
+                            Pieza = Datos.Pieza.TrimStart().TrimEnd(),
+                            IdPresentacionSerial = Datos.IdPresentacionSerial,
+                            IdMaterial = Datos.IdMaterial,
+                            Cantidad = Datos.Cantidad,
+                            Capaje = Datos.Capaje,
+                            IdUsuarioCrea = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
+                            FechaRegistro = DateTime.Now,
+                            Activo = true
+                        };
+
+                        _Conexion.SaveChanges();
+
+                        Registro.Serial = string.Concat(Registro.Serial, Registro.IdSerialComplemento);
+                        Registro.Serial = Registro.Serial.PadRight(11, '0');
+
+
+                        _Conexion.SerialComplemento.Add(Registro);
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+
+                        json = Cls.Cls_Mensaje.Tojson(json, 1, string.Empty, string.Empty, 0);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+            return json;
+        }
+
+
+
+
     }
 }

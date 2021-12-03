@@ -12,20 +12,21 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Material
+    public partial class PresentacionSerial
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Material()
+        public PresentacionSerial()
         {
+            this.Material = new HashSet<Material>();
             this.SerialComplemento = new HashSet<SerialComplemento>();
         }
     
-        public int IdMaterial { get; set; }
-        public string Material1 { get; set; }
         public int IdPresentacionSerial { get; set; }
+        public string Presentacion { get; set; }
         public bool Activo { get; set; }
     
-        public virtual PresentacionSerial PresentacionSerial { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Material> Material { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SerialComplemento> SerialComplemento { get; set; }
     }

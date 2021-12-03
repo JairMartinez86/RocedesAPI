@@ -63,6 +63,7 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="BundleBoxing_Saco">
           <Key>
@@ -89,6 +90,32 @@
           <Property Name="IdPresentacionSerial" Type="int" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="PresentacionSerial">
+          <Key>
+            <PropertyRef Name="IdPresentacionSerial" />
+          </Key>
+          <Property Name="IdPresentacionSerial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Presentacion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SerialComplemento">
+          <Key>
+            <PropertyRef Name="IdSerialComplemento" />
+          </Key>
+          <Property Name="IdSerialComplemento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Serial" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Pieza" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IdPresentacionSerial" Type="int" Nullable="false" />
+          <Property Name="IdMaterial" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Capaje" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCrea" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CorteCompleto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estilo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -113,6 +140,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Material_PresentacionSerial">
+          <End Role="PresentacionSerial" Type="Self.PresentacionSerial" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PresentacionSerial">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_POrder_Style">
           <End Role="Style" Type="Self.Style" Multiplicity="0..1" />
           <End Role="POrder" Type="Self.POrder" Multiplicity="*" />
@@ -125,20 +164,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SerialComplemento_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="SerialComplemento" Type="Self.SerialComplemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="SerialComplemento">
+              <PropertyRef Name="IdMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SerialComplemento_PresentacionSerial">
+          <End Role="PresentacionSerial" Type="Self.PresentacionSerial" Multiplicity="1" />
+          <End Role="SerialComplemento" Type="Self.SerialComplemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PresentacionSerial">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Principal>
+            <Dependent Role="SerialComplemento">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AuditoriaModelStoreContainer">
           <EntitySet Name="POrder" EntityType="Self.POrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
           <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="Self.FK_BundleBoxing_BundleBoxing_Saco">
             <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
             <End Role="BundleBoxing" EntitySet="BundleBoxing" />
           </AssociationSet>
+          <AssociationSet Name="FK_Material_PresentacionSerial" Association="Self.FK_Material_PresentacionSerial">
+            <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
           <AssociationSet Name="FK_POrder_Style" Association="Self.FK_POrder_Style">
             <End Role="Style" EntitySet="Style" />
             <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SerialComplemento_Material" Association="Self.FK_SerialComplemento_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="SerialComplemento" EntitySet="SerialComplemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SerialComplemento_PresentacionSerial" Association="Self.FK_SerialComplemento_PresentacionSerial">
+            <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
+            <End Role="SerialComplemento" EntitySet="SerialComplemento" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -179,12 +256,26 @@
           </AssociationSet>
           <EntitySet Name="BundleBoxing" EntityType="AuditoriaModel.BundleBoxing" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="AuditoriaModel.BundleBoxing_Saco" />
+          <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
+          <EntitySet Name="PresentacionSerial" EntityType="AuditoriaModel.PresentacionSerial" />
+          <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
           <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco">
             <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
             <End Role="BundleBoxing" EntitySet="BundleBoxing" />
           </AssociationSet>
-          <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
-        </EntityContainer>
+          <AssociationSet Name="FK_Material_PresentacionSerial" Association="AuditoriaModel.FK_Material_PresentacionSerial">
+            <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SerialComplemento_Material" Association="AuditoriaModel.FK_SerialComplemento_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="SerialComplemento" EntitySet="SerialComplemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SerialComplemento_PresentacionSerial" Association="AuditoriaModel.FK_SerialComplemento_PresentacionSerial">
+            <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
+            <End Role="SerialComplemento" EntitySet="SerialComplemento" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -245,6 +336,7 @@
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="BundleBoxing_Saco" Relationship="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing" ToRole="BundleBoxing_Saco" />
         </EntityType>
         <EntityType Name="BundleBoxing_Saco">
@@ -264,6 +356,47 @@
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BundleBoxing" Relationship="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing_Saco" ToRole="BundleBoxing" />
         </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Material1" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PresentacionSerial" Relationship="AuditoriaModel.FK_Material_PresentacionSerial" FromRole="Material" ToRole="PresentacionSerial" />
+          <NavigationProperty Name="SerialComplemento" Relationship="AuditoriaModel.FK_SerialComplemento_Material" FromRole="Material" ToRole="SerialComplemento" />
+        </EntityType>
+        <EntityType Name="PresentacionSerial">
+          <Key>
+            <PropertyRef Name="IdPresentacionSerial" />
+          </Key>
+          <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Presentacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="AuditoriaModel.FK_Material_PresentacionSerial" FromRole="PresentacionSerial" ToRole="Material" />
+          <NavigationProperty Name="SerialComplemento" Relationship="AuditoriaModel.FK_SerialComplemento_PresentacionSerial" FromRole="PresentacionSerial" ToRole="SerialComplemento" />
+        </EntityType>
+        <EntityType Name="SerialComplemento">
+          <Key>
+            <PropertyRef Name="IdSerialComplemento" />
+          </Key>
+          <Property Name="IdSerialComplemento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Pieza" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" />
+          <Property Name="IdMaterial" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Capaje" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="AuditoriaModel.FK_SerialComplemento_Material" FromRole="SerialComplemento" ToRole="Material" />
+          <NavigationProperty Name="PresentacionSerial" Relationship="AuditoriaModel.FK_SerialComplemento_PresentacionSerial" FromRole="SerialComplemento" ToRole="PresentacionSerial" />
+        </EntityType>
         <Association Name="FK_BundleBoxing_BundleBoxing_Saco">
           <End Type="AuditoriaModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="1" />
           <End Type="AuditoriaModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
@@ -276,16 +409,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Material">
-          <Key>
-            <PropertyRef Name="IdMaterial" />
-          </Key>
-          <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Material1" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-        </EntityType>
-      </Schema>
+        <Association Name="FK_Material_PresentacionSerial">
+          <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
+          <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PresentacionSerial">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SerialComplemento_Material">
+          <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="1" />
+          <End Type="AuditoriaModel.SerialComplemento" Role="SerialComplemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="SerialComplemento">
+              <PropertyRef Name="IdMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SerialComplemento_PresentacionSerial">
+          <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
+          <End Type="AuditoriaModel.SerialComplemento" Role="SerialComplemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PresentacionSerial">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Principal>
+            <Dependent Role="SerialComplemento">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -343,6 +503,7 @@
           <EntitySetMapping Name="BundleBoxing">
             <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing">
               <MappingFragment StoreEntitySet="BundleBoxing">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FechaInactivo" ColumnName="FechaInactivo" />
                 <ScalarProperty Name="IdUsuarioInactiva" ColumnName="IdUsuarioInactiva" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
@@ -390,6 +551,34 @@
                 <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
                 <ScalarProperty Name="Material1" ColumnName="Material" />
                 <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PresentacionSerial">
+            <EntityTypeMapping TypeName="AuditoriaModel.PresentacionSerial">
+              <MappingFragment StoreEntitySet="PresentacionSerial">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
+                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SerialComplemento">
+            <EntityTypeMapping TypeName="AuditoriaModel.SerialComplemento">
+              <MappingFragment StoreEntitySet="SerialComplemento">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
+                <ScalarProperty Name="Capaje" ColumnName="Capaje" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
+                <ScalarProperty Name="Pieza" ColumnName="Pieza" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="IdSerialComplemento" ColumnName="IdSerialComplemento" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
