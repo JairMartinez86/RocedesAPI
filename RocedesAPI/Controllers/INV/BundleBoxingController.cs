@@ -408,7 +408,7 @@ namespace RocedesAPI.Controllers.INV
                     {
                         SerialComplemento Registro = new SerialComplemento
                         {
-                            Serial = Datos.Serial,
+                            Serial = string.Empty,
                             Pieza = Datos.Pieza.TrimStart().TrimEnd(),
                             IdPresentacionSerial = Datos.IdPresentacionSerial,
                             IdMaterial = Datos.IdMaterial,
@@ -416,22 +416,27 @@ namespace RocedesAPI.Controllers.INV
                             Capaje = Datos.Capaje,
                             IdUsuarioCrea = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
                             FechaRegistro = DateTime.Now,
+                            Corte = Datos.Corte,
+                            CorteCompleto = Datos.CorteCompleto,
+                            Estilo = Datos.Estilo,
                             Activo = true
                         };
-
-                        _Conexion.SaveChanges();
-
-                        Registro.Serial = string.Concat(Registro.Serial, Registro.IdSerialComplemento);
-                        Registro.Serial = Registro.Serial.PadRight(11, '0');
-
 
                         _Conexion.SerialComplemento.Add(Registro);
 
 
                         _Conexion.SaveChanges();
+
+                        Registro.Serial = Datos.Serial.Replace("0", string.Empty);
+                        Registro.Serial = string.Concat(Registro.Serial, Registro.IdSerialComplemento);
+                        Registro.Serial = Registro.Serial.PadRight(11, '0');
+                        Datos.Serial = Registro.Serial;
+                        _Conexion.SaveChanges();
+
+
                         scope.Complete();
 
-                        json = Cls.Cls_Mensaje.Tojson(json, 1, string.Empty, string.Empty, 0);
+                        json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, $"Serial # <b>{Datos.Serial}</b> generado.", 0);
 
                     }
                 }

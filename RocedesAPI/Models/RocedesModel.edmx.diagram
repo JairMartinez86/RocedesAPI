@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="10" PointY="7.125" />
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="7.75" PointY="8" />
         <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="3" PointY="7.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="0.75" PointY="7.875" />
         <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="5.25" PointY="7" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" />
         <AssociationConnector Association="AuditoriaModel.FK_Material_PresentacionSerial" />

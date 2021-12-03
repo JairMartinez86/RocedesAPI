@@ -96,6 +96,7 @@
           </Key>
           <Property Name="IdPresentacionSerial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Presentacion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EsUnidad" Type="bit" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SerialComplemento">
@@ -373,6 +374,7 @@
           </Key>
           <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Presentacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EsUnidad" Type="Boolean" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Material" Relationship="AuditoriaModel.FK_Material_PresentacionSerial" FromRole="PresentacionSerial" ToRole="Material" />
           <NavigationProperty Name="SerialComplemento" Relationship="AuditoriaModel.FK_SerialComplemento_PresentacionSerial" FromRole="PresentacionSerial" ToRole="SerialComplemento" />
@@ -558,6 +560,7 @@
             <EntityTypeMapping TypeName="AuditoriaModel.PresentacionSerial">
               <MappingFragment StoreEntitySet="PresentacionSerial">
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="EsUnidad" ColumnName="EsUnidad" />
                 <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
                 <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
               </MappingFragment>

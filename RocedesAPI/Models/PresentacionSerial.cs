@@ -23,6 +23,7 @@ namespace RocedesAPI.Models
     
         public int IdPresentacionSerial { get; set; }
         public string Presentacion { get; set; }
+        public bool EsUnidad { get; set; }
         public bool Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
