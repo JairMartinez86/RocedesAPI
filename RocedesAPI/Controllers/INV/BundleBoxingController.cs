@@ -11,10 +11,12 @@ using System.Net;
 using System.Net.Http;
 using System.Transactions;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using IsolationLevel = System.Transactions.IsolationLevel;
 
 namespace RocedesAPI.Controllers.INV
 {
+ 
     public class BundleBoxingController : ApiController
     {
         [Route("api/BundleBoxing/GetSerialesEscaneado")]
@@ -452,7 +454,17 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
+        [Route("api/BundleBoxing/Obtener")]
+        [HttpGet]
+        public string Obtener()
+        {
+
+            return "{'Corte':'MP350028 - 1','CorteCompleto':'MP350028','Estilo':'X1 VTXRDP','Pieza':'Prueba','IdPresentacionSerial':1,'IdMaterial':1,'Capaje':25,'Cantidad':1,'Serial':'35281700000','Login':'JMartinez'}";
+        }
+
+
 
 
     }
+      
 }

@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Style>
+          <FontSize>10.00001pt</FontSize>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+        <ReportItems>
+          <Rectangle Name="Rectangle19">
+            <Left>1.5pt</Left>
+            <Top>6pt</Top>
+            <Height>102pt</Height>
+            <Width>186.75pt</Width>
+            <Style>
+              <FontSize>10.00001pt</FontSize>
+              <Border>
+                <Width>0.37500pt</Width>
+                <Color>#cccbcb</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+            <ReportItems>
+              <CustomReportItem Name="CustomItem15">
+                <Left>6pt</Left>
+                <Top>1.5pt</Top>
+                <Height>60pt</Height>
+                <Width>151.5pt</Width>
+                <CustomProperties>
+                  <CustomProperty>
+                    <Name>BarcodeValue</Name>
+                    <Value>35281600000</Value>
+                  </CustomProperty>
+                  <CustomProperty>
+                    <Name>BarcodeType</Name>
+                    <Value>UpcBarcode</Value>
+                  </CustomProperty>
+                  <CustomProperty>
+                    <Name>DisplayBarcodeText</Name>
+                    <Value>true</Value>
+                  </CustomProperty>
+                </CustomProperties>
+                <Style>
+                  <BackgroundColor>#ffffff</BackgroundColor>
+                  <FontSize>10.00001pt</FontSize>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Type>barcode</Type>
+              </CustomReportItem>
+              <Textbox Name="Cantidad1">
+                <Left>162.75pt</Left>
+                <Top>3pt</Top>
+                <Height>18.75pt</Height>
+                <Width>22.5pt</Width>
+                <Style>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!Cantidad.Value, "DataSet1")</Value>
+                        <Style>
+                          <FontSize>7.5pt</FontSize>
+                          <Color>Black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+              <Textbox Name="Capaje1">
+                <Left>159.75pt</Left>
+                <Top>44.25pt</Top>
+                <Height>18.75pt</Height>
+                <Width>22.5pt</Width>
+                <Style>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!Capaje.Value, "DataSet1")</Value>
+                        <Style>
+                          <FontSize>7.5pt</FontSize>
+                          <Color>black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+              <Textbox Name="Pieza1">
+                <Left>4.5pt</Left>
+                <Top>69pt</Top>
+                <Height>32.25pt</Height>
+                <Width>169.5pt</Width>
+                <Style>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!Pieza.Value, "DataSet1")</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>Black</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+              </Textbox>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+          </Rectangle>
+        </ReportItems>
+        <Height>122.25pt</Height>
+      </Body>
+      <Width>198.75pt</Width>
+      <Page>
+        <PageHeight>792pt</PageHeight>
+        <PageWidth>745.5pt</PageWidth>
+        <LeftMargin>37.5pt</LeftMargin>
+        <RightMargin>37.5pt</RightMargin>
+        <TopMargin>37.5pt</TopMargin>
+        <BottomMargin>37.5pt</BottomMargin>
+        <Style>
+          <FontSize>10.00001pt</FontSize>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SerialComplemento">
+      <ConnectionProperties>
+        <DataProvider>JSON</DataProvider>
+        <ConnectString>{"Data":"{\"Corte\":\"MP350028-1\",\"CorteCompleto\":\"MP350028\",\"Estilo\":\"X1 VTXRDP\",\"Pieza\":\"Prueba\",\"IdPresentacionSerial\":1,\"IdMaterial\":1,\"Capaje\":5,\"Cantidad\":1,\"Serial\":\"35281600000\",\"Login\":\"JMartinez\"}","DataMode":"inline","URL":""}</ConnectString>
+      </ConnectionProperties>
+      <rd:ImpersonateUser>false</rd:ImpersonateUser>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Fields>
+        <Field Name="Corte">
+          <DataField>Corte</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Estilo">
+          <DataField>Estilo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Pieza">
+          <DataField>Pieza</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Capaje">
+          <DataField>Capaje</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Cantidad">
+          <DataField>Cantidad</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Serial">
+          <DataField>Serial</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>SerialComplemento</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>{"Name":"Result","Columns":[{"Name":"CorteCompleto","IsHidden":true,"AliasName":""},{"Name":"IdPresentacionSerial","IsHidden":true,"AliasName":""},{"Name":"IdMaterial","IsHidden":true,"AliasName":""},{"Name":"Login","IsHidden":true,"AliasName":""}]}</CommandText>
+        <QueryDesignerState xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+          <Tables>
+            <Table Name="Result" Schema="">
+              <Columns>
+                <Column Name="Corte" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CorteCompleto" IsDuplicate="False" IsSelected="False" />
+                <Column Name="Estilo" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Pieza" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IdPresentacionSerial" IsDuplicate="False" IsSelected="False" />
+                <Column Name="IdMaterial" IsDuplicate="False" IsSelected="False" />
+                <Column Name="Capaje" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Cantidad" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Serial" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Login" IsDuplicate="False" IsSelected="False" />
+              </Columns>
+              <SchemaLevels>
+                <SchemaInfo Name="Result" SchemaType="Table" />
+              </SchemaLevels>
+            </Table>
+          </Tables>
+        </QueryDesignerState>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:PageUnit>Px</rd:PageUnit>
+</Report>
