@@ -9,6 +9,7 @@ namespace RocedesAPI.Models.Cls.INV
     {
         public int IdPresentacionSerial = 0;
         public string Presentacion = string.Empty;
+        public bool EsUnidad = false;
         public bool Activo = false;
     }
 }

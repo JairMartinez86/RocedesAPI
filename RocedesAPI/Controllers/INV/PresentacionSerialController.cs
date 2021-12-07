@@ -34,6 +34,7 @@ namespace RocedesAPI.Controllers.INV
                                                                 {
                                                                     IdPresentacionSerial = q.IdPresentacionSerial,
                                                                     Presentacion = q.Presentacion,
+                                                                    EsUnidad = q.EsUnidad,
                                                                     Activo = q.Activo
                                                                 }).ToList();
 
