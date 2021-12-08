@@ -7,19 +7,18 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Printing;
 using System.Reflection;
 using System.Web.Http;
 using BoldReports.Web;
 using BoldReports.Web.ReportViewer;
 using Newtonsoft.Json;
 using RocedesAPI.Models.Cls.INV;
-using System.Windows.Documents;
 using BoldReports.Writer;
 using ProcessingMode = BoldReports.Web.ReportViewer.ProcessingMode;
-using PrintDialog = System.Windows.Controls.PrintDialog;
 
-
+using Syncfusion.Pdf.Parsing;
+using System.Drawing.Printing;
+using System.Windows.Forms;
 
 public class SerialComponente
 {
@@ -79,6 +78,8 @@ namespace RocedesAPI.Controllers
     {
         SerialBoxingCustom Datos = null;
 
+        MemoryStream _stream = null;
+
        [Route("api/ReportViewer/PostReportAction")]
         // Post action for processing the RDL/RDLC report
         public object PostReportAction(Dictionary<string, object> jsonResult)
@@ -96,9 +97,12 @@ namespace RocedesAPI.Controllers
                 str_Datos = str_Datos.Replace("]", string.Empty);
                 str_Datos = str_Datos.TrimStart().TrimEnd();
 
+                str_Datos = "{'Corte':'MP350028 - 1','CorteCompleto':'MP350028','Estilo':'X1 VTXRDP','Pieza':'Prueba','IdPresentacionSerial':1,'IdMaterial':1,'Capaje':25,'Cantidad':1,'Serial':'35281700000','Login':'JMartinez'}";
                 Datos = JsonConvert.DeserializeObject<SerialBoxingCustom>(str_Datos);
 
             }
+
+
 
 
             return ReportHelper.ProcessReport(jsonResult, this);
@@ -126,40 +130,18 @@ namespace RocedesAPI.Controllers
 
             reportOption.ReportModel.ProcessingMode = ProcessingMode.Local;
             reportOption.ReportModel.ReportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
-            reportOption.ReportModel.DataSources.Add(new BoldReports.Web.ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
+            reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
 
 
-            string reportPath = @"~/Resources/SerialComponente.rdlc";
-            ReportWriter reportWriter = new ReportWriter(reportPath);
-            reportWriter.ReportProcessingMode = (BoldReports.Writer.ProcessingMode)ProcessingMode.Local;
+            string reportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
+            ReportWriter reportWriter = new ReportWriter();
+            reportWriter.ReportPath = reportPath;
+            reportWriter.ReportProcessingMode = BoldReports.Writer.ProcessingMode.Local;
             reportWriter.DataSources.Clear();
             reportWriter.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
-            MemoryStream stream = new MemoryStream();
-            reportWriter.Save(stream, WriterFormat.PDF);
-
-            PdfDocumentView pdfdoc = new PdfDocumentView();
-            pdfdoc.Load(stream);
-            var doc = pdfdoc.PrintDocument as IDocumentPaginatorSource;
-            PrintDialog printDialog = new PrintDialog();
-            List<string> printersList = new List<string>();
-            List<string> serversList = new List<string>();
-            var server = new PrintServer();
-            var queues = server.GetPrintQueues(new[] { EnumeratedPrintQueueTypes.Local });
-            foreach (var queue in queues)
-            {
-                if (!serversList.Contains(queue.HostingPrintServer.Name))
-                {
-                    serversList.Add(queue.HostingPrintServer.Name);
-                }
-                printersList.Add(queue.FullName);
-            }
-            server = new PrintServer(serversList[0].ToString());
-            PrintQueue printer1 = server.GetPrintQueue(printersList[2].ToString());
-            printDialog.PrintQueue = printer1;
-            printDialog.PrintDocument(doc.DocumentPaginator, "PDF PRINTER");
-
-
-
+            _stream = new MemoryStream();
+            reportWriter.Save(_stream, WriterFormat.PDF);
+          
         }
 
 
@@ -169,7 +151,64 @@ namespace RocedesAPI.Controllers
         [Route("api/ReportViewer/OnReportLoaded")]
         public void OnReportLoaded(ReportViewerOptions reportOption)
         {
+ 
+            string reportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.pdf");
 
+
+            PdfLoadedDocument loadedDocument = new PdfLoadedDocument(_stream);
+
+            //load the document in pdf document view
+            Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView view = new Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView();
+            view.Load(loadedDocument);
+
+            //print the document using print dialog
+            System.Windows.Forms.PrintDialog dialog = new System.Windows.Forms.PrintDialog();
+            dialog.Document = view.PrintDocument;
+            
+
+            PaperSize paperSize = new PaperSize("Custom", 70, 105);
+            paperSize.RawKind = (int)PaperKind.Custom;
+            dialog.Document.DefaultPageSettings.PaperSize = paperSize;
+
+            dialog.Document.DefaultPageSettings.Landscape = false;
+            dialog.Document.DefaultPageSettings.Margins.Top = 0;
+            dialog.Document.DefaultPageSettings.Margins.Bottom = 0;
+            dialog.Document.DefaultPageSettings.Margins.Left = 0;
+            dialog.Document.DefaultPageSettings.Margins.Right = 0;
+
+
+
+            /* foreach (System.Drawing.Printing.PaperSize ps in dialog.PrinterSettings.PaperSizes)
+             {
+                 if (ps.Kind == System.Drawing.Printing.PaperKind.A4)
+                 {   //<-- replace with papersize of your choice
+                     dialog.Document.DefaultPageSettings.PaperSize = paperSize;
+                     dialog.Document.DefaultPageSettings.Landscape = false;
+                     dialog.Document.DefaultPageSettings.Margins.Top = 0;
+                     dialog.Document.DefaultPageSettings.Margins.Bottom = 0;
+                     dialog.Document.DefaultPageSettings.Margins.Left = 0;
+                     dialog.Document.DefaultPageSettings.Margins.Right = 0;
+                     break;
+                 }
+             }*/
+            dialog.Document.PrintPage += new PrintPageEventHandler(Document_PrintPage);
+            dialog.Document.Print();
+            
+        }
+
+        private void Document_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            int X = (int)e.PageSettings.PrintableArea.X;
+            int Y = (int)e.PageSettings.PrintableArea.Y;
+            int width = (int)e.PageSettings.PrintableArea.Width - X;
+            int height = (int)e.PageSettings.PrintableArea.Height - Y;
+
+            int centerX = 0;
+            int centerY = 0;
+
+            e.Graphics.DrawRectangle(Pens.Gray, new Rectangle(X, Y, width, height));
+            e.Graphics.DrawLine(Pens.Black, centerX - 100, centerY, centerX + 100, centerY);
+            e.Graphics.DrawLine(Pens.Black, centerX, centerY - 100, centerX, centerY + 100);
         }
     }
 }
