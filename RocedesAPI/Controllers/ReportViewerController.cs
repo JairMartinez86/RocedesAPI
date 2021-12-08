@@ -131,6 +131,21 @@ namespace RocedesAPI.Controllers
             reportOption.ReportModel.ProcessingMode = ProcessingMode.Local;
             reportOption.ReportModel.ReportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
             reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
+            
+
+            System.Drawing.Printing.PageSettings pg = new System.Drawing.Printing.PageSettings();
+            pg.Margins.Top = 0;
+            pg.Landscape = true;
+            pg.Margins.Bottom = 0;
+            pg.Margins.Left = 50;
+            pg.Margins.Right = 0;
+
+            System.Drawing.Printing.PaperSize size = new PaperSize();
+            size.RawKind = (int)PaperKind.A4;
+            pg.PaperSize = size;
+            pg.Landscape = true;
+
+       
 
 
             string reportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
@@ -206,9 +221,23 @@ namespace RocedesAPI.Controllers
             int centerX = 0;
             int centerY = 0;
 
+            width = 70;
+            height = 105;
+
+            PaperSize paperSize = new PaperSize("Custom", 70, 105);
+            paperSize.RawKind = (int)PaperKind.Custom;
+            e.PageSettings.PaperSize =  paperSize;
+            e.PageSettings.Landscape = false;
+            e.PageSettings.Margins.Top = 0;
+            e.PageSettings.Margins.Bottom = 0;
+            e.PageSettings.Margins.Left = 0;
+            e.PageSettings.Margins.Right = 0;
+
+
+
             e.Graphics.DrawRectangle(Pens.Gray, new Rectangle(X, Y, width, height));
-            e.Graphics.DrawLine(Pens.Black, centerX - 100, centerY, centerX + 100, centerY);
-            e.Graphics.DrawLine(Pens.Black, centerX, centerY - 100, centerX, centerY + 100);
+            e.Graphics.DrawLine(Pens.Black, 0, 0, 0, 0);
+            e.Graphics.DrawLine(Pens.Black, 0, 0, 0, 0);
         }
     }
 }
