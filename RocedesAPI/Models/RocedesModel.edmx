@@ -45,7 +45,7 @@
           </Key>
           <Property Name="IdBundleBoxing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NoMesa" Type="int" Nullable="false" />
-          <Property Name="Serial" Type="int" Nullable="false" />
+          <Property Name="Serial" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Seccion" Type="int" Nullable="false" />
           <Property Name="Bulto" Type="int" Nullable="false" />
@@ -104,7 +104,7 @@
             <PropertyRef Name="IdSerialComplemento" />
           </Key>
           <Property Name="IdSerialComplemento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Serial" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Serial" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="Pieza" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="IdPresentacionSerial" Type="int" Nullable="false" />
           <Property Name="IdMaterial" Type="int" Nullable="false" />
@@ -319,7 +319,7 @@
           </Key>
           <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NoMesa" Type="Int32" Nullable="false" />
-          <Property Name="Serial" Type="Int32" Nullable="false" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Seccion" Type="Int32" Nullable="false" />
           <Property Name="Bulto" Type="Int32" Nullable="false" />
@@ -384,7 +384,7 @@
             <PropertyRef Name="IdSerialComplemento" />
           </Key>
           <Property Name="IdSerialComplemento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Serial" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="Pieza" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IdPresentacionSerial" Type="Int32" Nullable="false" />
           <Property Name="IdMaterial" Type="Int32" Nullable="false" />

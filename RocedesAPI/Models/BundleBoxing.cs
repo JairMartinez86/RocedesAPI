@@ -16,7 +16,7 @@ namespace RocedesAPI.Models
     {
         public int IdBundleBoxing { get; set; }
         public int NoMesa { get; set; }
-        public int Serial { get; set; }
+        public string Serial { get; set; }
         public string Nombre { get; set; }
         public int Seccion { get; set; }
         public int Bulto { get; set; }

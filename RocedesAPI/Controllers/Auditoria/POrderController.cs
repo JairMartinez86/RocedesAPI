@@ -131,15 +131,15 @@ namespace RocedesAPI.Controllers
                             List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte == corte && b.Activo).ToList();
 
 
-                            var ltsBoxingCustom = (from s in tbl.AsEnumerable()
+                            List<BundleBoxingCustom> ltsBoxingCustom = (from s in tbl.AsEnumerable()
                                                    join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
-                                                   join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), Serial = s.Field<int>("serialno")} equals new { _Corte = b.Corte, Serial = b.Serial} into SerialesUnion
+                                                   join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), Serial = s.Field<int>("serialno").ToString() } equals new { _Corte = b.Corte, Serial = b.Serial } into SerialesUnion
                                                    from sb in SerialesUnion.DefaultIfEmpty()
                                                    join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
                                                    from sc in SacoUnion.DefaultIfEmpty()
-                                                   select new
+                                                   select new BundleBoxingCustom()
                                                    {
-                                                       Serial = s.Field<int>("serialno"),
+                                                       Serial = s.Field<int>("serialno").ToString(),
                                                        Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),
                                                        Bulto = s.Field<int>("bundleno"),
                                                        Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
@@ -148,10 +148,31 @@ namespace RocedesAPI.Controllers
                                                        Mesa = (sc != null) ? sb.NoMesa : 0,
                                                        Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
                                                        CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
-                                                       Estilo = (sb != null) ? SerialesUnion.First( x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
+                                                       Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
                                                        Oper = s.Field<string>("operno").TrimStart().TrimEnd(),
                                                        Escaneado = (sb != null) ? true : false
-                                                   }).ToList();
+                                                   }).Union(from com in _Conexion.SerialComplemento
+                                                            join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
+                                                            where !(lstBundleBoxing.Any(item2 => item2.Serial == com.Serial))
+                                                            select new BundleBoxingCustom()
+                                                            {
+                                                                Serial = com.Serial,
+                                                                Nombre = com.Pieza,
+                                                                Bulto = com.Cantidad,
+                                                                Capaje = (presen.EsUnidad) ? com.Capaje : 0,
+                                                                Saco = 0,
+                                                                Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
+                                                                Mesa = 0,
+                                                                Corte = com.Corte,
+                                                                CorteCompleto = com.CorteCompleto,
+                                                                Estilo = com.Estilo,
+                                                                Oper = string.Empty,
+                                                                Escaneado = false
+                                                            }
+                                      ).ToList();
+
+
+
 
            
 

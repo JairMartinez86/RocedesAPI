@@ -6,6 +6,7 @@ using RocedesAPI.Models.Cls.INV;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -71,6 +72,8 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<BundleBoxingCustom> lst = (from b in _Cnx.BundleBoxing
+                                                    join com in _Cnx.SerialComplemento on b.Serial equals com.Serial into UnionCom
+                                                    from u_com in UnionCom.DefaultIfEmpty()
                                                     join p in _Cnx.POrder on b.Corte equals p.POrder1
                                                     where p.POrderClient == corte && b.Activo
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
@@ -78,7 +81,7 @@ namespace RocedesAPI.Controllers.INV
                                                     orderby b.Seccion
                                                     select new BundleBoxingCustom()
                                                     {
-                                                        Grupo = string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo + "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤMesa # ㅤ", b.NoMesa),
+                                                        Grupo = (u_com != null) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo + "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤMesa # ㅤ", b.NoMesa),
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
@@ -432,6 +435,10 @@ namespace RocedesAPI.Controllers.INV
                         Registro.Serial = Datos.Serial.Replace("0", string.Empty);
                         Registro.Serial = string.Concat(Registro.Serial, Registro.IdSerialComplemento);
                         Registro.Serial = Registro.Serial.PadRight(11, '0');
+
+                        BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+                        Image img = b.Encode(BarcodeLib.TYPE.UPCA, Registro.Serial, Color.Black, Color.White, 290, 120);
+                        Registro.Serial = b.RawData.ToString();
                         Datos.Serial = Registro.Serial;
                         _Conexion.SaveChanges();
 
@@ -454,15 +461,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/BundleBoxing/Obtener")]
-        [HttpGet]
-        public string Obtener()
-        {
-
-            return "{'Corte':'MP350028 - 1','CorteCompleto':'MP350028','Estilo':'X1 VTXRDP','Pieza':'Prueba','IdPresentacionSerial':1,'IdMaterial':1,'Capaje':25,'Cantidad':1,'Serial':'35281700000','Login':'JMartinez'}";
-        }
-
-
+  
 
 
     }

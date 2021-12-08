@@ -8,7 +8,7 @@ namespace RocedesAPI.Models.Cls.INV
     public class BundleBoxingCustom
     {
         public string Grupo = string.Empty;
-        public int Serial = 0;
+        public string Serial = string.Empty;
         public string Nombre = string.Empty;
         public int Seccion = 0;
         public int Bulto = 0;

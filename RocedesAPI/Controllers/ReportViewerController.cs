@@ -17,8 +17,8 @@ using BoldReports.Writer;
 using ProcessingMode = BoldReports.Web.ReportViewer.ProcessingMode;
 
 using Syncfusion.Pdf.Parsing;
+using BarcodeLib;
 using System.Drawing.Printing;
-using System.Windows.Forms;
 
 public class SerialComponente
 {
@@ -39,11 +39,9 @@ public class SerialComponente
 
 
         BarcodeLib.Barcode b = new BarcodeLib.Barcode();
-        b.IncludeLabel = false;
-        b.Alignment = BarcodeLib.AlignmentPositions.CENTER;
-        b.ImageFormat = ImageFormat.Png;
-        System.Drawing.Image img = b.Encode(BarcodeLib.TYPE.UPCA, "35281700000", Color.Black, Color.Transparent, 290, 120);
-       
+        b.BarWidth = 4;
+        Image img = b.Encode(BarcodeLib.TYPE.UPCA, Datos.Serial, Color.Black, Color.White, 300, 120);
+
 
 
         MemoryStream _MS = new MemoryStream();
@@ -97,7 +95,7 @@ namespace RocedesAPI.Controllers
                 str_Datos = str_Datos.Replace("]", string.Empty);
                 str_Datos = str_Datos.TrimStart().TrimEnd();
 
-                str_Datos = "{'Corte':'MP350028 - 1','CorteCompleto':'MP350028','Estilo':'X1 VTXRDP','Pieza':'Prueba','IdPresentacionSerial':1,'IdMaterial':1,'Capaje':25,'Cantidad':1,'Serial':'35281700000','Login':'JMartinez'}";
+                
                 Datos = JsonConvert.DeserializeObject<SerialBoxingCustom>(str_Datos);
 
             }
@@ -122,38 +120,26 @@ namespace RocedesAPI.Controllers
         [Route("api/ReportViewer/OnInitReportOptions")]
         public void OnInitReportOptions(ReportViewerOptions reportOption)
         {
-            /* string filePath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdl"); ;
+             string filePath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdl"); ;
              // Opens the report from application Resources folder using FileStream
-             FileStream reportStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            /* FileStream reportStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
              reportOption.ReportModel.Stream = reportStream;
-             reportOption.ReportModel.DataSources.Add(new BoldReports.Web.ReportDataSource { Name = "DataSet1", Value = ProductList.GetData() });*/
+             reportOption.ReportModel.DataSources.Add(new BoldReports.Web.ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });*/
 
             reportOption.ReportModel.ProcessingMode = ProcessingMode.Local;
             reportOption.ReportModel.ReportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
             reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
             
 
-            System.Drawing.Printing.PageSettings pg = new System.Drawing.Printing.PageSettings();
-            pg.Margins.Top = 0;
-            pg.Landscape = true;
-            pg.Margins.Bottom = 0;
-            pg.Margins.Left = 50;
-            pg.Margins.Right = 0;
-
-            System.Drawing.Printing.PaperSize size = new PaperSize();
-            size.RawKind = (int)PaperKind.A4;
-            pg.PaperSize = size;
-            pg.Landscape = true;
-
-       
-
+ 
+            
 
             string reportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
             ReportWriter reportWriter = new ReportWriter();
             reportWriter.ReportPath = reportPath;
             reportWriter.ReportProcessingMode = BoldReports.Writer.ProcessingMode.Local;
             reportWriter.DataSources.Clear();
-            reportWriter.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
+            reportWriter.DataSources.Add(reportOption.ReportModel.DataSources[0] );
             _stream = new MemoryStream();
             reportWriter.Save(_stream, WriterFormat.PDF);
           
@@ -167,10 +153,8 @@ namespace RocedesAPI.Controllers
         public void OnReportLoaded(ReportViewerOptions reportOption)
         {
  
-            string reportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.pdf");
-
-
-            PdfLoadedDocument loadedDocument = new PdfLoadedDocument(_stream);
+    
+           PdfLoadedDocument loadedDocument = new PdfLoadedDocument(_stream);
 
             //load the document in pdf document view
             Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView view = new Syncfusion.Windows.Forms.PdfViewer.PdfDocumentView();
@@ -179,65 +163,16 @@ namespace RocedesAPI.Controllers
             //print the document using print dialog
             System.Windows.Forms.PrintDialog dialog = new System.Windows.Forms.PrintDialog();
             dialog.Document = view.PrintDocument;
-            
-
-            PaperSize paperSize = new PaperSize("Custom", 70, 105);
-            paperSize.RawKind = (int)PaperKind.Custom;
-            dialog.Document.DefaultPageSettings.PaperSize = paperSize;
-
-            dialog.Document.DefaultPageSettings.Landscape = false;
-            dialog.Document.DefaultPageSettings.Margins.Top = 0;
-            dialog.Document.DefaultPageSettings.Margins.Bottom = 0;
-            dialog.Document.DefaultPageSettings.Margins.Left = 0;
-            dialog.Document.DefaultPageSettings.Margins.Right = 0;
 
 
+  
 
-            /* foreach (System.Drawing.Printing.PaperSize ps in dialog.PrinterSettings.PaperSizes)
-             {
-                 if (ps.Kind == System.Drawing.Printing.PaperKind.A4)
-                 {   //<-- replace with papersize of your choice
-                     dialog.Document.DefaultPageSettings.PaperSize = paperSize;
-                     dialog.Document.DefaultPageSettings.Landscape = false;
-                     dialog.Document.DefaultPageSettings.Margins.Top = 0;
-                     dialog.Document.DefaultPageSettings.Margins.Bottom = 0;
-                     dialog.Document.DefaultPageSettings.Margins.Left = 0;
-                     dialog.Document.DefaultPageSettings.Margins.Right = 0;
-                     break;
-                 }
-             }*/
-            dialog.Document.PrintPage += new PrintPageEventHandler(Document_PrintPage);
+
             dialog.Document.Print();
             
         }
 
-        private void Document_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            int X = (int)e.PageSettings.PrintableArea.X;
-            int Y = (int)e.PageSettings.PrintableArea.Y;
-            int width = (int)e.PageSettings.PrintableArea.Width - X;
-            int height = (int)e.PageSettings.PrintableArea.Height - Y;
+     
 
-            int centerX = 0;
-            int centerY = 0;
-
-            width = 70;
-            height = 105;
-
-            PaperSize paperSize = new PaperSize("Custom", 70, 105);
-            paperSize.RawKind = (int)PaperKind.Custom;
-            e.PageSettings.PaperSize =  paperSize;
-            e.PageSettings.Landscape = false;
-            e.PageSettings.Margins.Top = 0;
-            e.PageSettings.Margins.Bottom = 0;
-            e.PageSettings.Margins.Left = 0;
-            e.PageSettings.Margins.Right = 0;
-
-
-
-            e.Graphics.DrawRectangle(Pens.Gray, new Rectangle(X, Y, width, height));
-            e.Graphics.DrawLine(Pens.Black, 0, 0, 0, 0);
-            e.Graphics.DrawLine(Pens.Black, 0, 0, 0, 0);
-        }
     }
 }

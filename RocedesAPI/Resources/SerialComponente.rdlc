@@ -12,7 +12,7 @@
                 <Value>=Fields!Pieza.Value</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>7pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -22,9 +22,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>2.18426cm</Top>
-        <Height>0.56946cm</Height>
-        <Width>3.30563cm</Width>
+        <Top>1.96444cm</Top>
+        <Height>0.47313cm</Height>
+        <Width>3.89929cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -40,9 +40,8 @@
         <Value>=First(Fields!Imagen.Value, "DataSet1")</Value>
         <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.51398cm</Top>
-        <Height>1.235cm</Height>
-        <Width>3.30563cm</Width>
+        <Height>1.19972cm</Height>
+        <Width>3.89929cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -60,19 +59,19 @@
                 <Value>=Fields!Corte.Value &amp; " " &amp; Fields!Estilo.Value</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>7pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Right</TextAlign>
+              <TextAlign>Center</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.0787cm</Top>
-        <Height>0.4cm</Height>
-        <Width>3.30563cm</Width>
+        <Top>1.635cm</Top>
+        <Height>0.32944cm</Height>
+        <Width>3.89929cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -94,7 +93,7 @@
                 <Value>=Fields!Cantidad.Value</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>7pt</FontSize>
+                  <FontSize>6pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -104,10 +103,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.51398cm</Top>
-        <Left>3.30563cm</Left>
-        <Height>0.4cm</Height>
-        <Width>0.45255cm</Width>
+        <Top>2.43758cm</Top>
+        <Left>1.37205cm</Left>
+        <Height>0.29431cm</Height>
+        <Width>0.80248cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -129,7 +128,7 @@
                 <Value>=Fields!Capaje.Value</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>7pt</FontSize>
+                  <FontSize>6pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -139,10 +138,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.34898cm</Top>
-        <Left>3.34091cm</Left>
-        <Height>0.4cm</Height>
-        <Width>0.45255cm</Width>
+        <Top>2.43758cm</Top>
+        <Left>3.15655cm</Left>
+        <Height>0.29431cm</Height>
+        <Width>0.74274cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -174,9 +173,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.74898cm</Top>
+        <Top>1.235cm</Top>
         <Height>0.4cm</Height>
-        <Width>3.30563cm</Width>
+        <Width>3.89929cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -187,15 +186,49 @@
           <PaddingTop>1pt</PaddingTop>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox8">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>bulto/Rollo:</Value>
+                <Style>
+                  <FontFamily>Consolas</FontFamily>
+                  <FontSize>6pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>2.43758cm</Top>
+        <Height>0.29431cm</Height>
+        <Width>1.50235cm</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>1pt</PaddingLeft>
+          <PaddingRight>1pt</PaddingRight>
+          <PaddingTop>1pt</PaddingTop>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.97176cm</Height>
+    <Height>2.76cm</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>3.87797cm</Width>
+  <Width>4.00555cm</Width>
   <Page>
     <PageHeight>3.6cm</PageHeight>
     <PageWidth>4.2cm</PageWidth>
