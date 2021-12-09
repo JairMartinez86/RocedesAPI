@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86_64.v8-xfa.props" Condition="Exists('..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86_64.v8-xfa.props')" />
+  <Import Project="..\packages\PdfiumViewer.Native.x86.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86.v8-xfa.props" Condition="Exists('..\packages\PdfiumViewer.Native.x86.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86.v8-xfa.props')" />
   <Import Project="..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.2.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props" Condition="Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.2.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -349,6 +351,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfiumViewer, Version=2.13.0.0, Culture=neutral, PublicKeyToken=91e4789cfb0609e0, processorArchitecture=MSIL">
+      <HintPath>..\packages\PdfiumViewer.2.13.0.0\lib\net20\PdfiumViewer.dll</HintPath>
     </Reference>
     <Reference Include="Pervasive.Data.Common">
       <HintPath>..\..\..\..\Pervasive.Data.Common.dll</HintPath>
@@ -755,6 +760,11 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1832,7 +1842,13 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\SerialComponente.rdlc" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SerialComponente.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1872,11 +1888,15 @@
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Server.IIS.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IIS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Server.IIS.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IIS.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.AspNetCore.Server.IISIntegration.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IISIntegration.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.AspNetCore.Server.IISIntegration.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IISIntegration.targets'))" />
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\packages\PdfiumViewer.Native.x86.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86.v8-xfa.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PdfiumViewer.Native.x86.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86.v8-xfa.props'))" />
+    <Error Condition="!Exists('..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86_64.v8-xfa.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\PdfiumViewer.Native.x86_64.v8-xfa.props'))" />
+    <Error Condition="!Exists('..\packages\PDFium.Windows.1.0.0\build\PDFium.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PDFium.Windows.1.0.0\build\PDFium.Windows.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.2.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets" Condition="Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.2.0\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" />
   <Import Project="..\packages\Microsoft.AspNetCore.Server.IIS.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IIS.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Server.IIS.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IIS.targets')" />
   <Import Project="..\packages\Microsoft.AspNetCore.Server.IISIntegration.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IISIntegration.targets" Condition="Exists('..\packages\Microsoft.AspNetCore.Server.IISIntegration.2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Server.IISIntegration.targets')" />
   <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\packages\PDFium.Windows.1.0.0\build\PDFium.Windows.targets" Condition="Exists('..\packages\PDFium.Windows.1.0.0\build\PDFium.Windows.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

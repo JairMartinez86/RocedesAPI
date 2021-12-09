@@ -14,12 +14,6 @@ namespace RocedesAPI.Models
     
     public partial class BundleBoxing_Saco
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BundleBoxing_Saco()
-        {
-            this.BundleBoxing = new HashSet<BundleBoxing>();
-        }
-    
         public int IdSaco { get; set; }
         public int Saco { get; set; }
         public int NoMesa { get; set; }
@@ -31,8 +25,5 @@ namespace RocedesAPI.Models
         public bool Abierto { get; set; }
         public Nullable<int> IdUsuarioAbre { get; set; }
         public bool Activo { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BundleBoxing> BundleBoxing { get; set; }
     }
 }

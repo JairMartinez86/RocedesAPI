@@ -21,6 +21,7 @@ namespace RocedesAPI.Models
         public int IdMaterial { get; set; }
         public int Cantidad { get; set; }
         public int Capaje { get; set; }
+        public bool EnSaco { get; set; }
         public int IdUsuarioCrea { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public string Corte { get; set; }

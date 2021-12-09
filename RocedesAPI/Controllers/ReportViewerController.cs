@@ -17,8 +17,8 @@ using BoldReports.Writer;
 using ProcessingMode = BoldReports.Web.ReportViewer.ProcessingMode;
 
 using Syncfusion.Pdf.Parsing;
-using BarcodeLib;
-using System.Drawing.Printing;
+using System.Web;
+using Microsoft.Reporting.Map.WebForms.BingMaps;
 
 public class SerialComponente
 {
@@ -55,8 +55,8 @@ public class SerialComponente
             Corte = Datos.Corte,
             Estilo = Datos.Estilo,
             Pieza = Datos.Pieza,
-            Capaje = Datos.Cantidad,
-            Cantidad = Datos.Capaje,
+            Cantidad = Datos.Cantidad,
+            Capaje = Datos.Capaje,
             Serial = Datos.Serial,
             Imagen = _MS.ToArray()
         };
@@ -120,28 +120,28 @@ namespace RocedesAPI.Controllers
         [Route("api/ReportViewer/OnInitReportOptions")]
         public void OnInitReportOptions(ReportViewerOptions reportOption)
         {
-             string filePath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdl"); ;
              // Opens the report from application Resources folder using FileStream
             /* FileStream reportStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
              reportOption.ReportModel.Stream = reportStream;
              reportOption.ReportModel.DataSources.Add(new BoldReports.Web.ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });*/
 
             reportOption.ReportModel.ProcessingMode = ProcessingMode.Local;
-            reportOption.ReportModel.ReportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
+            //reportOption.ReportModel.ReportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
+            reportOption.ReportModel.ReportPath = HttpContext.Current.Server.MapPath("~/Resources/SerialComponente.rdlc");
             reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = SerialComponente.GetData(Datos) });
-            
 
- 
-            
 
-            string reportPath = System.Web.Hosting.HostingEnvironment.MapPath(@"~/Resources/SerialComponente.rdlc");
+
+            /*
+
+            string reportPath = reportOption.ReportModel.ReportPath;//HttpContext.Current.Server.MapPath("~/Resources/StudentReport.rdlc");
             ReportWriter reportWriter = new ReportWriter();
             reportWriter.ReportPath = reportPath;
             reportWriter.ReportProcessingMode = BoldReports.Writer.ProcessingMode.Local;
             reportWriter.DataSources.Clear();
             reportWriter.DataSources.Add(reportOption.ReportModel.DataSources[0] );
             _stream = new MemoryStream();
-            reportWriter.Save(_stream, WriterFormat.PDF);
+            reportWriter.Save(_stream, WriterFormat.PDF);*/
           
         }
 
@@ -152,8 +152,10 @@ namespace RocedesAPI.Controllers
         [Route("api/ReportViewer/OnReportLoaded")]
         public void OnReportLoaded(ReportViewerOptions reportOption)
         {
- 
-    
+
+           
+/*
+
            PdfLoadedDocument loadedDocument = new PdfLoadedDocument(_stream);
 
             //load the document in pdf document view
@@ -168,7 +170,7 @@ namespace RocedesAPI.Controllers
   
 
 
-            dialog.Document.Print();
+            dialog.Document.Print();*/
             
         }
 

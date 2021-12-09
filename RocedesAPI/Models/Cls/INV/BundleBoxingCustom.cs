@@ -14,8 +14,9 @@ namespace RocedesAPI.Models.Cls.INV
         public int Bulto = 0;
         public int Capaje = 0;
         public int Yarda = 0;
-        public int Saco = 0;
+        public Nullable<int> Saco = 0;
         public int Mesa = 0;
+        public bool EnSaco = false;
         public string Corte = string.Empty;
         public string CorteCompleto = string.Empty;
         public string Estilo = string.Empty;

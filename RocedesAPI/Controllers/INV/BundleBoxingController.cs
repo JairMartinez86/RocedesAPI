@@ -72,23 +72,22 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<BundleBoxingCustom> lst = (from b in _Cnx.BundleBoxing
-                                                    join com in _Cnx.SerialComplemento on b.Serial equals com.Serial into UnionCom
-                                                    from u_com in UnionCom.DefaultIfEmpty()
                                                     join p in _Cnx.POrder on b.Corte equals p.POrder1
                                                     where p.POrderClient == corte && b.Activo
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
-                                                    join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco
+                                                    join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco into LeftSaco
+                                                    from lf in LeftSaco.DefaultIfEmpty()
                                                     orderby b.Seccion
                                                     select new BundleBoxingCustom()
                                                     {
-                                                        Grupo = (u_com != null) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo + "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤMesa # ㅤ", b.NoMesa),
+                                                        Grupo = (!b.EnSaco) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo + "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤMesa # ㅤ", b.NoMesa),
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
                                                         Bulto = b.Bulto,
                                                         Capaje = b.Capaje,
                                                         Seccion = b.Seccion,
-                                                        Saco = sc.Saco,
+                                                        Saco = (lf == null) ? (int?)null : lf.Saco,
                                                         Yarda = b.Yarda,
                                                         Corte = b.Corte,
                                                         Estilo = b.Estilo,
@@ -338,7 +337,8 @@ namespace RocedesAPI.Controllers.INV
                                 Bulto = Datos.Bulto,
                                 Capaje = Datos.Capaje,
                                 Yarda = Datos.Yarda,
-                                IdSaco = _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Saco == Datos.Saco && sc.CorteCompleto == Datos.CorteCompleto && sc.Seccion == Datos.Seccion && sc.Activo).IdSaco,
+                                EnSaco = Datos.EnSaco,
+                                IdSaco = (!Datos.EnSaco)? (int?)null : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Saco == Datos.Saco && sc.CorteCompleto == Datos.CorteCompleto && sc.Seccion == Datos.Seccion && sc.Activo).IdSaco,
                                 Corte = Datos.Corte,
                                 CorteCompleto = Datos.CorteCompleto,
                                 Estilo = Datos.Estilo,
@@ -354,7 +354,7 @@ namespace RocedesAPI.Controllers.INV
                         BundleBoxingCustom BoxingCustom = new BundleBoxingCustom
                         {
                             Escaneado = Boxing.Activo,
-                            Saco = _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.IdSaco == Boxing.IdSaco && sc.Corte == Boxing.Corte && sc.Seccion == Boxing.Seccion).Saco,
+                            Saco = (!Datos.EnSaco)? 0 :  _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.IdSaco == Boxing.IdSaco && sc.Corte == Boxing.Corte && sc.Seccion == Boxing.Seccion).Saco,
                             Mesa = Boxing.NoMesa
                         };
 
@@ -419,6 +419,7 @@ namespace RocedesAPI.Controllers.INV
                             IdMaterial = Datos.IdMaterial,
                             Cantidad = Datos.Cantidad,
                             Capaje = Datos.Capaje,
+                            EnSaco = Datos.Ensaco,
                             IdUsuarioCrea = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
                             FechaRegistro = DateTime.Now,
                             Corte = Datos.Corte,

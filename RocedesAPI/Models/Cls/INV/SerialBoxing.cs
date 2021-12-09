@@ -14,8 +14,9 @@ namespace RocedesAPI.Models.Cls.INV
         public string Pieza = string.Empty;
         public int IdPresentacionSerial = 0;
         public int IdMaterial = 0;
-        public int Capaje = 0;
         public int Cantidad = 0;
+        public int Capaje = 0;
+        public bool Ensaco = false;
         public string Serial = string.Empty;
         public string Login = string.Empty;
     }

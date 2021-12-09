@@ -51,7 +51,8 @@
           <Property Name="Bulto" Type="int" Nullable="false" />
           <Property Name="Capaje" Type="int" Nullable="false" />
           <Property Name="Yarda" Type="int" Nullable="false" />
-          <Property Name="IdSaco" Type="int" Nullable="false" />
+          <Property Name="IdSaco" Type="int" />
+          <Property Name="EnSaco" Type="bit" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CorteCompleto" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Estilo" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -110,6 +111,7 @@
           <Property Name="IdMaterial" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="int" Nullable="false" />
           <Property Name="Capaje" Type="int" Nullable="false" />
+          <Property Name="EnSaco" Type="bit" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="int" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -129,18 +131,6 @@
           <Property Name="CodBar" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK_BundleBoxing_BundleBoxing_Saco">
-          <End Role="BundleBoxing_Saco" Type="Self.BundleBoxing_Saco" Multiplicity="1" />
-          <End Role="BundleBoxing" Type="Self.BundleBoxing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BundleBoxing_Saco">
-              <PropertyRef Name="IdSaco" />
-            </Principal>
-            <Dependent Role="BundleBoxing">
-              <PropertyRef Name="IdSaco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Material_PresentacionSerial">
           <End Role="PresentacionSerial" Type="Self.PresentacionSerial" Multiplicity="1" />
           <End Role="Material" Type="Self.Material" Multiplicity="*" />
@@ -198,10 +188,6 @@
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
-          <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="Self.FK_BundleBoxing_BundleBoxing_Saco">
-            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
-            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
-          </AssociationSet>
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="Self.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
             <End Role="Material" EntitySet="Material" />
@@ -260,10 +246,6 @@
           <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
           <EntitySet Name="PresentacionSerial" EntityType="AuditoriaModel.PresentacionSerial" />
           <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
-          <AssociationSet Name="FK_BundleBoxing_BundleBoxing_Saco" Association="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco">
-            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
-            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
-          </AssociationSet>
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="AuditoriaModel.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
             <End Role="Material" EntitySet="Material" />
@@ -325,7 +307,8 @@
           <Property Name="Bulto" Type="Int32" Nullable="false" />
           <Property Name="Capaje" Type="Int32" Nullable="false" />
           <Property Name="Yarda" Type="Int32" Nullable="false" />
-          <Property Name="IdSaco" Type="Int32" Nullable="false" />
+          <Property Name="IdSaco" Type="Int32" />
+          <Property Name="EnSaco" Type="Boolean" Nullable="false" />
           <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -338,7 +321,6 @@
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="BundleBoxing_Saco" Relationship="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing" ToRole="BundleBoxing_Saco" />
         </EntityType>
         <EntityType Name="BundleBoxing_Saco">
           <Key>
@@ -355,7 +337,6 @@
           <Property Name="Abierto" Type="Boolean" Nullable="false" />
           <Property Name="IdUsuarioAbre" Type="Int32" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="BundleBoxing" Relationship="AuditoriaModel.FK_BundleBoxing_BundleBoxing_Saco" FromRole="BundleBoxing_Saco" ToRole="BundleBoxing" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -390,6 +371,7 @@
           <Property Name="IdMaterial" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <Property Name="Capaje" Type="Int32" Nullable="false" />
+          <Property Name="EnSaco" Type="Boolean" Nullable="false" />
           <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -399,18 +381,6 @@
           <NavigationProperty Name="Material" Relationship="AuditoriaModel.FK_SerialComplemento_Material" FromRole="SerialComplemento" ToRole="Material" />
           <NavigationProperty Name="PresentacionSerial" Relationship="AuditoriaModel.FK_SerialComplemento_PresentacionSerial" FromRole="SerialComplemento" ToRole="PresentacionSerial" />
         </EntityType>
-        <Association Name="FK_BundleBoxing_BundleBoxing_Saco">
-          <End Type="AuditoriaModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="1" />
-          <End Type="AuditoriaModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BundleBoxing_Saco">
-              <PropertyRef Name="IdSaco" />
-            </Principal>
-            <Dependent Role="BundleBoxing">
-              <PropertyRef Name="IdSaco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Material_PresentacionSerial">
           <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
           <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="*" />
@@ -517,6 +487,7 @@
                 <ScalarProperty Name="Estilo" ColumnName="Estilo" />
                 <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
                 <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="EnSaco" ColumnName="EnSaco" />
                 <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
                 <ScalarProperty Name="Yarda" ColumnName="Yarda" />
                 <ScalarProperty Name="Capaje" ColumnName="Capaje" />
@@ -575,6 +546,7 @@
                 <ScalarProperty Name="Corte" ColumnName="Corte" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
+                <ScalarProperty Name="EnSaco" ColumnName="EnSaco" />
                 <ScalarProperty Name="Capaje" ColumnName="Capaje" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
@@ -585,7 +557,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

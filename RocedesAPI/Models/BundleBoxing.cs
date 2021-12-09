@@ -22,7 +22,8 @@ namespace RocedesAPI.Models
         public int Bulto { get; set; }
         public int Capaje { get; set; }
         public int Yarda { get; set; }
-        public int IdSaco { get; set; }
+        public Nullable<int> IdSaco { get; set; }
+        public bool EnSaco { get; set; }
         public string Corte { get; set; }
         public string CorteCompleto { get; set; }
         public string Estilo { get; set; }
@@ -35,7 +36,5 @@ namespace RocedesAPI.Models
         public Nullable<int> IdUsuarioInactiva { get; set; }
         public Nullable<System.DateTime> FechaInactivo { get; set; }
         public System.Guid ID { get; set; }
-    
-        public virtual BundleBoxing_Saco BundleBoxing_Saco { get; set; }
     }
 }

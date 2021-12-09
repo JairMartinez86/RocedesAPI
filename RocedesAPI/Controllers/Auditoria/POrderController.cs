@@ -105,7 +105,7 @@ namespace RocedesAPI.Controllers
         public string GetSerial2(string corte, string estilo)
         {
             string json = string.Empty;
-            //MP350028-1
+ 
             try
             {
                 string sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno  \n" +
@@ -118,34 +118,36 @@ namespace RocedesAPI.Controllers
                 Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
                 DataTable tbl = _Cnx.GetDatos(sql, out json);
 
-               
-                if(tbl != null)
+                DataTableExt.ConvertColumnType(tbl, "serialno", typeof(string));
+
+
+                if (tbl != null)
                 {
                     if (tbl.Rows.Count > 0)
                     {
-
-
 
                         using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                         {
                             List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte == corte && b.Activo).ToList();
 
 
+
                             List<BundleBoxingCustom> ltsBoxingCustom = (from s in tbl.AsEnumerable()
                                                    join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
-                                                   join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), Serial = s.Field<int>("serialno").ToString() } equals new { _Corte = b.Corte, Serial = b.Serial } into SerialesUnion
+                                                   join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), _Serial = s.Field<string>("serialno") } equals new { _Corte = b.Corte, _Serial = b.Serial } into SerialesUnion
                                                    from sb in SerialesUnion.DefaultIfEmpty()
                                                    join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
                                                    from sc in SacoUnion.DefaultIfEmpty()
                                                    select new BundleBoxingCustom()
                                                    {
-                                                       Serial = s.Field<int>("serialno").ToString(),
+                                                       Serial = s.Field<string>("serialno"),
                                                        Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),
                                                        Bulto = s.Field<int>("bundleno"),
                                                        Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
                                                        Saco = (sb != null) ? sc.Saco : 0,
                                                        Yarda = (sc != null) ? sb.Yarda : 0,
                                                        Mesa = (sc != null) ? sb.NoMesa : 0,
+                                                       EnSaco = (sc != null) ? sb.EnSaco : true,
                                                        Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
                                                        CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
                                                        Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
@@ -153,7 +155,7 @@ namespace RocedesAPI.Controllers
                                                        Escaneado = (sb != null) ? true : false
                                                    }).Union(from com in _Conexion.SerialComplemento
                                                             join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
-                                                            where !(lstBundleBoxing.Any(item2 => item2.Serial == com.Serial))
+                                                            where com.Corte.Equals(corte)
                                                             select new BundleBoxingCustom()
                                                             {
                                                                 Serial = com.Serial,
@@ -163,6 +165,7 @@ namespace RocedesAPI.Controllers
                                                                 Saco = 0,
                                                                 Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
                                                                 Mesa = 0,
+                                                                EnSaco = com.EnSaco,
                                                                 Corte = com.Corte,
                                                                 CorteCompleto = com.CorteCompleto,
                                                                 Estilo = com.Estilo,
@@ -172,9 +175,15 @@ namespace RocedesAPI.Controllers
                                       ).ToList();
 
 
+    
+                            ltsBoxingCustom.Where( w => w.Corte.Equals(corte) && (lstBundleBoxing.Any(item2 => item2.Serial.Equals(w.Serial)))).ToList().ForEach(i => i.Escaneado = true);
 
 
-           
+
+
+
+
+
 
 
 
@@ -202,6 +211,31 @@ namespace RocedesAPI.Controllers
 
         }
 
+      
 
+    }
+
+    public static class DataTableExt
+    {
+        public static void ConvertColumnType(this DataTable dt, string columnName, Type newType)
+        {
+            using (DataColumn dc = new DataColumn(columnName + "_new", newType))
+            {
+                // Add the new column which has the new type, and move it to the ordinal of the old column
+                int ordinal = dt.Columns[columnName].Ordinal;
+                dt.Columns.Add(dc);
+                dc.SetOrdinal(ordinal);
+
+                // Get and convert the values of the old column, and insert them into the new
+                foreach (DataRow dr in dt.Rows)
+                    dr[dc.ColumnName] = Convert.ChangeType(dr[columnName], newType);
+
+                // Remove the old column
+                dt.Columns.Remove(columnName);
+
+                // Give the new column the old column's name
+                dc.ColumnName = columnName;
+            }
+        }
     }
 }
