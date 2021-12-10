@@ -707,7 +707,9 @@
     <Compile Include="Controllers\INV\BundleBoxingController.cs" />
     <Compile Include="Controllers\INV\MaterialController.cs" />
     <Compile Include="Controllers\INV\PresentacionSerialController.cs" />
-    <Compile Include="Controllers\ReportViewerController.cs" />
+    <Compile Include="Controllers\INV\ReportViewerBoxinSerialController.cs" />
+    <Compile Include="Controllers\INV\SacoController.cs" />
+    <Compile Include="Controllers\INV\SerialComponenteController.cs" />
     <Compile Include="Controllers\SIS\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -723,9 +725,11 @@
     <Compile Include="Models\Cls\INV\BundleBoxing_SacoCustom.cs" />
     <Compile Include="Models\Cls\INV\MaterialCustom.cs" />
     <Compile Include="Models\Cls\INV\PresentacionSerialCustom.cs" />
+    <Compile Include="Models\Cls\INV\SacoCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoEstado.cs" />
     <Compile Include="Conex_Pervasive\Cls_ConexionPervasive.cs" />
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
+    <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
     <Compile Include="Models\Material.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
@@ -1804,6 +1808,8 @@
     <Folder Include="Views\POrder\" />
     <Folder Include="Views\Presentacion\" />
     <Folder Include="Views\Report\" />
+    <Folder Include="Views\Saco\" />
+    <Folder Include="Views\SerialComponente\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

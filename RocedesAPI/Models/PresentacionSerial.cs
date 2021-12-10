@@ -18,7 +18,6 @@ namespace RocedesAPI.Models
         public PresentacionSerial()
         {
             this.Material = new HashSet<Material>();
-            this.SerialComplemento = new HashSet<SerialComplemento>();
         }
     
         public int IdPresentacionSerial { get; set; }
@@ -28,7 +27,5 @@ namespace RocedesAPI.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Material> Material { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SerialComplemento> SerialComplemento { get; set; }
     }
 }

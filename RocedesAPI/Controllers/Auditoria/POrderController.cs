@@ -118,11 +118,13 @@ namespace RocedesAPI.Controllers
                 Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
                 DataTable tbl = _Cnx.GetDatos(sql, out json);
 
-                DataTableExt.ConvertColumnType(tbl, "serialno", typeof(string));
-
 
                 if (tbl != null)
                 {
+
+                    DataTableExt.ConvertColumnType(tbl, "serialno", typeof(string));
+
+
                     if (tbl.Rows.Count > 0)
                     {
 

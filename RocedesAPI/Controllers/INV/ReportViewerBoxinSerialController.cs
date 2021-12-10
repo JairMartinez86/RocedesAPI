@@ -30,7 +30,6 @@ public class SerialComponente
     public string Serial { get; set; }
     public byte[] Imagen { get; set; }
 
-    // return "{'Corte':'MP350028 - 1','CorteCompleto':'MP350028','Estilo':'X1 VTXRDP','Pieza':'Prueba','IdPresentacionSerial':1,'IdMaterial':1,'Capaje':25,'Cantidad':1,'Serial':'35281700000','Login':'JMartinez'}";
 
     public static IList GetData(SerialBoxingCustom Datos)
     {
@@ -39,6 +38,7 @@ public class SerialComponente
 
 
         BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+        b.IncludeLabel = true;
         b.BarWidth = 4;
         Image img = b.Encode(BarcodeLib.TYPE.UPCA, Datos.Serial, Color.Black, Color.White, 300, 120);
 
@@ -72,13 +72,13 @@ public class SerialComponente
 
 namespace RocedesAPI.Controllers
 {
-    public class ReportViewerController : ApiController, IReportController
+    public class ReportViewerBoxinSerialController : ApiController, IReportController
     {
         SerialBoxingCustom Datos = null;
 
         MemoryStream _stream = null;
 
-       [Route("api/ReportViewer/PostReportAction")]
+       [Route("api/BundleBoxing/ReportViewerBoxinSerial/PostReportAction")]
         // Post action for processing the RDL/RDLC report
         public object PostReportAction(Dictionary<string, object> jsonResult)
         {
@@ -107,7 +107,7 @@ namespace RocedesAPI.Controllers
         }
 
         // Get action for getting resources from the report
-        [Route("api/ReportViewer/GetResource")]
+        [Route("api/BundleBoxing/ReportViewerBoxinSerial/GetResource")]
         [System.Web.Http.ActionName("GetResource")]
         [AcceptVerbs("GET")]
         public object GetResource(string key, string resourcetype, bool isPrint)
@@ -117,7 +117,7 @@ namespace RocedesAPI.Controllers
 
 
         // Method that will be called when initialize the report options before start processing the report
-        [Route("api/ReportViewer/OnInitReportOptions")]
+        [Route("api/BundleBoxing/ReportViewerBoxinSerial/OnInitReportOptions")]
         public void OnInitReportOptions(ReportViewerOptions reportOption)
         {
              // Opens the report from application Resources folder using FileStream
@@ -149,7 +149,7 @@ namespace RocedesAPI.Controllers
   
 
         // Method that will be called when reported is loaded
-        [Route("api/ReportViewer/OnReportLoaded")]
+        [Route("api/BundleBoxing/ReportViewerBoxinSerial/OnReportLoaded")]
         public void OnReportLoaded(ReportViewerOptions reportOption)
         {
 

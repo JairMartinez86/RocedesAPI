@@ -29,9 +29,9 @@ namespace RocedesAPI.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Style> Style { get; set; }
         public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
-        public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
         public virtual DbSet<Material> Material { get; set; }
         public virtual DbSet<PresentacionSerial> PresentacionSerial { get; set; }
         public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
+        public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
     }
 }

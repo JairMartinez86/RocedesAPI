@@ -15,6 +15,7 @@ namespace RocedesAPI.Models
     public partial class BundleBoxing_Saco
     {
         public int IdSaco { get; set; }
+        public string Serial { get; set; }
         public int Saco { get; set; }
         public int NoMesa { get; set; }
         public string Corte { get; set; }
@@ -25,5 +26,7 @@ namespace RocedesAPI.Models
         public bool Abierto { get; set; }
         public Nullable<int> IdUsuarioAbre { get; set; }
         public bool Activo { get; set; }
+        public Nullable<int> IdUsuarioInactiva { get; set; }
+        public Nullable<System.DateTime> FechaInactivo { get; set; }
     }
 }

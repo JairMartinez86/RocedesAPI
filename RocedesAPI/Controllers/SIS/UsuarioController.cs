@@ -263,7 +263,7 @@ namespace RocedesAPI.Controllers
                             _Conexion.SaveChanges();
                             scope.Complete();
                             scope.Dispose();
-                            json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, Registro.Activo ? "Cambios guardados." : "Usuario se ha Inactivado.", 0);
+                            json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, Registro.Activo ? "Cambios guardados." : "Usuario inactivo.", 0);
                         }
                         else
                             json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "El Usuario ya se encuentra registrado.", 1); 

@@ -28,8 +28,7 @@ namespace RocedesAPI.Models
         public string CorteCompleto { get; set; }
         public string Estilo { get; set; }
         public bool Activo { get; set; }
-    
-        public virtual Material Material { get; set; }
-        public virtual PresentacionSerial PresentacionSerial { get; set; }
+        public Nullable<int> IdUsuarioInactiva { get; set; }
+        public Nullable<System.DateTime> FechaInactivo { get; set; }
     }
 }
