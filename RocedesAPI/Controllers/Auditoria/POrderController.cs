@@ -102,104 +102,158 @@ namespace RocedesAPI.Controllers
 
         [Route("api/Auditoria/GetSerial2")]
         [HttpGet]
-        public string GetSerial2(string corte, string estilo)
+        public string GetSerial2(string corte, string estilo, bool esComplemento)
         {
             string json = string.Empty;
  
             try
             {
-                string sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno  \n" +
+                string sql = string.Empty;
+
+                if (!esComplemento)
+                {
+                    sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno  \n" +
                     $"FROM SERIAL2 AS S \n" +
                     $"INNER JOIN OPER AS OP ON OP.operno = S.operno \n" +
                      $"INNER JOIN BUNDLE AS BD ON BD.prodno = S.prodno AND BD.bundleno = S.bundleno \n" +
                     $"WHERE S.prodno = '{corte}' " +
                     $"GROUP BY  S.serialno,  OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno";
 
-                Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
-                DataTable tbl = _Cnx.GetDatos(sql, out json);
+                    Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
+                    DataTable tbl = _Cnx.GetDatos(sql, out json);
 
-
-                if (tbl != null)
-                {
-
-                    DataTableExt.ConvertColumnType(tbl, "serialno", typeof(string));
-
-
-                    if (tbl.Rows.Count > 0)
+                    if (tbl != null)
                     {
 
-                        using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                        DataTableExt.ConvertColumnType(tbl, "serialno", typeof(string));
+
+
+                        if (tbl.Rows.Count > 0)
                         {
-                            List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte == corte && b.Activo).ToList();
+
+                            using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                            {
+                                List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && b.EnSaco && b.Activo).ToList();
 
 
 
-                            List<BundleBoxingCustom> ltsBoxingCustom = (from s in tbl.AsEnumerable()
-                                                   join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
-                                                   join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), _Serial = s.Field<string>("serialno") } equals new { _Corte = b.Corte, _Serial = b.Serial } into SerialesUnion
-                                                   from sb in SerialesUnion.DefaultIfEmpty()
-                                                   join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
-                                                   from sc in SacoUnion.DefaultIfEmpty()
-                                                   select new BundleBoxingCustom()
-                                                   {
-                                                       Serial = s.Field<string>("serialno"),
-                                                       Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),
-                                                       Bulto = s.Field<int>("bundleno"),
-                                                       Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
-                                                       Saco = (sb != null) ? sc.Saco : 0,
-                                                       Yarda = (sc != null) ? sb.Yarda : 0,
-                                                       Mesa = (sc != null) ? sb.NoMesa : 0,
-                                                       EnSaco = (sc != null) ? sb.EnSaco : true,
-                                                       Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
-                                                       CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
-                                                       Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
-                                                       Oper = s.Field<string>("operno").TrimStart().TrimEnd(),
-                                                       Escaneado = (sb != null) ? true : false
-                                                   }).Union(from com in _Conexion.SerialComplemento
-                                                            join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
-                                                            where com.Corte.Equals(corte)
-                                                            select new BundleBoxingCustom()
-                                                            {
-                                                                Serial = com.Serial,
-                                                                Nombre = com.Pieza,
-                                                                Bulto = com.Cantidad,
-                                                                Capaje = (presen.EsUnidad) ? com.Capaje : 0,
-                                                                Saco = 0,
-                                                                Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
-                                                                Mesa = 0,
-                                                                EnSaco = com.EnSaco,
-                                                                Corte = com.Corte,
-                                                                CorteCompleto = com.CorteCompleto,
-                                                                Estilo = com.Estilo,
-                                                                Oper = string.Empty,
-                                                                Escaneado = false
-                                                            }
-                                      ).ToList();
-
-
-    
-                            ltsBoxingCustom.Where( w => w.Corte.Equals(corte) && (lstBundleBoxing.Any(item2 => item2.Serial.Equals(w.Serial)))).ToList().ForEach(i => i.Escaneado = true);
+                                List<BundleBoxingCustom> ltsBoxingCustom = (from s in tbl.AsEnumerable()
+                                                                            join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
+                                                                            join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), _Serial = s.Field<string>("serialno") } equals new { _Corte = b.Corte, _Serial = b.Serial } into SerialesUnion
+                                                                            from sb in SerialesUnion.DefaultIfEmpty()
+                                                                            join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
+                                                                            from sc in SacoUnion.DefaultIfEmpty()
+                                                                            select new BundleBoxingCustom()
+                                                                            {
+                                                                                Serial = s.Field<string>("serialno"),
+                                                                                Nombre = s.Field<string>("Descr").TrimStart().TrimEnd(),
+                                                                                Bulto = s.Field<int>("bundleno"),
+                                                                                Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
+                                                                                Saco = (sb != null) ? sc.Saco : 0,
+                                                                                Yarda = (sc != null) ? sb.Yarda : 0,
+                                                                                Mesa = (sc != null) ? sb.NoMesa : 0,
+                                                                                EnSaco = (sc != null) ? sb.EnSaco : true,
+                                                                                Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
+                                                                                CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
+                                                                                Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
+                                                                                Oper = s.Field<string>("operno").TrimStart().TrimEnd(),
+                                                                                Escaneado = (sb != null) ? true : false
+                                                                            }).Union(from com in _Conexion.SerialComplemento
+                                                                                     join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
+                                                                                     where com.Corte.Equals(corte) && com.EnSaco && com.Activo
+                                                                                     select new BundleBoxingCustom()
+                                                                                     {
+                                                                                         Serial = com.Serial,
+                                                                                         Nombre = com.Pieza,
+                                                                                         Bulto = com.Cantidad,
+                                                                                         Capaje = (presen.EsUnidad) ? com.Capaje : 0,
+                                                                                         Saco = 0,
+                                                                                         Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
+                                                                                         Mesa = 0,
+                                                                                         EnSaco = com.EnSaco,
+                                                                                         Corte = com.Corte,
+                                                                                         CorteCompleto = com.CorteCompleto,
+                                                                                         Estilo = com.Estilo,
+                                                                                         Oper = string.Empty,
+                                                                                         Escaneado = false
+                                                                                     }
+                                          ).ToList();
 
 
 
+                                ltsBoxingCustom.Where(w => w.Corte.Equals(corte) && (lstBundleBoxing.Any(item2 => item2.Serial.Equals(w.Serial)))).ToList().ForEach(i => i.Escaneado = true);
+
+
+
+                                json = Cls.Cls_Mensaje.Tojson(ltsBoxingCustom, ltsBoxingCustom.Count, string.Empty, string.Empty, 0);
+                            }
 
 
 
 
-
-
-
-                            json = Cls.Cls_Mensaje.Tojson(ltsBoxingCustom, ltsBoxingCustom.Count, string.Empty, string.Empty, 0);
                         }
 
+                        else
+                            json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro no encontrado.", 0);
+                    }
+                }
+                else
+                {
+
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+                        List<BundleBoxing> lstBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && !b.EnSaco && b.Activo).ToList();
 
 
 
+
+
+                        List<BundleBoxingCustom> ltsBoxingCustom = (from com in _Conexion.SerialComplemento
+                                                                   join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
+                                                                   where com.Corte.Equals(corte) && !com.EnSaco && com.Activo
+                                                                   select new BundleBoxingCustom()
+                                                                   {
+                                                                       Serial = com.Serial,
+                                                                       Nombre = com.Pieza,
+                                                                       Bulto = com.Cantidad,
+                                                                       Capaje = (presen.EsUnidad) ? com.Capaje : 0,
+                                                                       Saco = 0,
+                                                                       Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
+                                                                       Mesa = 0,
+                                                                       EnSaco = com.EnSaco,
+                                                                       Corte = com.Corte,
+                                                                       CorteCompleto = com.CorteCompleto,
+                                                                       Estilo = com.Estilo,
+                                                                       Oper = string.Empty,
+                                                                       Escaneado = false
+                                                                   }).ToList();
+
+
+
+                        ltsBoxingCustom.Where(w => w.Corte.Equals(corte) && (lstBoxing.Any(item2 => item2.Serial.Equals(w.Serial)))).ToList().ForEach(i => i.Escaneado = true);
+
+
+
+
+
+
+
+
+
+
+                        json = Cls.Cls_Mensaje.Tojson(ltsBoxingCustom, ltsBoxingCustom.Count, string.Empty, string.Empty, 0);
                     }
 
-                    else
-                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro no encontrado.", 0);
+
+
+
                 }
+
+
+
+
+
+
 
 
             }

@@ -41,9 +41,17 @@ namespace RocedesAPI.Controllers
                                  }).ToList();
 
 
+                    if(query.Count == 0)
+                    {
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Usuario y/o contraseña invalida.", 1);
+                    }
+                    else
+                    {
+                        json = Cls.Cls_Mensaje.Tojson(query, query.Count, string.Empty, string.Empty, 0);
+                    }
 
 
-                    json = Cls.Cls_Mensaje.Tojson(query, query.Count, string.Empty, string.Empty, 0);
+                    
                 }
              
             }
@@ -255,6 +263,12 @@ namespace RocedesAPI.Controllers
                     using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     {
                         Usuario u = _Conexion.Usuario.ToList().Find(s => s.IdUsuario == Registro.IdUsuario);
+
+                        if(u.Login == "JMartinez" && u.Activo)
+                        {
+                            json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "No se permite modificar este usuario.", 1);
+                            return json;
+                        }
 
                         if (u != null)
                         {

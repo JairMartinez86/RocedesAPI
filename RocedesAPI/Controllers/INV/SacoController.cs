@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -68,7 +70,7 @@ namespace RocedesAPI.Controllers.INV
             return json;
         }
 
-
+      
         [Route("api/Inventario/Saco")]
         [HttpPost]
         public IHttpActionResult Saco(string d)
@@ -188,20 +190,50 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
-                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.CorteCompleto == Datos.CorteCompleto && b.Saco == Datos.Saco && b.Activo);
+                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.CorteCompleto == Datos.CorteCompleto && b.Saco == Datos.Saco);
 
                             if (Registro != null)
                             {
-                                if (Registro.NoMesa == Datos.Mesa && Registro.Seccion == Datos.Seccion)
+                                if(Registro.Abierto || Datos.Estado == "Abrir")
                                 {
-                                    Registro.IdUsuarioAbre = ((Datos.Estado == "Abrir") ? IdUsuario : (int?)null);
-                                    Registro.Abierto = ((Datos.Estado == "Abrir") ? true : false);
+
+                                    if (Registro.NoMesa == Datos.Mesa && Registro.Seccion == Datos.Seccion)
+                                    {
+
+                                        if(Registro.IdUsuarioAbre != IdUsuario && Registro.Abierto && Datos.Estado == "Abrir")
+                                        {
+                                            json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Datos.Saco}</b> se encuentra utilizado por otro usuario.</b>", 1);
+                                            return json;
+                                        }
+
+
+
+                                        Registro.IdUsuarioAbre = ((Datos.Estado == "Abrir") ? IdUsuario : (int?)null);
+                                        Registro.Abierto = ((Datos.Estado == "Abrir") ? true : false);
+                                    }
+                                    else
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Datos.Saco}</b> pertenece a la mesa # <b>{ Registro.NoMesa}</b>  Seccion # <b>{Registro.Seccion}</b>", 1);
+                                        return json;
+                                    }
                                 }
                                 else
                                 {
-                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Datos.Saco}</b> pertenece a la mesa # <b>{ Registro.NoMesa}</b>  Seccion # <b>{Registro.Seccion}</b>", 1);
-                                    return json;
+
+                                    if(Datos.Estado == "Cerrar")
+                                    {
+                                        Registro.IdUsuarioAbre = (int?)null;
+                                        Registro.Abierto = false;
+                                    }
+                                    else
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Datos.Saco}</b> se encuentra cerrado.", 1);
+                                        return json;
+                                    }
+                                    
+                                   
                                 }
+                                
 
 
                             }
@@ -213,7 +245,7 @@ namespace RocedesAPI.Controllers.INV
                                 }
                                 else
                                 {
-                                    json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, $"Saco # {Datos.Saco} cerado.", 0);
+                                    json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, $"Saco # {Datos.Saco} cerrado.", 0);
 
                                 }
                                 return json;
@@ -250,5 +282,74 @@ namespace RocedesAPI.Controllers.INV
             return json;
 
         }
+
+
+
+
+
+
+        [Route("api/Inventario/Saco/Eliminar")]
+        [HttpPost]
+        public IHttpActionResult Eliminar(string serial, string login)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(Eliminaraco(serial, login));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string Eliminaraco(string serial, string login)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        int IdUsuario = _Conexion.Usuario.ToList().Find(u => u.Login == login).IdUsuario;
+
+                        BundleBoxing_Saco Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(f => f.Serial.Equals(serial));
+
+                        Registro.IdUsuarioInactiva = IdUsuario;
+                        Registro.FechaInactivo = DateTime.Now;
+                        Registro.Activo = false;
+
+
+
+                        json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, "Registro Guardado.", 0);
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+
+
+
     }
 }

@@ -153,11 +153,15 @@ namespace RocedesAPI.Controllers.INV
                         BundleBoxing_Saco RegisttroSaco = _Conexion.BundleBoxing_Saco.FirstOrDefault(f => f.Saco == Datos.Saco && f.NoMesa == Datos.Mesa && f.Corte.Equals(Datos.Corte));
 
 
-                        if(!RegisttroSaco.Abierto)
+                        if(Datos.EnSaco)
                         {
-                            json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra cerrado", 1);
-                            return json;
+                            if (!RegisttroSaco.Abierto)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra cerrado", 1);
+                                return json;
+                            }
                         }
+                       
 
 
 

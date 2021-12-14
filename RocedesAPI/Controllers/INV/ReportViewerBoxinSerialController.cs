@@ -18,7 +18,7 @@ using ProcessingMode = BoldReports.Web.ReportViewer.ProcessingMode;
 
 using Syncfusion.Pdf.Parsing;
 using System.Web;
-using Microsoft.Reporting.Map.WebForms.BingMaps;
+
 
 public class SerialComponente
 {
