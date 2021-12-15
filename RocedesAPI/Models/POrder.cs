@@ -14,6 +14,12 @@ namespace RocedesAPI.Models
     
     public partial class POrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public POrder()
+        {
+            this.Bundle = new HashSet<Bundle>();
+        }
+    
         public int Id_Order { get; set; }
         public Nullable<int> Id_Cliente { get; set; }
         public Nullable<int> Id_Style { get; set; }
@@ -34,5 +40,7 @@ namespace RocedesAPI.Models
         public Nullable<bool> washed { get; set; }
     
         public virtual Style Style { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bundle> Bundle { get; set; }
     }
 }

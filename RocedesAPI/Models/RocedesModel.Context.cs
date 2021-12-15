@@ -33,5 +33,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<PresentacionSerial> PresentacionSerial { get; set; }
         public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
         public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
+        public virtual DbSet<Bundle> Bundle { get; set; }
     }
 }

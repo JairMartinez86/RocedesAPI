@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AuditoriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bundle">
+          <Key>
+            <PropertyRef Name="Id_Bundle" />
+          </Key>
+          <Property Name="Id_Bundle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Order" Type="int" />
+          <Property Name="NSeq" Type="int" />
+          <Property Name="Bld" Type="int" />
+          <Property Name="Size" Type="nvarchar" MaxLength="10" />
+          <Property Name="Color" Type="nvarchar" MaxLength="10" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Controlconcurrencia" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
         <EntityType Name="POrder">
           <Key>
             <PropertyRef Name="Id_Order" />
@@ -136,6 +149,18 @@
           <Property Name="CodBar" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Bundle_POrder">
+          <End Role="POrder" Type="Self.POrder" Multiplicity="0..1" />
+          <End Role="Bundle" Type="Self.Bundle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POrder">
+              <PropertyRef Name="Id_Order" />
+            </Principal>
+            <Dependent Role="Bundle">
+              <PropertyRef Name="Id_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Material_PresentacionSerial">
           <End Role="PresentacionSerial" Type="Self.PresentacionSerial" Multiplicity="1" />
           <End Role="Material" Type="Self.Material" Multiplicity="*" />
@@ -161,6 +186,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AuditoriaModelStoreContainer">
+          <EntitySet Name="Bundle" EntityType="Self.Bundle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POrder" EntityType="Self.POrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
@@ -169,6 +195,10 @@
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
+          <AssociationSet Name="FK_Bundle_POrder" Association="Self.FK_Bundle_POrder">
+            <End Role="POrder" EntitySet="POrder" />
+            <End Role="Bundle" EntitySet="Bundle" />
+          </AssociationSet>
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="Self.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
             <End Role="Material" EntitySet="Material" />
@@ -205,6 +235,7 @@
           <Property Name="POrderClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="washed" Type="Boolean" />
           <NavigationProperty Name="Style" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="POrder" ToRole="Style" />
+          <NavigationProperty Name="Bundle" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="POrder" ToRole="Bundle" />
         </EntityType>
         <EntityContainer Name="AuditoriaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="POrder" EntityType="Self.POrder" />
@@ -223,6 +254,11 @@
             <End Role="Material" EntitySet="Material" />
           </AssociationSet>
           <EntitySet Name="BundleBoxing_Saco" EntityType="AuditoriaModel.BundleBoxing_Saco" />
+          <EntitySet Name="Bundle" EntityType="AuditoriaModel.Bundle" />
+          <AssociationSet Name="FK_Bundle_POrder" Association="AuditoriaModel.FK_Bundle_POrder">
+            <End Role="POrder" EntitySet="POrder" />
+            <End Role="Bundle" EntitySet="Bundle" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -359,6 +395,32 @@
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
         </EntityType>
+        <EntityType Name="Bundle">
+          <Key>
+            <PropertyRef Name="Id_Bundle" />
+          </Key>
+          <Property Name="Id_Bundle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Order" Type="Int32" />
+          <Property Name="NSeq" Type="Int32" />
+          <Property Name="Bld" Type="Int32" />
+          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Controlconcurrencia" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="Bundle" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_Bundle_POrder">
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.Bundle" Role="Bundle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POrder">
+              <PropertyRef Name="Id_Order" />
+            </Principal>
+            <Dependent Role="Bundle">
+              <PropertyRef Name="Id_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -501,6 +563,20 @@
                 <ScalarProperty Name="Saco" ColumnName="Saco" />
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bundle">
+            <EntityTypeMapping TypeName="AuditoriaModel.Bundle">
+              <MappingFragment StoreEntitySet="Bundle">
+                <ScalarProperty Name="Controlconcurrencia" ColumnName="Controlconcurrencia" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Bld" ColumnName="Bld" />
+                <ScalarProperty Name="NSeq" ColumnName="NSeq" />
+                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
+                <ScalarProperty Name="Id_Bundle" ColumnName="Id_Bundle" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

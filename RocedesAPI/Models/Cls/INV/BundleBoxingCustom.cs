@@ -10,6 +10,7 @@ namespace RocedesAPI.Models.Cls.INV
         public string Grupo = string.Empty;
         public string Serial = string.Empty;
         public string Nombre = string.Empty;
+        public string Talla = string.Empty;
         public int Seccion = 0;
         public int Bulto = 0;
         public int Capaje = 0;

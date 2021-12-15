@@ -73,6 +73,7 @@ namespace RocedesAPI.Controllers.INV
 
                     List<BundleBoxingCustom> lst = (from b in _Cnx.BundleBoxing
                                                     join p in _Cnx.POrder on b.Corte equals p.POrder1
+                                                    join s in _Cnx.Bundle on p.Id_Order equals s.Id_Order
                                                     where p.POrderClient == corte && b.Activo
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
                                                     join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco into LeftSaco
@@ -84,6 +85,7 @@ namespace RocedesAPI.Controllers.INV
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
+                                                        Talla = s.Size,
                                                         Bulto = b.Bulto,
                                                         Capaje = b.Capaje,
                                                         Seccion = b.Seccion,
