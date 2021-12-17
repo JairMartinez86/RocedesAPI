@@ -76,7 +76,7 @@ namespace RocedesAPI.Controllers
     {
         SerialBoxingCustom Datos = null;
 
-        MemoryStream _stream = null;
+        //MemoryStream _stream = null;
 
        [Route("api/BundleBoxing/ReportViewerBoxinSerial/PostReportAction")]
         // Post action for processing the RDL/RDLC report

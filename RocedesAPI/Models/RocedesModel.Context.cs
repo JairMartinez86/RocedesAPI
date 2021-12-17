@@ -34,5 +34,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
         public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
         public virtual DbSet<Bundle> Bundle { get; set; }
+        public virtual DbSet<FactorTendido> FactorTendido { get; set; }
+        public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
     }
 }

@@ -98,6 +98,15 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="FactorTendido">
+          <Key>
+            <PropertyRef Name="IdFactor" />
+          </Key>
+          <Property Name="IdFactor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProcesoTendido" Type="int" Nullable="false" />
+          <Property Name="NoFactor" Type="int" Nullable="false" />
+          <Property Name="ValorFactor" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Material">
           <Key>
             <PropertyRef Name="IdMaterial" />
@@ -115,6 +124,14 @@
           <Property Name="Presentacion" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="EsUnidad" Type="bit" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProcesosTendido">
+          <Key>
+            <PropertyRef Name="IdProcesoTendido" />
+          </Key>
+          <Property Name="IdProcesoTendido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="SerialComplemento">
           <Key>
@@ -161,6 +178,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FactorTendido_ProcesosTendido">
+          <End Role="ProcesosTendido" Type="Self.ProcesosTendido" Multiplicity="1" />
+          <End Role="FactorTendido" Type="Self.FactorTendido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcesosTendido">
+              <PropertyRef Name="IdProcesoTendido" />
+            </Principal>
+            <Dependent Role="FactorTendido">
+              <PropertyRef Name="IdProcesoTendido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Material_PresentacionSerial">
           <End Role="PresentacionSerial" Type="Self.PresentacionSerial" Multiplicity="1" />
           <End Role="Material" Type="Self.Material" Multiplicity="*" />
@@ -191,13 +220,19 @@
           <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="FactorTendido" EntityType="Self.FactorTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
           <AssociationSet Name="FK_Bundle_POrder" Association="Self.FK_Bundle_POrder">
             <End Role="POrder" EntitySet="POrder" />
             <End Role="Bundle" EntitySet="Bundle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="Self.FK_FactorTendido_ProcesosTendido">
+            <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
+            <End Role="FactorTendido" EntitySet="FactorTendido" />
           </AssociationSet>
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="Self.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
@@ -258,6 +293,12 @@
           <AssociationSet Name="FK_Bundle_POrder" Association="AuditoriaModel.FK_Bundle_POrder">
             <End Role="POrder" EntitySet="POrder" />
             <End Role="Bundle" EntitySet="Bundle" />
+          </AssociationSet>
+          <EntitySet Name="FactorTendido" EntityType="AuditoriaModel.FactorTendido" />
+          <EntitySet Name="ProcesosTendido" EntityType="AuditoriaModel.ProcesosTendido" />
+          <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido">
+            <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
+            <End Role="FactorTendido" EntitySet="FactorTendido" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -421,6 +462,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FactorTendido">
+          <Key>
+            <PropertyRef Name="IdFactor" />
+          </Key>
+          <Property Name="IdFactor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="ProcesosTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="FactorTendido" ToRole="ProcesosTendido" />
+        </EntityType>
+        <EntityType Name="ProcesosTendido">
+          <Key>
+            <PropertyRef Name="IdProcesoTendido" />
+          </Key>
+          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FactorTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="ProcesosTendido" ToRole="FactorTendido" />
+        </EntityType>
+        <Association Name="FK_FactorTendido_ProcesosTendido">
+          <End Type="AuditoriaModel.ProcesosTendido" Role="ProcesosTendido" Multiplicity="1" />
+          <End Type="AuditoriaModel.FactorTendido" Role="FactorTendido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcesosTendido">
+              <PropertyRef Name="IdProcesoTendido" />
+            </Principal>
+            <Dependent Role="FactorTendido">
+              <PropertyRef Name="IdProcesoTendido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -577,6 +649,25 @@
                 <ScalarProperty Name="NSeq" ColumnName="NSeq" />
                 <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
                 <ScalarProperty Name="Id_Bundle" ColumnName="Id_Bundle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorTendido">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorTendido">
+              <MappingFragment StoreEntitySet="FactorTendido">
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
+                <ScalarProperty Name="IdFactor" ColumnName="IdFactor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcesosTendido">
+            <EntityTypeMapping TypeName="AuditoriaModel.ProcesosTendido">
+              <MappingFragment StoreEntitySet="ProcesosTendido">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

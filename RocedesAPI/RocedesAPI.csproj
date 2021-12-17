@@ -692,6 +692,7 @@
     <Compile Include="Controllers\INV\BundleBoxingController.cs" />
     <Compile Include="Controllers\INV\MaterialController.cs" />
     <Compile Include="Controllers\INV\PresentacionSerialController.cs" />
+    <Compile Include="Controllers\INV\ProcesoTendidoController.cs" />
     <Compile Include="Controllers\INV\ReportViewerBoxinSerialController.cs" />
     <Compile Include="Controllers\INV\SacoController.cs" />
     <Compile Include="Controllers\INV\SerialComponenteController.cs" />
@@ -712,6 +713,7 @@
     </Compile>
     <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
     <Compile Include="Models\Cls\INV\BundleBoxing_SacoCustom.cs" />
+    <Compile Include="Models\Cls\INV\FactorTendidoCustom.cs" />
     <Compile Include="Models\Cls\INV\MaterialCustom.cs" />
     <Compile Include="Models\Cls\INV\PresentacionSerialCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoCustom.cs" />
@@ -725,6 +727,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Models\FactorTendido.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Material.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
@@ -732,6 +737,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PresentacionSerial.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProcesosTendido.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RocedesModel.Context.cs">
@@ -1816,6 +1824,7 @@
     <Folder Include="Views\Material\" />
     <Folder Include="Views\POrder\" />
     <Folder Include="Views\Presentacion\" />
+    <Folder Include="Views\ProcesoTendido\" />
     <Folder Include="Views\ReportViewer\" />
     <Folder Include="Views\Report\" />
     <Folder Include="Views\Saco\" />

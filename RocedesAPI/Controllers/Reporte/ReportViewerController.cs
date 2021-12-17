@@ -36,7 +36,7 @@ namespace RocedesAPI.Controllers.Reporte
     {
         BarcodeLib.Barcode BarCode;
         ReporteRDLC Datos = null;
-        MemoryStream _stream = null;
+        //MemoryStream _stream = null;
 
         [Route("api/Reporte/ReportViewer/PostReportAction")]
         // Post action for processing the RDL/RDLC report

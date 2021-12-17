@@ -264,7 +264,7 @@ namespace RocedesAPI.Controllers.INV
                         SerialComplemento Registro = new SerialComplemento
                         {
                             Serial = string.Empty,
-                            Pieza = Datos.Pieza.TrimStart().TrimEnd(),
+                            Pieza = Datos.Pieza.TrimStart().TrimEnd().ToUpper(),
                             IdPresentacionSerial = Datos.IdPresentacionSerial,
                             IdMaterial = Datos.IdMaterial,
                             Cantidad = Datos.Cantidad,
