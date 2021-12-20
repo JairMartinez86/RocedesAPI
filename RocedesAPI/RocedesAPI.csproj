@@ -708,10 +708,14 @@
     <Compile Include="Models\BundleBoxing.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BundleBoxingEnvio.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BundleBoxing_Saco.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
+    <Compile Include="Models\Cls\INV\BundleBoxingEnvioCustom.cs" />
     <Compile Include="Models\Cls\INV\BundleBoxing_SacoCustom.cs" />
     <Compile Include="Models\Cls\INV\FactorTendidoCustom.cs" />
     <Compile Include="Models\Cls\INV\MaterialCustom.cs" />
@@ -722,6 +726,7 @@
     <Compile Include="Models\Cls\INV\SacoSerial.cs" />
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
+    <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
     <Compile Include="Models\Dset\DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -764,6 +769,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioPerfil.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

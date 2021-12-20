@@ -10,6 +10,7 @@ namespace RocedesAPI.Models.Cls.INV
         public int IdProcesoTendido = 0;
         public int Orden = 0;
         public string Descripcion = string.Empty;
+        public int NoFactor = 0;
         public  Nullable<decimal> Factor1 = null;
         public Nullable<decimal> Factor2 = null;
         public Nullable<decimal> Factor3 = null;

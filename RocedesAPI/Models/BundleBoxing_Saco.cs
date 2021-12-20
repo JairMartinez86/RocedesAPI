@@ -28,5 +28,7 @@ namespace RocedesAPI.Models
         public bool Activo { get; set; }
         public Nullable<int> IdUsuarioInactiva { get; set; }
         public Nullable<System.DateTime> FechaInactivo { get; set; }
+    
+        public virtual Usuario Usuario { get; set; }
     }
 }

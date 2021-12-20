@@ -14,6 +14,14 @@ namespace RocedesAPI.Models
     
     public partial class Usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuario()
+        {
+            this.BundleBoxing = new HashSet<BundleBoxing>();
+            this.BundleBoxing_Saco = new HashSet<BundleBoxing_Saco>();
+            this.BundleBoxingEnvio = new HashSet<BundleBoxingEnvio>();
+        }
+    
         public int IdUsuario { get; set; }
         public string Login { get; set; }
         public string Pass { get; set; }
@@ -21,5 +29,12 @@ namespace RocedesAPI.Models
         public string Apellidos { get; set; }
         public string CodBar { get; set; }
         public bool Activo { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BundleBoxing> BundleBoxing { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BundleBoxingEnvio> BundleBoxingEnvio { get; set; }
     }
 }

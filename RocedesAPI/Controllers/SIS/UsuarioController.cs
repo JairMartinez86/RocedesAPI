@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
+using RocedesAPI.Models.Cls.SIS;
 
 namespace RocedesAPI.Controllers
 {
@@ -104,8 +105,8 @@ namespace RocedesAPI.Controllers
 
                 if(tbl != null)
                 {
-                    List<Usuario> lst = (from q in tbl.AsEnumerable()
-                                         select new Usuario()
+                    List<UsuarioCustom> lst = (from q in tbl.AsEnumerable()
+                                         select new UsuarioCustom()
                                          {
                                              Login = q.Field<string>("EMPNO"),
                                              Nombres = q.Field<string>("firstname"),
@@ -144,7 +145,18 @@ namespace RocedesAPI.Controllers
             {
                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                 {
-                    List<Usuario> lst = _Conexion.Usuario.ToList();
+                    List<UsuarioCustom> lst = (from u in _Conexion.Usuario
+                                               select new UsuarioCustom
+                                               {
+                                                   IdUsuario = u.IdUsuario,
+                                                   Login = u.Login,
+                                                   Pass = u.Pass,
+                                                   Nombres = u.Nombres,
+                                                   Apellidos = u.Apellidos,
+                                                   CodBar = u.CodBar,
+                                                   Activo = u.Activo
+                                               }).ToList();
+
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
                 }
@@ -159,6 +171,45 @@ namespace RocedesAPI.Controllers
 
         }
 
+
+
+        //GET api/Registros
+        [Route("api/Usuario/BuscarAcceso")]
+        [HttpGet]
+        public string BuscarAcceso(string login)
+        {
+
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+                    var lst = (from up in _Conexion.UsuarioPerfil
+                                               join u in _Conexion.Usuario on up.IdUsuario equals u.IdUsuario
+                                               where u.Login.Equals(login)
+                                               select new
+                                               {
+                                                   IdUsuarioPerfil = up.IdUsuarioPerfil,
+                                                   IdPerfil = up.IdPerfil,
+                                                   IdUsuario = up.IdUsuario,
+                                                   Esquema = up.Esquema,
+                                                   Link = up.Link
+
+                                               }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+            return json;
+
+        }
 
 
 

@@ -9,17 +9,22 @@
         <EntityTypeShape EntityType="AuditoriaModel.Usuario" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Style" Width="1.5" PointX="3.5" PointY="1.875" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Style" />
-        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="5.75" PointY="6.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="3" PointY="6.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="0.75" PointY="6.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="7.75" PointY="6.75" />
-        <AssociationConnector Association="AuditoriaModel.FK_Material_PresentacionSerial" />
-        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Bundle" Width="1.5" PointX="8" PointY="11.75" />
         <AssociationConnector Association="AuditoriaModel.FK_Bundle_POrder" />
-        <EntityTypeShape EntityType="AuditoriaModel.FactorTendido" Width="1.5" PointX="12.625" PointY="0.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="10.375" PointY="1" />
+        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3.375" PointY="10.375" />
+        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="3.375" PointY="16.625" />
+        <EntityTypeShape EntityType="AuditoriaModel.FactorTendido" Width="1.5" PointX="3" PointY="6.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="8" PointY="6.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="5.75" PointY="6.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.75" PointY="0.75" />
+        <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Usuario" />
+        <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
+        <AssociationConnector Association="AuditoriaModel.FK_Material_PresentacionSerial" />
+        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxingEnvio" Width="1.5" PointX="3" PointY="21.375" />
+        <AssociationConnector Association="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" />
+        <EntityTypeShape EntityType="AuditoriaModel.UsuarioPerfil" Width="1.5" PointX="0.75" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

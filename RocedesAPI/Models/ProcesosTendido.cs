@@ -23,6 +23,7 @@ namespace RocedesAPI.Models
         public int IdProcesoTendido { get; set; }
         public int Orden { get; set; }
         public string Descripcion { get; set; }
+        public int NoFactor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FactorTendido> FactorTendido { get; set; }

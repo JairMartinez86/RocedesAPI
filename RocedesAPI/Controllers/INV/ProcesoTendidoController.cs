@@ -29,7 +29,7 @@ namespace RocedesAPI.Controllers.INV
 
                     List<FactorTendidoCustom> lst = (from p in _Cnx.ProcesosTendido
                                                      join f in _Cnx.FactorTendido on p.IdProcesoTendido equals f.IdProcesoTendido
-                                                     group f  by  new { f.IdProcesoTendido, p.Descripcion, p.Orden } into grupo
+                                                     group f  by  new { f.IdProcesoTendido, p.Descripcion, p.Orden, p.NoFactor } into grupo
           
                                                      orderby grupo.Key.Orden  ascending
                                                      select new FactorTendidoCustom()
@@ -37,6 +37,7 @@ namespace RocedesAPI.Controllers.INV
                                                          IdProcesoTendido = grupo.Key.IdProcesoTendido,
                                                          Orden = grupo.Key.Orden,
                                                          Descripcion =   grupo.Key.Descripcion,
+                                                         NoFactor = grupo.Key.NoFactor,
                                                          Factor1 = grupo.Where(c => c.NoFactor == 1).Sum(c => c.ValorFactor),
                                                          Factor2 = grupo.Where(c => c.NoFactor == 2).Sum(c => c.ValorFactor),
                                                          Factor3 = grupo.Where(c => c.NoFactor == 3).Sum(c => c.ValorFactor),

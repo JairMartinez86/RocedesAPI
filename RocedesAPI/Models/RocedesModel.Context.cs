@@ -28,13 +28,15 @@ namespace RocedesAPI.Models
         public virtual DbSet<POrder> POrder { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Style> Style { get; set; }
+        public virtual DbSet<Bundle> Bundle { get; set; }
         public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
+        public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
+        public virtual DbSet<FactorTendido> FactorTendido { get; set; }
         public virtual DbSet<Material> Material { get; set; }
         public virtual DbSet<PresentacionSerial> PresentacionSerial { get; set; }
-        public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
-        public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
-        public virtual DbSet<Bundle> Bundle { get; set; }
-        public virtual DbSet<FactorTendido> FactorTendido { get; set; }
         public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
+        public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
+        public virtual DbSet<BundleBoxingEnvio> BundleBoxingEnvio { get; set; }
+        public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
     }
 }

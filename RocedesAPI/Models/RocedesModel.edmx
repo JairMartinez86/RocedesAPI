@@ -98,6 +98,25 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="BundleBoxingEnvio">
+          <Key>
+            <PropertyRef Name="IdEnvio" />
+          </Key>
+          <Property Name="IdEnvio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CorteCompleto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Corte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Serial" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="IdSaco" Type="int" />
+          <Property Name="Saco" Type="int" Nullable="false" />
+          <Property Name="Bulto" Type="int" Nullable="false" />
+          <Property Name="Yarda" Type="int" Nullable="false" />
+          <Property Name="Polin" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioInactiva" Type="int" />
+          <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
+        </EntityType>
         <EntityType Name="FactorTendido">
           <Key>
             <PropertyRef Name="IdFactor" />
@@ -132,6 +151,7 @@
           <Property Name="IdProcesoTendido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orden" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="NoFactor" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SerialComplemento">
           <Key>
@@ -166,6 +186,16 @@
           <Property Name="CodBar" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="UsuarioPerfil">
+          <Key>
+            <PropertyRef Name="IdUsuarioPerfil" />
+          </Key>
+          <Property Name="IdUsuarioPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdPerfil" Type="int" Nullable="false" />
+          <Property Name="Esquema" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Bundle_POrder">
           <End Role="POrder" Type="Self.POrder" Multiplicity="0..1" />
           <End Role="Bundle" Type="Self.Bundle" Multiplicity="*" />
@@ -175,6 +205,42 @@
             </Principal>
             <Dependent Role="Bundle">
               <PropertyRef Name="Id_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BundleBoxing_Saco_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="BundleBoxing_Saco" Type="Self.BundleBoxing_Saco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxing_Saco">
+              <PropertyRef Name="IdUsuarioCrea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BundleBoxing_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="BundleBoxing" Type="Self.BundleBoxing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxing">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BundleBoxingEnvio_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="BundleBoxingEnvio" Type="Self.BundleBoxingEnvio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxingEnvio">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -220,15 +286,29 @@
           <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="BundleBoxingEnvio" EntityType="Self.BundleBoxingEnvio" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorTendido" EntityType="Self.FactorTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
+          <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="SIS" store:Type="Tables" />
           <AssociationSet Name="FK_Bundle_POrder" Association="Self.FK_Bundle_POrder">
             <End Role="POrder" EntitySet="POrder" />
             <End Role="Bundle" EntitySet="Bundle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BundleBoxing_Saco_Usuario" Association="Self.FK_BundleBoxing_Saco_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BundleBoxing_Usuario" Association="Self.FK_BundleBoxing_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BundleBoxingEnvio_Usuario" Association="Self.FK_BundleBoxingEnvio_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxingEnvio" EntitySet="BundleBoxingEnvio" />
           </AssociationSet>
           <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="Self.FK_FactorTendido_ProcesosTendido">
             <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
@@ -280,26 +360,40 @@
             <End Role="Style" EntitySet="Style" />
             <End Role="POrder" EntitySet="POrder" />
           </AssociationSet>
-          <EntitySet Name="BundleBoxing" EntityType="AuditoriaModel.BundleBoxing" />
-          <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
-          <EntitySet Name="PresentacionSerial" EntityType="AuditoriaModel.PresentacionSerial" />
-          <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
-          <AssociationSet Name="FK_Material_PresentacionSerial" Association="AuditoriaModel.FK_Material_PresentacionSerial">
-            <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
-            <End Role="Material" EntitySet="Material" />
-          </AssociationSet>
-          <EntitySet Name="BundleBoxing_Saco" EntityType="AuditoriaModel.BundleBoxing_Saco" />
           <EntitySet Name="Bundle" EntityType="AuditoriaModel.Bundle" />
           <AssociationSet Name="FK_Bundle_POrder" Association="AuditoriaModel.FK_Bundle_POrder">
             <End Role="POrder" EntitySet="POrder" />
             <End Role="Bundle" EntitySet="Bundle" />
           </AssociationSet>
+          <EntitySet Name="BundleBoxing" EntityType="AuditoriaModel.BundleBoxing" />
+          <EntitySet Name="BundleBoxing_Saco" EntityType="AuditoriaModel.BundleBoxing_Saco" />
           <EntitySet Name="FactorTendido" EntityType="AuditoriaModel.FactorTendido" />
+          <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
+          <EntitySet Name="PresentacionSerial" EntityType="AuditoriaModel.PresentacionSerial" />
           <EntitySet Name="ProcesosTendido" EntityType="AuditoriaModel.ProcesosTendido" />
+          <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
+          <AssociationSet Name="FK_BundleBoxing_Usuario" Association="AuditoriaModel.FK_BundleBoxing_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BundleBoxing_Saco_Usuario" Association="AuditoriaModel.FK_BundleBoxing_Saco_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
+          </AssociationSet>
           <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido">
             <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
             <End Role="FactorTendido" EntitySet="FactorTendido" />
           </AssociationSet>
+          <AssociationSet Name="FK_Material_PresentacionSerial" Association="AuditoriaModel.FK_Material_PresentacionSerial">
+            <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <EntitySet Name="BundleBoxingEnvio" EntityType="AuditoriaModel.BundleBoxingEnvio" />
+          <AssociationSet Name="FK_BundleBoxingEnvio_Usuario" Association="AuditoriaModel.FK_BundleBoxingEnvio_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxingEnvio" EntitySet="BundleBoxingEnvio" />
+          </AssociationSet>
+          <EntitySet Name="UsuarioPerfil" EntityType="AuditoriaModel.UsuarioPerfil" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -312,6 +406,9 @@
           <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CodBar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BundleBoxing" Relationship="AuditoriaModel.FK_BundleBoxing_Usuario" FromRole="Usuario" ToRole="BundleBoxing" />
+          <NavigationProperty Name="BundleBoxing_Saco" Relationship="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" FromRole="Usuario" ToRole="BundleBoxing_Saco" />
+          <NavigationProperty Name="BundleBoxingEnvio" Relationship="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" FromRole="Usuario" ToRole="BundleBoxingEnvio" />
         </EntityType>
         <EntityType Name="Style">
           <Key>
@@ -334,6 +431,32 @@
             </Principal>
             <Dependent Role="POrder">
               <PropertyRef Name="Id_Style" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Bundle">
+          <Key>
+            <PropertyRef Name="Id_Bundle" />
+          </Key>
+          <Property Name="Id_Bundle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Order" Type="Int32" />
+          <Property Name="NSeq" Type="Int32" />
+          <Property Name="Bld" Type="Int32" />
+          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Controlconcurrencia" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="Bundle" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_Bundle_POrder">
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.Bundle" Role="Bundle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POrder">
+              <PropertyRef Name="Id_Order" />
+            </Principal>
+            <Dependent Role="Bundle">
+              <PropertyRef Name="Id_Order" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -363,6 +486,37 @@
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
           <Property Name="ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxing_Usuario" FromRole="BundleBoxing" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="BundleBoxing_Saco">
+          <Key>
+            <PropertyRef Name="IdSaco" />
+          </Key>
+          <Property Name="IdSaco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Saco" Type="Int32" Nullable="false" />
+          <Property Name="NoMesa" Type="Int32" Nullable="false" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Seccion" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Abierto" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioAbre" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioInactiva" Type="Int32" />
+          <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" FromRole="BundleBoxing_Saco" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="FactorTendido">
+          <Key>
+            <PropertyRef Name="IdFactor" />
+          </Key>
+          <Property Name="IdFactor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="ProcesosTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="FactorTendido" ToRole="ProcesosTendido" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -383,6 +537,16 @@
           <Property Name="EsUnidad" Type="Boolean" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Material" Relationship="AuditoriaModel.FK_Material_PresentacionSerial" FromRole="PresentacionSerial" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="ProcesosTendido">
+          <Key>
+            <PropertyRef Name="IdProcesoTendido" />
+          </Key>
+          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FactorTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="ProcesosTendido" ToRole="FactorTendido" />
         </EntityType>
         <EntityType Name="SerialComplemento">
           <Key>
@@ -405,82 +569,30 @@
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
         </EntityType>
-        <Association Name="FK_Material_PresentacionSerial">
-          <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
-          <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="*" />
+        <Association Name="FK_BundleBoxing_Usuario">
+          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AuditoriaModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PresentacionSerial">
-              <PropertyRef Name="IdPresentacionSerial" />
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
             </Principal>
-            <Dependent Role="Material">
-              <PropertyRef Name="IdPresentacionSerial" />
+            <Dependent Role="BundleBoxing">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BundleBoxing_Saco">
-          <Key>
-            <PropertyRef Name="IdSaco" />
-          </Key>
-          <Property Name="IdSaco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="Saco" Type="Int32" Nullable="false" />
-          <Property Name="NoMesa" Type="Int32" Nullable="false" />
-          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Seccion" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuarioCrea" Type="Int32" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Abierto" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuarioAbre" Type="Int32" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuarioInactiva" Type="Int32" />
-          <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
-        </EntityType>
-        <EntityType Name="Bundle">
-          <Key>
-            <PropertyRef Name="Id_Bundle" />
-          </Key>
-          <Property Name="Id_Bundle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Order" Type="Int32" />
-          <Property Name="NSeq" Type="Int32" />
-          <Property Name="Bld" Type="Int32" />
-          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Controlconcurrencia" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="Bundle" ToRole="POrder" />
-        </EntityType>
-        <Association Name="FK_Bundle_POrder">
-          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="0..1" />
-          <End Type="AuditoriaModel.Bundle" Role="Bundle" Multiplicity="*" />
+        <Association Name="FK_BundleBoxing_Saco_Usuario">
+          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AuditoriaModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="POrder">
-              <PropertyRef Name="Id_Order" />
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
             </Principal>
-            <Dependent Role="Bundle">
-              <PropertyRef Name="Id_Order" />
+            <Dependent Role="BundleBoxing_Saco">
+              <PropertyRef Name="IdUsuarioCrea" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="FactorTendido">
-          <Key>
-            <PropertyRef Name="IdFactor" />
-          </Key>
-          <Property Name="IdFactor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" />
-          <Property Name="NoFactor" Type="Int32" Nullable="false" />
-          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <NavigationProperty Name="ProcesosTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="FactorTendido" ToRole="ProcesosTendido" />
-        </EntityType>
-        <EntityType Name="ProcesosTendido">
-          <Key>
-            <PropertyRef Name="IdProcesoTendido" />
-          </Key>
-          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FactorTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="ProcesosTendido" ToRole="FactorTendido" />
-        </EntityType>
         <Association Name="FK_FactorTendido_ProcesosTendido">
           <End Type="AuditoriaModel.ProcesosTendido" Role="ProcesosTendido" Multiplicity="1" />
           <End Type="AuditoriaModel.FactorTendido" Role="FactorTendido" Multiplicity="*" />
@@ -493,6 +605,60 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Material_PresentacionSerial">
+          <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
+          <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PresentacionSerial">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BundleBoxingEnvio">
+          <Key>
+            <PropertyRef Name="IdEnvio" />
+          </Key>
+          <Property Name="IdEnvio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="IdSaco" Type="Int32" />
+          <Property Name="Saco" Type="Int32" Nullable="false" />
+          <Property Name="Bulto" Type="Int32" Nullable="false" />
+          <Property Name="Yarda" Type="Int32" Nullable="false" />
+          <Property Name="Polin" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioInactiva" Type="Int32" />
+          <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" FromRole="BundleBoxingEnvio" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_BundleBoxingEnvio_Usuario">
+          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AuditoriaModel.BundleBoxingEnvio" Role="BundleBoxingEnvio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxingEnvio">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UsuarioPerfil">
+          <Key>
+            <PropertyRef Name="IdUsuarioPerfil" />
+          </Key>
+          <Property Name="IdUsuarioPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+          <Property Name="Esquema" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -548,6 +714,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Bundle">
+            <EntityTypeMapping TypeName="AuditoriaModel.Bundle">
+              <MappingFragment StoreEntitySet="Bundle">
+                <ScalarProperty Name="Controlconcurrencia" ColumnName="Controlconcurrencia" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Bld" ColumnName="Bld" />
+                <ScalarProperty Name="NSeq" ColumnName="NSeq" />
+                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
+                <ScalarProperty Name="Id_Bundle" ColumnName="Id_Bundle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BundleBoxing">
             <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing">
               <MappingFragment StoreEntitySet="BundleBoxing">
@@ -576,6 +756,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BundleBoxing_Saco">
+            <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing_Saco">
+              <MappingFragment StoreEntitySet="BundleBoxing_Saco">
+                <ScalarProperty Name="FechaInactivo" ColumnName="FechaInactivo" />
+                <ScalarProperty Name="IdUsuarioInactiva" ColumnName="IdUsuarioInactiva" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdUsuarioAbre" ColumnName="IdUsuarioAbre" />
+                <ScalarProperty Name="Abierto" ColumnName="Abierto" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
+                <ScalarProperty Name="Saco" ColumnName="Saco" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorTendido">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorTendido">
+              <MappingFragment StoreEntitySet="FactorTendido">
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
+                <ScalarProperty Name="IdFactor" ColumnName="IdFactor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Material">
             <EntityTypeMapping TypeName="AuditoriaModel.Material">
               <MappingFragment StoreEntitySet="Material">
@@ -593,6 +803,16 @@
                 <ScalarProperty Name="EsUnidad" ColumnName="EsUnidad" />
                 <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
                 <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcesosTendido">
+            <EntityTypeMapping TypeName="AuditoriaModel.ProcesosTendido">
+              <MappingFragment StoreEntitySet="ProcesosTendido">
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -618,56 +838,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BundleBoxing_Saco">
-            <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing_Saco">
-              <MappingFragment StoreEntitySet="BundleBoxing_Saco">
+          <EntitySetMapping Name="BundleBoxingEnvio">
+            <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxingEnvio">
+              <MappingFragment StoreEntitySet="BundleBoxingEnvio">
                 <ScalarProperty Name="FechaInactivo" ColumnName="FechaInactivo" />
                 <ScalarProperty Name="IdUsuarioInactiva" ColumnName="IdUsuarioInactiva" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdUsuarioAbre" ColumnName="IdUsuarioAbre" />
-                <ScalarProperty Name="Abierto" ColumnName="Abierto" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
-                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
-                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
-                <ScalarProperty Name="Corte" ColumnName="Corte" />
-                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Polin" ColumnName="Polin" />
+                <ScalarProperty Name="Yarda" ColumnName="Yarda" />
+                <ScalarProperty Name="Bulto" ColumnName="Bulto" />
                 <ScalarProperty Name="Saco" ColumnName="Saco" />
-                <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
+                <ScalarProperty Name="IdEnvio" ColumnName="IdEnvio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Bundle">
-            <EntityTypeMapping TypeName="AuditoriaModel.Bundle">
-              <MappingFragment StoreEntitySet="Bundle">
-                <ScalarProperty Name="Controlconcurrencia" ColumnName="Controlconcurrencia" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="Bld" ColumnName="Bld" />
-                <ScalarProperty Name="NSeq" ColumnName="NSeq" />
-                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
-                <ScalarProperty Name="Id_Bundle" ColumnName="Id_Bundle" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FactorTendido">
-            <EntityTypeMapping TypeName="AuditoriaModel.FactorTendido">
-              <MappingFragment StoreEntitySet="FactorTendido">
-                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
-                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
-                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
-                <ScalarProperty Name="IdFactor" ColumnName="IdFactor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcesosTendido">
-            <EntityTypeMapping TypeName="AuditoriaModel.ProcesosTendido">
-              <MappingFragment StoreEntitySet="ProcesosTendido">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
+          <EntitySetMapping Name="UsuarioPerfil">
+            <EntityTypeMapping TypeName="AuditoriaModel.UsuarioPerfil">
+              <MappingFragment StoreEntitySet="UsuarioPerfil">
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Esquema" ColumnName="Esquema" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioPerfil" ColumnName="IdUsuarioPerfil" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

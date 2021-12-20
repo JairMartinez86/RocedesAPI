@@ -12,30 +12,22 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BundleBoxing
+    public partial class BundleBoxingEnvio
     {
-        public int IdBundleBoxing { get; set; }
-        public int NoMesa { get; set; }
-        public string Serial { get; set; }
-        public string Nombre { get; set; }
-        public int Seccion { get; set; }
-        public int Bulto { get; set; }
-        public int Capaje { get; set; }
-        public int Yarda { get; set; }
-        public Nullable<int> IdSaco { get; set; }
-        public bool EnSaco { get; set; }
-        public string Corte { get; set; }
+        public int IdEnvio { get; set; }
         public string CorteCompleto { get; set; }
-        public string Estilo { get; set; }
-        public string Oper { get; set; }
+        public string Corte { get; set; }
+        public string Serial { get; set; }
+        public Nullable<int> IdSaco { get; set; }
+        public int Saco { get; set; }
+        public int Bulto { get; set; }
+        public int Yarda { get; set; }
+        public int Polin { get; set; }
+        public System.DateTime Fecha { get; set; }
         public int IdUsuario { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        public Nullable<int> IdUsuarioTermina { get; set; }
-        public Nullable<System.DateTime> FechaTermina { get; set; }
         public bool Activo { get; set; }
         public Nullable<int> IdUsuarioInactiva { get; set; }
         public Nullable<System.DateTime> FechaInactivo { get; set; }
-        public System.Guid ID { get; set; }
     
         public virtual Usuario Usuario { get; set; }
     }

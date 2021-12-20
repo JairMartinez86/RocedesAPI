@@ -20,7 +20,7 @@ namespace RocedesAPI.Controllers.INV
  
     public class BundleBoxingController : ApiController
     {
-        [Route("api/BundleBoxing/GetSerialesEscaneado")]
+        [Route("api/Inventario/BundleBoxing/GetSerialesEscaneado")]
         [HttpGet]
         public string GetSerialesEscaneado(string corte)
         {
@@ -60,7 +60,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/BundleBoxing/GetBundleBoxing")]
+        [Route("api/Inventario/BundleBoxing/GetBundleBoxing")]
         [HttpGet]
         public string GetBundleBoxing(string corte)
         {
@@ -121,7 +121,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/BundleBoxing/Pieza")]
+        [Route("api/Inventario/BundleBoxing/Pieza")]
         [HttpPost]
         public IHttpActionResult Pieza(string d)
         {
@@ -232,7 +232,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/BundleBoxing/GenerarSerial")]
+        [Route("api/Inventario/BundleBoxing/GenerarSerial")]
         [HttpPost]
         public IHttpActionResult GenerarSerial(string d)
         {
@@ -312,9 +312,179 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-  
 
 
+
+
+
+        [Route("api/Inventario/BundleBoxing/GetEnvio")]
+        [HttpGet]
+        public string GetEnvio(string corte)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                {
+
+                    List<BundleBoxingEnvioCustom> lst = (from b in _Cnx.BundleBoxingEnvio
+                                                    where b.Corte == corte && b.Activo
+                                                    join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
+                                                    select new BundleBoxingEnvioCustom()
+                                                    {
+                                                        IdEnvio = b.IdEnvio,
+                                                        CorteCompleto = b.CorteCompleto,
+                                                        Corte = b.Corte,
+                                                        Serial = b.Serial,
+                                                        IdSaco = b.IdSaco,
+                                                        Saco = (b.Saco == 0)? (int?) null: b.Saco,
+                                                        Bulto = (b.Bulto == 0) ? (int?)null : b.Bulto,
+                                                        Yarda = (b.Yarda == 0) ? (int?)null : b.Yarda,
+                                                        Polin = b.Polin,
+                                                        Fecha = b.Fecha,
+                                                        Login = u.Login,
+                                                        Activo = b.Activo
+
+                                                    }).ToList();
+
+
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+
+
+        [Route("api/Inventario/BundleBoxing/GuardarEnvio")]
+        [HttpPost]
+        public IHttpActionResult GuardarEnvio(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(GuardarSerialEnvio(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string GuardarSerialEnvio(string d)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                BundleBoxingEnvioCustom Datos = JsonConvert.DeserializeObject<BundleBoxingEnvioCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                    {
+
+                        if(_Cnx.BundleBoxingEnvio.FirstOrDefault( f => f.Serial.Equals(Datos.Serial) && f.CorteCompleto.Equals(Datos.CorteCompleto)) != null)
+                        {
+
+                            json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, $"Serial # <b>{Datos.Serial}</b> escaneado.", 0);
+                            return json;
+                        }
+
+                        BundleBoxingEnvio Registro = new BundleBoxingEnvio();
+
+                        BundleBoxing_Saco _Saco = _Cnx.BundleBoxing_Saco.ToList().Find(f => f.Serial.Equals(Datos.Serial) && f.CorteCompleto.Equals(Datos.CorteCompleto));
+
+
+                        Registro.Serial = Datos.Serial;
+                       
+                        Registro.Polin = Datos.Polin;
+                        Registro.Fecha = Datos.Fecha;
+                        Registro.IdUsuario = _Cnx.Usuario.FirstOrDefault(f => f.Login.Equals(Datos.Login)).IdUsuario;
+                        Registro.Activo = true;
+
+                        if (_Saco != null)
+                        {
+                            Registro.CorteCompleto = _Saco.CorteCompleto;
+                            Registro.Corte = _Saco.Corte;
+                            Registro.IdSaco = _Saco.IdSaco;
+                            Registro.Saco = _Saco.Saco;
+                            Registro.Bulto = _Cnx.BundleBoxing.Where(w => w.IdSaco == _Saco.IdSaco).Sum(s => s.Bulto);
+                        }
+                        else
+                        {
+                            BundleBoxing _Boxin = _Cnx.BundleBoxing.ToList().Find(f => f.Serial.Equals(Datos.Serial) && f.CorteCompleto.Equals(Datos.CorteCompleto) && !f.EnSaco);
+
+                            if(_Boxin == null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, $"Serial # <b>{Datos.Serial}</b> no encontrado.", 0);
+                                return json;
+                            }
+
+                            Registro.CorteCompleto = _Boxin.CorteCompleto;
+                            Registro.Corte = _Boxin.Corte;
+                            Registro.Yarda = _Boxin.Yarda;
+                        }
+
+                        _Cnx.BundleBoxingEnvio.Add(Registro);
+
+                        _Cnx.SaveChanges();
+                       
+
+                        BundleBoxingEnvioCustom Envio = new BundleBoxingEnvioCustom
+                        {
+                            IdEnvio = Registro.IdEnvio,
+                            CorteCompleto = Registro.CorteCompleto,
+                            Corte = Registro.Corte,
+                            Serial = Registro.Serial,
+                            IdSaco = Registro.IdSaco,
+                            Saco = (Registro.Saco == 0) ? (int?)null : Registro.Saco,
+                            Bulto = (Registro.Bulto == 0) ? (int?)null : Registro.Bulto,
+                            Yarda = (Registro.Yarda == 0) ? (int?)null : Registro.Yarda,
+                            Polin = Registro.Polin,
+                            Fecha = Registro.Fecha,
+                            Login = Datos.Login,
+                            Activo = Registro.Activo
+                        };
+
+
+
+                     
+
+                        json = Cls.Cls_Mensaje.Tojson(Envio, 1, string.Empty, $"Serial # <b>{Datos.Serial}</b> escaneado.", 0);
+
+                        scope.Complete();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+            return json;
+        }
+
+
+     
     }
-      
+
 }
