@@ -24,6 +24,13 @@ namespace RocedesAPI.Controllers
             return Login(usr, pwd);
         }
 
+        //GET api/Get
+        [HttpGet]
+        public string Get(string usr)
+        {
+            return Login(usr);
+        }
+
         private string Login(string usr, string pwd)
         {
 
@@ -65,9 +72,42 @@ namespace RocedesAPI.Controllers
         }
 
 
+        private string Login(string usr)
+        {
+
+            string json = string.Empty;
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    var query = (from _q in _Conexion.Usuario.AsEnumerable()
+                                 where _q.Activo == true && _q.Login.ToLower().Contains(usr.ToLower())
+                                 orderby _q.Login.Length
+                                 select new
+                                 {
+                                     Login = _q.Login,
+                                     Nombre = string.Concat(_q.Nombres, " ", _q.Apellidos)
+                                 }).Take(20).ToList();
 
 
-        
+                    json = Cls.Cls_Mensaje.Tojson(query, query.Count, string.Empty, string.Empty, 0);
+
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+        }
+
+
+
         [HttpPost]
         public IHttpActionResult Inicio(string usr, string pwd)
         {
@@ -187,14 +227,16 @@ namespace RocedesAPI.Controllers
                 {
                     var lst = (from up in _Conexion.UsuarioPerfil
                                                join u in _Conexion.Usuario on up.IdUsuario equals u.IdUsuario
-                                               where u.Login.Equals(login)
+                                               where u.Login.Equals(login) && up.Activo
                                                select new
                                                {
                                                    IdUsuarioPerfil = up.IdUsuarioPerfil,
-                                                   IdPerfil = up.IdPerfil,
                                                    IdUsuario = up.IdUsuario,
                                                    Esquema = up.Esquema,
-                                                   Link = up.Link
+                                                   NombreEsquema = up.NombreEsquema,
+                                                   Link = up.Link,
+                                                   NombreLink = up.NombreLink,
+                                                   Activo = up.Activo
 
                                                }).ToList();
 
@@ -332,6 +374,93 @@ namespace RocedesAPI.Controllers
                         }
                         else
                             json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "El Usuario ya se encuentra registrado.", 1); 
+
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+                }
+
+            }
+
+
+            return json;
+
+        }
+
+
+
+
+
+
+        [Route("api/Usuario/GuardarPerfil")]
+        public IHttpActionResult GuardarPerfil(string d, string usr)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(Perfil(d, usr));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+
+
+        }
+
+
+        private string Perfil(string d, string usr)
+        {
+            string json = string.Empty;
+
+            UsuarioPerfilCustom Datos = JsonConvert.DeserializeObject<UsuarioPerfilCustom>(d);
+
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+            {
+
+                try
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+                        int IdUsuario = _Conexion.Usuario.First(f => f.Login.Equals(usr)).IdUsuario;
+
+                        UsuarioPerfil Registro = _Conexion.UsuarioPerfil.FirstOrDefault(f => f.IdUsuario == IdUsuario && f.Esquema.Equals(Datos.Esquema) && f.Link.Equals(Datos.Link));
+
+
+
+                        if (Registro == null)
+                        {
+                            _Conexion.UsuarioPerfil.Add(new UsuarioPerfil
+                            {
+                                IdUsuario = _Conexion.Usuario.First(f => f.Login.Equals(usr)).IdUsuario,
+                                Esquema = Datos.Esquema,
+                                NombreEsquema = Datos.NombreEsquema,
+                                Link = Datos.Link,
+                                NombreLink = Datos.NombreLink,
+                                Activo = Datos.Activo
+                            });
+
+                          
+                        }
+                        else
+                        {
+                            Registro.NombreEsquema = Datos.NombreEsquema;
+                            Registro.NombreLink = Datos.NombreLink;
+                            Registro.Activo = Datos.Activo;
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro Guardado.", 0);
 
 
                     }

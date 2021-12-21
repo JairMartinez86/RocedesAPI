@@ -192,9 +192,11 @@
           </Key>
           <Property Name="IdUsuarioPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
-          <Property Name="IdPerfil" Type="int" Nullable="false" />
           <Property Name="Esquema" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombreEsquema" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Link" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="NombreLink" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Bundle_POrder">
           <End Role="POrder" Type="Self.POrder" Multiplicity="0..1" />
@@ -655,9 +657,11 @@
           </Key>
           <Property Name="IdUsuarioPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
           <Property Name="Esquema" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NombreEsquema" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NombreLink" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -861,9 +865,11 @@
           <EntitySetMapping Name="UsuarioPerfil">
             <EntityTypeMapping TypeName="AuditoriaModel.UsuarioPerfil">
               <MappingFragment StoreEntitySet="UsuarioPerfil">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="NombreLink" ColumnName="NombreLink" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="NombreEsquema" ColumnName="NombreEsquema" />
                 <ScalarProperty Name="Esquema" ColumnName="Esquema" />
-                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="IdUsuarioPerfil" ColumnName="IdUsuarioPerfil" />
               </MappingFragment>

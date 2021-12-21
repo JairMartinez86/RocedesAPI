@@ -112,15 +112,23 @@ namespace RocedesAPI.Controllers
 
                 if (!esComplemento)
                 {
-                    sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno  \n" +
+                    sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno, OB.seqno  \n" +
                     $"FROM SERIAL2 AS S \n" +
                     $"INNER JOIN OPER AS OP ON OP.operno = S.operno \n" +
-                     $"INNER JOIN BUNDLE AS BD ON BD.prodno = S.prodno AND BD.bundleno = S.bundleno \n" +
+                    $"INNER JOIN BUNDLE AS BD ON BD.prodno = S.prodno AND BD.bundleno = S.bundleno \n" +
+                    $"INNER JOIN OPBULL AS OB ON OB.operno = OP.operno AND OB.bulletin = '{estilo}'  \n" +
                     $"WHERE S.prodno = '{corte}' " +
-                    $"GROUP BY  S.serialno,  OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno";
+                    $"GROUP BY  S.serialno,  OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno, OB.bulletin, OB.seqno";
 
                     Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
                     DataTable tbl = _Cnx.GetDatos(sql, out json);
+
+                    sql = $"SELECT OB.operno, OB.seqno  \n" +
+                   $"FROM  OPBULL AS OB " +
+                   $"WHERE OB.bulletin = '{estilo}' AND OB.varid = '' \n";
+
+                    DataTable tbl2 = _Cnx.GetDatos(sql, out json);
+
 
                     if (tbl != null)
                     {

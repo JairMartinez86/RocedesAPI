@@ -16,8 +16,10 @@ namespace RocedesAPI.Models
     {
         public int IdUsuarioPerfil { get; set; }
         public int IdUsuario { get; set; }
-        public int IdPerfil { get; set; }
         public string Esquema { get; set; }
+        public string NombreEsquema { get; set; }
         public string Link { get; set; }
+        public string NombreLink { get; set; }
+        public bool Activo { get; set; }
     }
 }

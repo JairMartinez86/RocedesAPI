@@ -727,6 +727,7 @@
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
+    <Compile Include="Models\Cls\SIS\UsuarioPerfilCustom.cs" />
     <Compile Include="Models\Dset\DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1236,10 +1237,8 @@
     <Content Include="Models\Dset\DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\JMartinez-app - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\JMartinezAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CodeMirror\addon\comment\comment.js" />
