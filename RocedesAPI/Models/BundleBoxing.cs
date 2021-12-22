@@ -18,6 +18,7 @@ namespace RocedesAPI.Models
         public int NoMesa { get; set; }
         public string Serial { get; set; }
         public string Nombre { get; set; }
+        public string Talla { get; set; }
         public int Seccion { get; set; }
         public int Bulto { get; set; }
         public int Capaje { get; set; }
@@ -28,8 +29,8 @@ namespace RocedesAPI.Models
         public string CorteCompleto { get; set; }
         public string Estilo { get; set; }
         public string Oper { get; set; }
-        public int IdUsuario { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
+        public Nullable<int> IdUsuario { get; set; }
+        public Nullable<System.DateTime> FechaRegistro { get; set; }
         public Nullable<int> IdUsuarioTermina { get; set; }
         public Nullable<System.DateTime> FechaTermina { get; set; }
         public bool Activo { get; set; }

@@ -73,7 +73,8 @@ namespace RocedesAPI.Controllers.INV
 
                     List<BundleBoxingCustom> lst = (from b in _Cnx.BundleBoxing
                                                     join p in _Cnx.POrder on b.Corte equals p.POrder1
-                                                    join s in _Cnx.Bundle on p.Id_Order equals s.Id_Order
+                                                    join s in _Cnx.Bundle on new { ID = p.Id_Order, Bld = b.Bulto } equals new { ID = (s.Id_Order == null) ? 0 : (int)s.Id_Order , Bld = (s.Bld == null) ? 0 : (int)s.Bld } into BundleUnion
+                                                    from bu in BundleUnion.DefaultIfEmpty()
                                                     where p.POrderClient == corte && b.Activo
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
                                                     join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco into LeftSaco
@@ -85,7 +86,7 @@ namespace RocedesAPI.Controllers.INV
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
-                                                        Talla = s.Size,
+                                                        Talla = (bu == null) ? string.Empty : bu.Size,
                                                         Bulto = b.Bulto,
                                                         Capaje = b.Capaje,
                                                         Seccion = b.Seccion,
@@ -99,8 +100,27 @@ namespace RocedesAPI.Controllers.INV
                                                     }).ToList();
 
 
+                    List<BundleBoxingCustom> lstGrupo = (List<BundleBoxingCustom>)(from datos in lst
+                                                        group datos by new  { datos.Grupo, datos.Mesa, datos.Nombre, datos.Talla, datos.Seccion, datos.Saco, datos.Corte, datos.Estilo, datos.Login, datos.Fecha} into grupo
+                                                        select new BundleBoxingCustom()
+                                                        {
+                                                            Grupo = grupo.Key.Grupo,
+                                                            Mesa = grupo.Key.Mesa,
+                                                            Nombre = grupo.Key.Nombre,
+                                                            Talla = grupo.Key.Talla,
+                                                            Bulto = grupo.Sum(s => s.Bulto),
+                                                            Capaje = grupo.Sum(s => s.Capaje),
+                                                            Seccion = grupo.Key.Seccion,
+                                                            Saco = grupo.Key.Saco,
+                                                            Yarda = grupo.Sum(s => s.Yarda),
+                                                            Corte = grupo.Key.Corte,
+                                                            Estilo = grupo.Key.Estilo,
+                                                            Login = grupo.Key.Login,
+                                                            Fecha = grupo.Key.Fecha
+                                                        }).ToList();
 
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+                    json = Cls.Cls_Mensaje.Tojson(lstGrupo, lstGrupo.Count, string.Empty, string.Empty, 0);
 
 
                 }
@@ -146,6 +166,10 @@ namespace RocedesAPI.Controllers.INV
             {
                 BundleBoxingCustom Datos = JsonConvert.DeserializeObject<BundleBoxingCustom>(d);
 
+                List<BundleBoxingCustom> BoxingCustom = new List<BundleBoxingCustom>();
+
+                DateTime Fecha = DateTime.Now;
+
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
                 {
                     using (AuditoriaEntities _Conexion = new AuditoriaEntities())
@@ -177,39 +201,164 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
-
-                            Boxing = new BundleBoxing
+                            if(Datos.Oper != string.Empty)
                             {
-                                NoMesa = Datos.Mesa,
-                                Serial = Datos.Serial,
-                                Nombre = Datos.Nombre,
-                                Seccion = Datos.Seccion,
-                                Bulto = Datos.Bulto,
-                                Capaje = Datos.Capaje,
-                                Yarda = Datos.Yarda,
-                                EnSaco = Datos.EnSaco,
-                                IdSaco = (!Datos.EnSaco)? (int?)null : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Saco == Datos.Saco && sc.CorteCompleto == Datos.CorteCompleto && sc.Seccion == Datos.Seccion && sc.Activo).IdSaco,
-                                Corte = Datos.Corte,
-                                CorteCompleto = Datos.CorteCompleto,
-                                Estilo = Datos.Estilo,
-                                Oper = Datos.Oper,
-                                IdUsuario = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
-                                FechaRegistro = DateTime.Now,
-                                Activo = true
-                            };
+                                string sql = $"SELECT S.serialno, OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno, OB.seqno  \n" +
+                              $"FROM SERIAL2 AS S \n" +
+                              $"INNER JOIN OPER AS OP ON OP.operno = S.operno \n" +
+                              $"INNER JOIN BUNDLE AS BD ON BD.prodno = S.prodno AND BD.bundleno = S.bundleno \n" +
+                              $"INNER JOIN OPBULL AS OB ON OB.operno = OP.operno AND OB.bulletin = '{Datos.Estilo}'  \n" +
+                              $"WHERE S.prodno = '{Datos.Corte}' " +
+                              $"GROUP BY  S.serialno,  OP.Descr, S.bundleno, BD.qty, S.prodno, S.operno, OB.bulletin, OB.seqno";
 
-                            _Conexion.BundleBoxing.Add(Boxing);
+                                Cls_ConexionPervasive _Cnx = new Cls_ConexionPervasive();
+                                DataTable tbl = _Cnx.GetDatos(sql, out json);
+
+                                if(tbl == null)
+                                {
+                                    return json;
+                                }
+
+                                sql = $"SELECT OB.operno, OP.Descr, OB.seqno  \n" +
+                               $"FROM  OPBULL AS OB " +
+                               $"INNER JOIN OPER AS OP ON OP.operno = OB.operno \n" +
+                               $"WHERE OB.bulletin = '{Datos.Estilo}' AND OB.varid = '' \n";
+
+                                DataTable tbl2 = _Cnx.GetDatos(sql, out json);
+
+
+                                if (tbl2 == null)
+                                {
+                                    return json;
+                                }
+
+                                if (tbl.Rows.Count == 0 || tbl.Rows.Count == 0)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "Registro no encontrado.", 1);
+                                    return json;
+                                }
+
+                                DataTableExt.ConvertColumnType(tbl, "serialno", typeof(string));
+
+                                var OperMaster = (from OB in tbl2.AsEnumerable()
+                                                  select new
+                                                  {
+                                                      operno = OB.Field<string>("operno"),
+                                                      Descr = OB.Field<string>("Descr"),
+                                                      seqno = OB.Field<Int16>("seqno")
+                                                  }).ToList();
+
+
+
+                                List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(Datos.Corte) && b.EnSaco && b.Oper == Datos.Oper && b.Activo).ToList();
+
+
+
+                                List<BundleBoxingCustom> ltsBoxingCustom = (from s in tbl.AsEnumerable()
+                                                                            join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
+                                                                            join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), _Serial = s.Field<string>("serialno") } equals new { _Corte = b.Corte, _Serial = b.Serial } into SerialesUnion
+                                                                            from sb in SerialesUnion.DefaultIfEmpty()
+                                                                            join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
+                                                                            from sc in SacoUnion.DefaultIfEmpty()
+                                                                            where OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).operno == Datos.Oper
+                                                                            select new BundleBoxingCustom()
+                                                                            {
+                                                                                Serial = s.Field<string>("serialno"),
+                                                                                Nombre = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).Descr,//s.Field<string>("Descr").TrimStart().TrimEnd(),
+                                                                                Bulto = s.Field<int>("bundleno"),
+                                                                                Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
+                                                                                Saco = (sb != null) ? sc.Saco : 0,
+                                                                                Yarda = (sc != null) ? sb.Yarda : 0,
+                                                                                Mesa = (sc != null) ? sb.NoMesa : 0,
+                                                                                EnSaco = (sc != null) ? sb.EnSaco : true,
+                                                                                Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
+                                                                                CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
+                                                                                Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : Datos.Estilo,
+                                                                                Oper = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).operno,//s.Field<string>("operno").TrimStart().TrimEnd(),
+                                                                                Escaneado = true
+                                                                            }).ToList();
+
+
+                                foreach(BundleBoxingCustom b in ltsBoxingCustom)
+                                {
+
+                                    Boxing = new BundleBoxing
+                                    {
+                                        NoMesa = b.Mesa,
+                                        Serial = b.Serial,
+                                        Nombre = b.Nombre,
+                                        Seccion = b.Seccion,
+                                        Bulto = b.Bulto,
+                                        Capaje = b.Capaje,
+                                        Yarda = b.Yarda,
+                                        EnSaco = b.EnSaco,
+                                        IdSaco = (!b.EnSaco) ? (int?)null : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Saco == Datos.Saco && sc.CorteCompleto == Datos.CorteCompleto && sc.Seccion == Datos.Seccion && sc.Activo).IdSaco,
+                                        Corte = b.Corte,
+                                        CorteCompleto = b.CorteCompleto,
+                                        Estilo = b.Estilo,
+                                        Oper = b.Oper,
+                                        IdUsuario = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
+                                        FechaRegistro = Fecha,
+                                        Activo = true
+                                    };
+
+
+                                    BoxingCustom.Add(new BundleBoxingCustom
+                                    {
+                                        Escaneado = Boxing.Activo,
+                                        Saco = (!Datos.EnSaco) ? 0 : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.IdSaco == Boxing.IdSaco && sc.Corte == Boxing.Corte && sc.Seccion == Boxing.Seccion).Saco,
+                                        Mesa = Boxing.NoMesa
+                                    });
+
+
+
+                                    _Conexion.BundleBoxing.Add(Boxing);
+
+
+                                }
+
+     
+                            }
+                            else
+                            {
+
+                                Boxing = new BundleBoxing
+                                {
+                                    NoMesa = Datos.Mesa,
+                                    Serial = Datos.Serial,
+                                    Nombre = Datos.Nombre,
+                                    Seccion = Datos.Seccion,
+                                    Bulto = Datos.Bulto,
+                                    Capaje = Datos.Capaje,
+                                    Yarda = Datos.Yarda,
+                                    EnSaco = Datos.EnSaco,
+                                    IdSaco = (!Datos.EnSaco) ? (int?)null : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Saco == Datos.Saco && sc.CorteCompleto == Datos.CorteCompleto && sc.Seccion == Datos.Seccion && sc.Activo).IdSaco,
+                                    Corte = Datos.Corte,
+                                    CorteCompleto = Datos.CorteCompleto,
+                                    Estilo = Datos.Estilo,
+                                    Oper = Datos.Oper,
+                                    IdUsuario = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
+                                    FechaRegistro = Fecha,
+                                    Activo = true
+                                };
+
+
+                                BoxingCustom.Add(new BundleBoxingCustom
+                                {
+                                    Escaneado = Boxing.Activo,
+                                    Saco = (!Datos.EnSaco) ? 0 : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.IdSaco == Boxing.IdSaco && sc.Corte == Boxing.Corte && sc.Seccion == Boxing.Seccion).Saco,
+                                    Mesa = Boxing.NoMesa
+                                });
+
+
+                                _Conexion.BundleBoxing.Add(Boxing);
+                            }
+
+                                   
+
+
+                            
                         }
-
-                        BundleBoxingCustom BoxingCustom = new BundleBoxingCustom
-                        {
-                            Escaneado = Boxing.Activo,
-                            Saco = (!Datos.EnSaco)? 0 :  _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.IdSaco == Boxing.IdSaco && sc.Corte == Boxing.Corte && sc.Seccion == Boxing.Seccion).Saco,
-                            Mesa = Boxing.NoMesa
-                        };
-
-
-
 
 
                         _Conexion.SaveChanges();
@@ -218,6 +367,7 @@ namespace RocedesAPI.Controllers.INV
                         json = Cls.Cls_Mensaje.Tojson(BoxingCustom, 1, string.Empty, $"Serial # <b>{Datos.Serial}</b> escaneado.", 0);
 
                     }
+                
                 }
             }
             catch(Exception ex)
