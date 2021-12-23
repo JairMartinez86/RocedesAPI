@@ -118,6 +118,37 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="FactorCorte">
+          <Key>
+            <PropertyRef Name="IdFactorCorte" />
+          </Key>
+          <Property Name="IdFactorCorte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Linearecta" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="Curva" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="Esquinas" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="Piquetes" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="HacerOrificio" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="PonerTape" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FactorDetalleCorte">
+          <Key>
+            <PropertyRef Name="IdFactorDetalleCorte" />
+          </Key>
+          <Property Name="IdFactorDetalleCorte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFactorCorte" Type="int" Nullable="false" />
+          <Property Name="Item" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Componente" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estilo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LayLimits" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TotalPieces" Type="int" Nullable="false" />
+          <Property Name="StraightPerimeter" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CurvedPerimeter" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalPerimeter" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TotalNotches" Type="int" Nullable="false" />
+          <Property Name="TotalCorners" Type="int" Nullable="false" />
+          <Property Name="Segundos" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+          <Property Name="Minutos_Pza" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="FactorTendido">
           <Key>
             <PropertyRef Name="IdFactor" />
@@ -247,6 +278,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FactorDetalleCorte_FactorCorte">
+          <End Role="FactorCorte" Type="Self.FactorCorte" Multiplicity="1" />
+          <End Role="FactorDetalleCorte" Type="Self.FactorDetalleCorte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FactorCorte">
+              <PropertyRef Name="IdFactorCorte" />
+            </Principal>
+            <Dependent Role="FactorDetalleCorte">
+              <PropertyRef Name="IdFactorCorte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FactorTendido_ProcesosTendido">
           <End Role="ProcesosTendido" Type="Self.ProcesosTendido" Multiplicity="1" />
           <End Role="FactorTendido" Type="Self.FactorTendido" Multiplicity="*" />
@@ -290,6 +333,8 @@
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxingEnvio" EntityType="Self.BundleBoxingEnvio" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="FactorCorte" EntityType="Self.FactorCorte" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="FactorDetalleCorte" EntityType="Self.FactorDetalleCorte" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorTendido" EntityType="Self.FactorTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
@@ -312,6 +357,10 @@
           <AssociationSet Name="FK_BundleBoxingEnvio_Usuario" Association="Self.FK_BundleBoxingEnvio_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="BundleBoxingEnvio" EntitySet="BundleBoxingEnvio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorDetalleCorte_FactorCorte" Association="Self.FK_FactorDetalleCorte_FactorCorte">
+            <End Role="FactorCorte" EntitySet="FactorCorte" />
+            <End Role="FactorDetalleCorte" EntitySet="FactorDetalleCorte" />
           </AssociationSet>
           <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="Self.FK_FactorTendido_ProcesosTendido">
             <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
@@ -396,6 +445,12 @@
           <AssociationSet Name="FK_BundleBoxing_Usuario" Association="AuditoriaModel.FK_BundleBoxing_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
+          <EntitySet Name="FactorCorte" EntityType="AuditoriaModel.FactorCorte" />
+          <EntitySet Name="FactorDetalleCorte" EntityType="AuditoriaModel.FactorDetalleCorte" />
+          <AssociationSet Name="FK_FactorDetalleCorte_FactorCorte" Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte">
+            <End Role="FactorCorte" EntitySet="FactorCorte" />
+            <End Role="FactorDetalleCorte" EntitySet="FactorDetalleCorte" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -665,6 +720,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FactorCorte">
+          <Key>
+            <PropertyRef Name="IdFactorCorte" />
+          </Key>
+          <Property Name="IdFactorCorte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Linearecta" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Curva" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Esquinas" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Piquetes" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="HacerOrificio" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="PonerTape" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="FactorDetalleCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorCorte" ToRole="FactorDetalleCorte" />
+        </EntityType>
+        <EntityType Name="FactorDetalleCorte">
+          <Key>
+            <PropertyRef Name="IdFactorDetalleCorte" />
+          </Key>
+          <Property Name="IdFactorDetalleCorte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFactorCorte" Type="Int32" Nullable="false" />
+          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Componente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LayLimits" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPieces" Type="Int32" Nullable="false" />
+          <Property Name="StraightPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CurvedPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TotalPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TotalNotches" Type="Int32" Nullable="false" />
+          <Property Name="TotalCorners" Type="Int32" Nullable="false" />
+          <Property Name="Segundos" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Minutos_Pza" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="FactorCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorDetalleCorte" ToRole="FactorCorte" />
+        </EntityType>
+        <Association Name="FK_FactorDetalleCorte_FactorCorte">
+          <End Type="AuditoriaModel.FactorCorte" Role="FactorCorte" Multiplicity="1" />
+          <End Type="AuditoriaModel.FactorDetalleCorte" Role="FactorDetalleCorte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FactorCorte">
+              <PropertyRef Name="IdFactorCorte" />
+            </Principal>
+            <Dependent Role="FactorDetalleCorte">
+              <PropertyRef Name="IdFactorCorte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -875,6 +975,39 @@
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
                 <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorCorte">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorCorte">
+              <MappingFragment StoreEntitySet="FactorCorte">
+                <ScalarProperty Name="PonerTape" ColumnName="PonerTape" />
+                <ScalarProperty Name="HacerOrificio" ColumnName="HacerOrificio" />
+                <ScalarProperty Name="Piquetes" ColumnName="Piquetes" />
+                <ScalarProperty Name="Esquinas" ColumnName="Esquinas" />
+                <ScalarProperty Name="Curva" ColumnName="Curva" />
+                <ScalarProperty Name="Linearecta" ColumnName="Linearecta" />
+                <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorDetalleCorte">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorDetalleCorte">
+              <MappingFragment StoreEntitySet="FactorDetalleCorte">
+                <ScalarProperty Name="Minutos_Pza" ColumnName="Minutos_Pza" />
+                <ScalarProperty Name="Segundos" ColumnName="Segundos" />
+                <ScalarProperty Name="TotalCorners" ColumnName="TotalCorners" />
+                <ScalarProperty Name="TotalNotches" ColumnName="TotalNotches" />
+                <ScalarProperty Name="TotalPerimeter" ColumnName="TotalPerimeter" />
+                <ScalarProperty Name="CurvedPerimeter" ColumnName="CurvedPerimeter" />
+                <ScalarProperty Name="StraightPerimeter" ColumnName="StraightPerimeter" />
+                <ScalarProperty Name="TotalPieces" ColumnName="TotalPieces" />
+                <ScalarProperty Name="LayLimits" ColumnName="LayLimits" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="Componente" ColumnName="Componente" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
+                <ScalarProperty Name="IdFactorDetalleCorte" ColumnName="IdFactorDetalleCorte" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

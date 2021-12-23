@@ -38,5 +38,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<BundleBoxingEnvio> BundleBoxingEnvio { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
         public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
+        public virtual DbSet<FactorCorte> FactorCorte { get; set; }
+        public virtual DbSet<FactorDetalleCorte> FactorDetalleCorte { get; set; }
     }
 }

@@ -85,7 +85,8 @@ namespace RocedesAPI.Controllers.Reporte
             if(Datos != null)
             {
                 reportOption.ReportModel.ProcessingMode = ProcessingMode.Local;
-                reportOption.ReportModel.ReportPath = HttpContext.Current.Server.MapPath("~/Resources/" + Datos.Rdlc);
+                //reportOption.ReportModel.ReportPath = HttpContext.Current.Server.MapPath("~/Resources/" + Datos.Rdlc);
+                reportOption.ReportModel.ReportPath = HttpContext.Current.Server.MapPath("~/bin/Resources/" + Datos.Rdlc);
 
                 reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "DataSet1", Value = GetData(Datos) });
 
