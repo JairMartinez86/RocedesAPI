@@ -162,101 +162,133 @@ namespace RocedesAPI.Controllers
                             {
                                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                                 {
-                                    List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && b.EnSaco && b.FechaInactivo == null).ToList();
+                                    List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && b.FechaInactivo == null).ToList();
+                                    List<BundleBoxingCustom> ltsBoxingCustom = null;
+
+                                    if (lstBundleBoxing.FindAll(w => w.Oper != string.Empty &&  w.Corte == corte && OperMaster.Any(f => f.operno != w.Oper) ).Count == 0)
+                                    {
+
+                                        ltsBoxingCustom = (from s in tbl.AsEnumerable()
+                                                           join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
+                                                           join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), _Serial = s.Field<string>("serialno")} equals new { _Corte = b.Corte, _Serial = b.Serial} into SerialesUnion
+                                                           from sb in SerialesUnion.DefaultIfEmpty()
+                                                           join bun in _Conexion.Bundle on new { ID = p.Id_Order, Bld = s.Field<int>("bundleno") } equals new { ID = (bun.Id_Order == null) ? 0 : (int)bun.Id_Order, Bld = (bun.Bld == null) ? 0 : (int)bun.Bld } into BundleUnion
+                                                           from bu in BundleUnion.DefaultIfEmpty()
+                                                           join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
+                                                           from sc in SacoUnion.DefaultIfEmpty()
+                                                           select new BundleBoxingCustom()
+                                                           {
+                                                               Serial = s.Field<string>("serialno"),
+                                                               Nombre = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).Descr,//s.Field<string>("Descr").TrimStart().TrimEnd(),
+                                                               Talla = (bu == null) ? string.Empty : bu.Size,
+                                                               Bulto = s.Field<int>("bundleno"),
+                                                               Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
+                                                               Saco = (sb != null && sc != null) ? sc.Saco : 0,
+                                                               Yarda = (sc != null) ? sb.Yarda : 0,
+                                                               Mesa = (sc != null) ? sb.NoMesa : 0,
+                                                               EnSaco = (sc != null) ? sb.EnSaco : true,
+                                                               Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
+                                                               CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
+                                                               Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
+                                                               Oper = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).operno,//s.Field<string>("operno").TrimStart().TrimEnd(),
+                                                               Escaneado = (sb == null) ? false : sb.Activo
+                                                           }).Union(from com in _Conexion.SerialComplemento
+                                                                    join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
+                                                                    where com.Corte.Equals(corte) &&  com.Activo
+                                                                    join p in _Conexion.POrder on com.CorteCompleto equals p.POrder1.TrimEnd().TrimStart()
+                                                                    join bun in _Conexion.Bundle on new { ID = p.Id_Order, Bld = com.Cantidad } equals new { ID = (bun.Id_Order == null) ? 0 : (int)bun.Id_Order, Bld = (bun.Bld == null) ? 0 : (int)bun.Bld } into BundleUnion
+                                                                    from bu in BundleUnion.DefaultIfEmpty()
+                                                                    select new BundleBoxingCustom()
+                                                                    {
+                                                                        Serial = com.Serial,
+                                                                        Nombre = com.Pieza,
+                                                                        Talla = (bu == null) ? string.Empty : bu.Size,
+                                                                        Bulto = com.Cantidad,
+                                                                        Capaje = (presen.EsUnidad) ? com.Capaje : 0,
+                                                                        Saco = 0,
+                                                                        Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
+                                                                        Mesa = 0,
+                                                                        EnSaco = com.EnSaco,
+                                                                        Corte = com.Corte,
+                                                                        CorteCompleto = com.CorteCompleto,
+                                                                        Estilo = com.Estilo,
+                                                                        Oper = string.Empty,
+                                                                        Escaneado = false
+                                                                    }
+                                                 ).ToList();
+
+
+  
+
+                                        ltsBoxingCustom.Where(w =>  w.Corte.Equals(corte) && (lstBundleBoxing.Any(item2 => item2.Serial.Equals(w.Serial)))).ToList().ForEach(i => i.Escaneado = true);
 
 
 
-                                    List<BundleBoxingCustom> ltsBoxingCustom = (from s in tbl.AsEnumerable()
-                                                                                join p in _Conexion.POrder on s.Field<string>("prodno").TrimStart().TrimEnd() equals p.POrder1.TrimEnd().TrimStart()
-                                                                                join b in lstBundleBoxing on new { _Corte = s.Field<string>("prodno"), _Serial = s.Field<string>("serialno") } equals new { _Corte = b.Corte, _Serial = b.Serial } into SerialesUnion
-                                                                                from sb in SerialesUnion.DefaultIfEmpty()
-                                                                                join bun in _Conexion.Bundle on new { ID = p.Id_Order, Bld = s.Field<int>("bundleno") } equals new { ID = (bun.Id_Order == null) ? 0 : (int)bun.Id_Order, Bld = (bun.Bld == null) ? 0 : (int)bun.Bld } into BundleUnion
-                                                                                from bu in BundleUnion.DefaultIfEmpty()
-                                                                                join sc in _Conexion.BundleBoxing_Saco on (sb == null ? 0 : sb.IdSaco) equals sc.IdSaco into SacoUnion
-                                                                                from sc in SacoUnion.DefaultIfEmpty()
-                                                                                select new BundleBoxingCustom()
-                                                                                {
-                                                                                    Serial = s.Field<string>("serialno"),
-                                                                                    Nombre = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).Descr,//s.Field<string>("Descr").TrimStart().TrimEnd(),
-                                                                                    Talla = (bu == null) ? string.Empty : bu.Size,
-                                                                                    Bulto = s.Field<int>("bundleno"),
-                                                                                    Capaje = Convert.ToInt32(s.Field<Int16>("qty")),
-                                                                                    Saco = (sb != null && sc != null) ? sc.Saco : 0,
-                                                                                    Yarda = (sc != null) ? sb.Yarda : 0,
-                                                                                    Mesa = (sc != null) ? sb.NoMesa : 0,
-                                                                                    EnSaco = (sc != null) ? sb.EnSaco : true,
-                                                                                    Corte = s.Field<string>("prodno").TrimStart().TrimEnd(),
-                                                                                    CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
-                                                                                    Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
-                                                                                    Oper = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).operno,//s.Field<string>("operno").TrimStart().TrimEnd(),
-                                                                                    Escaneado = (sb != null) ? true : false
-                                                                                }).Union(from com in _Conexion.SerialComplemento
-                                                                                         join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
-                                                                                         where com.Corte.Equals(corte) && com.EnSaco && com.Activo
-                                                                                         join p in _Conexion.POrder on com.CorteCompleto equals p.POrder1.TrimEnd().TrimStart()
-                                                                                         join bun in _Conexion.Bundle on new { ID = p.Id_Order, Bld = com.Cantidad } equals new { ID = (bun.Id_Order == null) ? 0 : (int)bun.Id_Order, Bld = (bun.Bld == null) ? 0 : (int)bun.Bld } into BundleUnion
-                                                                                         from bu in BundleUnion.DefaultIfEmpty()
-                                                                                         select new BundleBoxingCustom()
-                                                                                         {
-                                                                                             Serial = com.Serial,
-                                                                                             Nombre = com.Pieza,
-                                                                                             Talla = (bu == null) ? string.Empty : bu.Size,
-                                                                                             Bulto = com.Cantidad,
-                                                                                             Capaje = (presen.EsUnidad) ? com.Capaje : 0,
-                                                                                             Saco = 0,
-                                                                                             Yarda = (presen.EsUnidad) ? 0 : com.Capaje,
-                                                                                             Mesa = 0,
-                                                                                             EnSaco = com.EnSaco,
-                                                                                             Corte = com.Corte,
-                                                                                             CorteCompleto = com.CorteCompleto,
-                                                                                             Estilo = com.Estilo,
-                                                                                             Oper = string.Empty,
-                                                                                             Escaneado = false
-                                                                                         }
-                                              ).ToList();
+
+                                        foreach (BundleBoxingCustom b in ltsBoxingCustom.Where(w => w.Oper != string.Empty &&  !lstBundleBoxing.Any(f => f.Serial == w.Serial)))
+                                        {
+
+                                            lstGuardar.Add(new BundleBoxing
+                                            {
+                                                NoMesa = b.Mesa,
+                                                Serial = b.Serial,
+                                                Nombre = b.Nombre,
+                                                Talla = b.Talla,
+                                                Seccion = b.Seccion,
+                                                Bulto = b.Bulto,
+                                                Capaje = b.Capaje,
+                                                Yarda = b.Yarda,
+                                                EnSaco = b.EnSaco,
+                                                IdSaco = null,
+                                                Corte = b.Corte,
+                                                CorteCompleto = b.CorteCompleto,
+                                                Estilo = b.Estilo,
+                                                Oper = b.Oper,
+                                                IdUsuario = null,
+                                                FechaRegistro = null,
+                                                Activo = false
+                                            });
 
 
 
-                                    ltsBoxingCustom.Where(w => w.Corte.Equals(corte) && (lstBundleBoxing.Any(item2 => item2.Serial.Equals(w.Serial)))).ToList().ForEach(i => i.Escaneado = true);
+                                        }
 
-                                    
+                                        if (lstGuardar.Count > 0) _Conexion.BundleBoxing.AddRange(lstGuardar);
 
 
-                                      foreach (BundleBoxingCustom b in ltsBoxingCustom.Where(w => !lstBundleBoxing.Any(f => f.Serial == w.Serial)))
-                                      {
+                                    }
+                                    else
+                                    {
+                                        ltsBoxingCustom = (from s in lstBundleBoxing
+                                                           join sc in _Conexion.BundleBoxing_Saco on  s.IdSaco equals sc.IdSaco into SacoUnion
+                                                           from sc in SacoUnion.DefaultIfEmpty()
+                                                           select new BundleBoxingCustom()
+                                                           {
+                                                               Serial = s.Serial,
+                                                               Nombre = s.Nombre,
+                                                               Talla = s.Talla,
+                                                               Bulto = s.Bulto,
+                                                               Capaje = s.Capaje,
+                                                               Saco = (sc != null) ? sc.Saco : 0,
+                                                               Yarda = s.Yarda,
+                                                               Mesa = s.NoMesa,
+                                                               EnSaco = s.EnSaco,
+                                                               Corte = s.Corte,
+                                                               CorteCompleto = s.CorteCompleto,
+                                                               Estilo = s.Estilo,
+                                                               Oper = s.Oper,
+                                                               Escaneado = s.Activo
+                                                           }).ToList();
 
-                                        lstGuardar.Add( new BundleBoxing
-                                          {
-                                              NoMesa = b.Mesa,
-                                              Serial = b.Serial,
-                                              Nombre = b.Nombre,
-                                              Talla = b.Talla,
-                                              Seccion = b.Seccion,
-                                              Bulto = b.Bulto,
-                                              Capaje = b.Capaje,
-                                              Yarda = b.Yarda,
-                                              EnSaco = b.EnSaco,
-                                              IdSaco = null,
-                                              Corte = b.Corte,
-                                              CorteCompleto = b.CorteCompleto,
-                                              Estilo = b.Estilo,
-                                              Oper = b.Oper,
-                                              IdUsuario = null,
-                                              FechaRegistro = null,
-                                              Activo = false
-                                          });
+                                    }
 
-                      
-
-                                      }
-
-                                    _Conexion.BundleBoxing.AddRange(lstGuardar);
 
                                     json = Cls.Cls_Mensaje.Tojson(ltsBoxingCustom, ltsBoxingCustom.Count, string.Empty, string.Empty, 0);
 
 
                                     _Conexion.SaveChanges();
                                     scope.Complete();
+                                    scope.Dispose();
                                 }
 
                             }
@@ -341,7 +373,7 @@ namespace RocedesAPI.Controllers
                             }
 
 
-                            _Conexion.BundleBoxing.AddRange(lstGuardar);
+                            if (lstGuardar.Count > 0) _Conexion.BundleBoxing.AddRange(lstGuardar);
 
                             json = Cls.Cls_Mensaje.Tojson(ltsBoxingCustom, ltsBoxingCustom.Count, string.Empty, string.Empty, 0);
 
@@ -349,6 +381,7 @@ namespace RocedesAPI.Controllers
 
                             _Conexion.SaveChanges();
                             scope.Complete();
+                            scope.Dispose();
                         }
 
 

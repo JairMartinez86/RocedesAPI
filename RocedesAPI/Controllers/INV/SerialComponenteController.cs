@@ -108,7 +108,15 @@ namespace RocedesAPI.Controllers.INV
 
 
                         json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, $"Serial # <b>{serial}</b> eliminado.", 0);
-      
+
+                        if (!Registro.Activo)
+                        {
+                            BundleBoxing Boxing = _Conexion.BundleBoxing.First(f => f.Serial == Registro.Serial && f.Oper == string.Empty);
+                            if (Boxing != null) _Conexion.BundleBoxing.Remove(Boxing);
+                        }
+                           
+
+
 
                         _Conexion.SaveChanges();
                         scope.Complete();
