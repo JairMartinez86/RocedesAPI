@@ -26,7 +26,7 @@
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3" PointY="26.625" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Usuario" />
         <EntityTypeShape EntityType="AuditoriaModel.FactorCorte" Width="1.5" PointX="10.375" PointY="6.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.FactorDetalleCorte" Width="1.5" PointX="12.625" PointY="6.125" />
+        <EntityTypeShape EntityType="AuditoriaModel.FactorDetalleCorte" Width="1.5" PointX="12.625" PointY="6.25" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" />
         </Diagram>
     </edmx:Diagrams>

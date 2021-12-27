@@ -146,8 +146,6 @@
           <Property Name="TotalPerimeter" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="TotalNotches" Type="int" Nullable="false" />
           <Property Name="TotalCorners" Type="int" Nullable="false" />
-          <Property Name="Segundos" Type="decimal" Precision="18" Scale="10" Nullable="false" />
-          <Property Name="Minutos_Pza" Type="decimal" Precision="18" Scale="10" Nullable="false" />
         </EntityType>
         <EntityType Name="FactorTendido">
           <Key>
@@ -749,8 +747,6 @@
           <Property Name="TotalPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="TotalNotches" Type="Int32" Nullable="false" />
           <Property Name="TotalCorners" Type="Int32" Nullable="false" />
-          <Property Name="Segundos" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <Property Name="Minutos_Pza" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
           <NavigationProperty Name="FactorCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorDetalleCorte" ToRole="FactorCorte" />
         </EntityType>
         <Association Name="FK_FactorDetalleCorte_FactorCorte">
@@ -994,8 +990,6 @@
           <EntitySetMapping Name="FactorDetalleCorte">
             <EntityTypeMapping TypeName="AuditoriaModel.FactorDetalleCorte">
               <MappingFragment StoreEntitySet="FactorDetalleCorte">
-                <ScalarProperty Name="Minutos_Pza" ColumnName="Minutos_Pza" />
-                <ScalarProperty Name="Segundos" ColumnName="Segundos" />
                 <ScalarProperty Name="TotalCorners" ColumnName="TotalCorners" />
                 <ScalarProperty Name="TotalNotches" ColumnName="TotalNotches" />
                 <ScalarProperty Name="TotalPerimeter" ColumnName="TotalPerimeter" />

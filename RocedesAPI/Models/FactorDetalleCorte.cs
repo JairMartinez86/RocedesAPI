@@ -26,8 +26,6 @@ namespace RocedesAPI.Models
         public decimal TotalPerimeter { get; set; }
         public int TotalNotches { get; set; }
         public int TotalCorners { get; set; }
-        public decimal Segundos { get; set; }
-        public decimal Minutos_Pza { get; set; }
     
         public virtual FactorCorte FactorCorte { get; set; }
     }
