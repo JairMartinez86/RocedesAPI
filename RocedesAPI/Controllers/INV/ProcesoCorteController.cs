@@ -103,7 +103,7 @@ namespace RocedesAPI.Controllers.INV
                                   select new
                                   {
                                       Componente = grupo.Key.Componente,
-                                      Minutos_Pza  = grupo.Key.IdFactorDetalleCorte
+                                      IdFactorDetalleCorte = grupo.Key.IdFactorDetalleCorte
                                   }).Take(20).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(_Query, _Query.Count, string.Empty, string.Empty, 0);
@@ -136,31 +136,33 @@ namespace RocedesAPI.Controllers.INV
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
 
-                 
-                    FactorDetalleCorteCustom Detalle = (FactorDetalleCorteCustom)(from d in _Cnx.FactorDetalleCorte
-                                                                                  where d.IdFactorDetalleCorte == IdFactorDetalleCorte
-                                                                                  select new FactorDetalleCorteCustom()
-                                                                                  {
-                                                                                      IdFactorDetalleCorte = d.IdFactorDetalleCorte,
-                                                                                      IdFactorCorte = d.IdFactorCorte,
-                                                                                      Item = d.Item,
-                                                                                      Componente = d.Componente,
-                                                                                      Estilo = d.Estilo,
-                                                                                      LayLimits = d.LayLimits,
-                                                                                      TotalPieces = d.TotalPieces,
-                                                                                      StraightPerimeter = d.StraightPerimeter,
-                                                                                      CurvedPerimeter = d.CurvedPerimeter,
-                                                                                      TotalPerimeter = d.TotalPerimeter,
-                                                                                      TotalNotches = d.TotalNotches,
-                                                                                      TotalCorners = d.TotalCorners,
-                                                                                      Segundos = 0,
-                                                                                      Minutos_Pza = 0
+                    int IdFactorCorte = 0;
 
-                                                                                  }).Take(1);
+                    List<FactorDetalleCorteCustom> lstDetalleFactor = (from d in _Cnx.FactorDetalleCorte
+                                                                       where d.IdFactorDetalleCorte == IdFactorDetalleCorte
+                                                                       select new FactorDetalleCorteCustom()
+                                                                       {
+                                                                           IdFactorDetalleCorte = d.IdFactorDetalleCorte,
+                                                                           IdFactorCorte = d.IdFactorCorte,
+                                                                           Item = d.Item,
+                                                                           Componente = d.Componente,
+                                                                           Estilo = d.Estilo,
+                                                                           LayLimits = d.LayLimits,
+                                                                           TotalPieces = d.TotalPieces,
+                                                                           StraightPerimeter = d.StraightPerimeter,
+                                                                           CurvedPerimeter = d.CurvedPerimeter,
+                                                                           TotalPerimeter = d.TotalPerimeter,
+                                                                           TotalNotches = d.TotalNotches,
+                                                                           TotalCorners = d.TotalCorners,
+                                                                           Segundos = 0,
+                                                                           Minutos_Pza = 0
 
+                                                                       }).ToList();
+
+
+                    IdFactorCorte = lstDetalleFactor[0].IdFactorCorte;
 
                     var FactorCorte = (from f in _Cnx.FactorCorte
-                                       where f.IdFactorCorte == Detalle.IdFactorCorte
                                        select new
                                        {
                                            IdFactorCorte = f.IdFactorCorte,
@@ -170,14 +172,14 @@ namespace RocedesAPI.Controllers.INV
                                            Piquetes = f.Piquetes,
                                            HacerOrificio = f.HacerOrificio,
                                            PonerTape = f.PonerTape
-                                       }).Take(1);
+                                       }).ToList();
 
 
 
 
                     List<object> registros = new List<object>();
-                    registros.Add(FactorCorte);
-                    registros.Add(Detalle);
+                    registros.Add(FactorCorte.First(w => w.IdFactorCorte == IdFactorCorte));
+                   registros.Add(lstDetalleFactor[0]);
 
 
 

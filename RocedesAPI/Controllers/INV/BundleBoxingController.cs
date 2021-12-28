@@ -213,22 +213,28 @@ namespace RocedesAPI.Controllers.INV
 
                         IdSaco = (!Datos.EnSaco) ? 0 : _Conexion.BundleBoxing_Saco.FirstOrDefault(sc => sc.Corte == Datos.Corte && sc.Seccion == Datos.Seccion && sc.NoMesa == Datos.Mesa && sc.Saco == Datos.Saco).IdSaco;
 
-                        foreach (BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.Oper.Equals(Datos.Oper) && w.Serial != Datos.Serial && !w.Activo))
+                        if(Datos.Oper != string.Empty)
                         {
-                            b.Activo = true;
-                            b.Seccion = Datos.Seccion;
-                            b.IdSaco = IdSaco;
-                            b.NoMesa = Datos.Mesa;
-                            b.FechaRegistro = Fecha;
-                            b.IdUsuario = Idusuario;
+                            foreach (BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.Oper.Equals(Datos.Oper) && w.Serial != Datos.Serial && !w.Activo))
+                            {
+                                b.Activo = true;
+                                b.Seccion = Datos.Seccion;
+                                b.IdSaco = IdSaco;
+                                b.NoMesa = Datos.Mesa;
+                                b.FechaRegistro = Fecha;
+                                b.IdUsuario = Idusuario;
 
-                            BoxingCustom.Add(new BundleBoxingCustom {
-                                Serial = b.Serial,
-                                Escaneado = true,
-                                Saco = Datos.Saco,
-                                Mesa = Datos.Mesa
-                            });
+                                BoxingCustom.Add(new BundleBoxingCustom
+                                {
+                                    Serial = b.Serial,
+                                    Escaneado = true,
+                                    Saco = Datos.Saco,
+                                    Mesa = Datos.Mesa
+                                });
+                            }
+
                         }
+                        
 
 
                         Boxing.Activo = true;
