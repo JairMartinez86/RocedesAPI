@@ -71,7 +71,10 @@ namespace RocedesAPI.Controllers.INV
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
 
-                    List<BundleBoxingCustom> lst = (from b in _Cnx.BundleBoxing
+                    List<BundleBoxing> lstBundleBoxing = _Cnx.BundleBoxing.Where(w => w.CorteCompleto == corte && w.Activo).ToList();
+
+
+                    List<BundleBoxingCustom> lst = (from b in lstBundleBoxing
                                                     join p in _Cnx.POrder on b.Corte equals p.POrder1
                                                     join s in _Cnx.Bundle on new { ID = p.Id_Order, Bld = b.Bulto } equals new { ID = (s.Id_Order == null) ? 0 : (int)s.Id_Order , Bld = (s.Bld == null) ? 0 : (int)s.Bld } into BundleUnion
                                                     from bu in BundleUnion.DefaultIfEmpty()
@@ -104,7 +107,8 @@ namespace RocedesAPI.Controllers.INV
                                                         group datos by new  { datos.Grupo, datos.Mesa, datos.Nombre, datos.Talla, datos.Seccion, datos.Saco, datos.Corte, datos.Estilo, datos.Login, datos.Fecha} into grupo
                                                         select new BundleBoxingCustom()
                                                         {
-                                                            Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", grupo.Sum(s => s.Bulto), "ㅤㅤㅤCapaje : ㅤ", grupo.Sum(s => s.Capaje), "ㅤㅤㅤYarda : ㅤ", grupo.Sum(s => s.Yarda)),
+                                                            Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).ToList().Count, "ㅤㅤㅤCapaje : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Capaje), "ㅤㅤㅤYarda : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Yarda)),
+                                                            //Grupo = grupo.Key.Grupo,
                                                             Mesa = grupo.Key.Mesa,
                                                             Nombre = grupo.Key.Nombre,
                                                             Talla = grupo.Key.Talla,
