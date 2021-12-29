@@ -403,7 +403,7 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<BundleBoxingEnvioCustom> lst = (from b in _Cnx.BundleBoxingEnvio
-                                                    where b.Corte == corte && b.Activo
+                                                    where b.CorteCompleto == corte && b.Activo
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
                                                     select new BundleBoxingEnvioCustom()
                                                     {
