@@ -87,7 +87,7 @@ namespace RocedesAPI.Controllers.INV
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
                                                         Talla = (bu == null) ? string.Empty : bu.Size,
-                                                        Bulto = b.Bulto,
+                                                        Bulto = (b.EnSaco)? 1 : 0,
                                                         Capaje = b.Capaje,
                                                         Seccion = b.Seccion,
                                                         Saco = (lf == null) ? (int?)null : lf.Saco,
@@ -104,7 +104,7 @@ namespace RocedesAPI.Controllers.INV
                                                         group datos by new  { datos.Grupo, datos.Mesa, datos.Nombre, datos.Talla, datos.Seccion, datos.Saco, datos.Corte, datos.Estilo, datos.Login, datos.Fecha} into grupo
                                                         select new BundleBoxingCustom()
                                                         {
-                                                            Grupo = grupo.Key.Grupo,
+                                                            Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", grupo.Sum(s => s.Bulto), "ㅤㅤㅤCapaje : ㅤ", grupo.Sum(s => s.Capaje), "ㅤㅤㅤYarda : ㅤ", grupo.Sum(s => s.Yarda)),
                                                             Mesa = grupo.Key.Mesa,
                                                             Nombre = grupo.Key.Nombre,
                                                             Talla = grupo.Key.Talla,
@@ -490,11 +490,13 @@ namespace RocedesAPI.Controllers.INV
 
                         if (_Saco != null)
                         {
+                            List<BundleBoxing> lst = _Cnx.BundleBoxing.Where(w => w.IdSaco == _Saco.IdSaco).ToList();
                             Registro.CorteCompleto = _Saco.CorteCompleto;
                             Registro.Corte = _Saco.Corte;
                             Registro.IdSaco = _Saco.IdSaco;
                             Registro.Saco = _Saco.Saco;
-                            Registro.Bulto = _Cnx.BundleBoxing.Where(w => w.IdSaco == _Saco.IdSaco).Sum(s => s.Bulto);
+                            Registro.Bulto = 0;
+                            if (lst.Count > 0) Registro.Bulto = lst.Count;
                         }
                         else
                         {

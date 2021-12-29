@@ -162,7 +162,7 @@ namespace RocedesAPI.Controllers
                             {
                                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                                 {
-                                    List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && b.FechaInactivo == null).ToList();
+                                    List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && b.FechaInactivo == null && b.EnSaco == !esComplemento).ToList();
                                     List<BundleBoxingCustom> ltsBoxingCustom = null;
 
                                     if (lstBundleBoxing.FindAll(w => w.Oper != string.Empty &&  w.Corte == corte && OperMaster.Any(f => f.operno != w.Oper) ).Count == 0)
@@ -194,7 +194,7 @@ namespace RocedesAPI.Controllers
                                                                Escaneado = (sb == null) ? false : sb.Activo
                                                            }).Union(from com in _Conexion.SerialComplemento
                                                                     join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
-                                                                    where com.Corte.Equals(corte) &&  com.Activo
+                                                                    where com.Corte.Equals(corte) &&  com.Activo && com.EnSaco
                                                                     join p in _Conexion.POrder on com.CorteCompleto equals p.POrder1.TrimEnd().TrimStart()
                                                                     join bun in _Conexion.Bundle on new { ID = p.Id_Order, Bld = com.Cantidad } equals new { ID = (bun.Id_Order == null) ? 0 : (int)bun.Id_Order, Bld = (bun.Bld == null) ? 0 : (int)bun.Bld } into BundleUnion
                                                                     from bu in BundleUnion.DefaultIfEmpty()
