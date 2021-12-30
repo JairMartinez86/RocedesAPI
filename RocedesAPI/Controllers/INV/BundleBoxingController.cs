@@ -75,10 +75,7 @@ namespace RocedesAPI.Controllers.INV
 
 
                     List<BundleBoxingCustom> lst = (from b in lstBundleBoxing
-                                                    join p in _Cnx.POrder on b.Corte equals p.POrder1
-                                                    join s in _Cnx.Bundle on new { ID = p.Id_Order, Bld = b.Bulto } equals new { ID = (s.Id_Order == null) ? 0 : (int)s.Id_Order , Bld = (s.Bld == null) ? 0 : (int)s.Bld } into BundleUnion
-                                                    from bu in BundleUnion.DefaultIfEmpty()
-                                                    where p.POrderClient == corte && b.Activo
+                                                    where b.CorteCompleto == corte && b.Activo
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
                                                     join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco into LeftSaco
                                                     from lf in LeftSaco.DefaultIfEmpty()
@@ -89,8 +86,8 @@ namespace RocedesAPI.Controllers.INV
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
-                                                        Talla = (bu == null) ? string.Empty : bu.Size,
-                                                        Bulto = (b.EnSaco)? 1 : 0,
+                                                        Talla = b.Talla,
+                                                        Bulto = (b.EnSaco) ? b.Bulto : 0,
                                                         Capaje = b.Capaje,
                                                         Seccion = b.Seccion,
                                                         Saco = (lf == null) ? (int?)null : lf.Saco,
@@ -98,25 +95,53 @@ namespace RocedesAPI.Controllers.INV
                                                         Corte = b.Corte,
                                                         Estilo = b.Estilo,
                                                         Login = u.Login,
-                                                        Fecha =   b.FechaRegistro
+                                                        Fecha = b.FechaRegistro
 
                                                     }).ToList();
 
+                    //List<BundleBoxingCustom> lst = (from b in lstBundleBoxing
+                    //                                join p in _Cnx.POrder on b.Corte equals p.POrder1
+                    //                                join s in _Cnx.Bundle on new { ID = p.Id_Order, Bld = b.Bulto } equals new { ID = (s.Id_Order == null) ? 0 : (int)s.Id_Order , Bld = (s.Bld == null) ? 0 : (int)s.Bld } into BundleUnion
+                    //                                from bu in BundleUnion.DefaultIfEmpty()
+                    //                                where p.POrderClient == corte && b.Activo
+                    //                                join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
+                    //                                join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco into LeftSaco
+                    //                                from lf in LeftSaco.DefaultIfEmpty()
+                    //                                orderby b.Seccion
+                    //                                select new BundleBoxingCustom()
+                    //                                {
+                    //                                    Grupo = (!b.EnSaco) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo + "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤMesa # ㅤ", b.NoMesa),
+                    //                                    Mesa = b.NoMesa,
+                    //                                    Serial = b.Serial,
+                    //                                    Nombre = b.Nombre,
+                    //                                    Talla = (bu == null) ? string.Empty : bu.Size,
+                    //                                    Bulto = (b.EnSaco)? b.Bulto : 0,
+                    //                                    Capaje = b.Capaje,
+                    //                                    Seccion = b.Seccion,
+                    //                                    Saco = (lf == null) ? (int?)null : lf.Saco,
+                    //                                    Yarda = b.Yarda,
+                    //                                    Corte = b.Corte,
+                    //                                    Estilo = b.Estilo,
+                    //                                    Login = u.Login,
+                    //                                    Fecha =   b.FechaRegistro
+
+                    //                                }).ToList();
+
 
                     List<BundleBoxingCustom> lstGrupo = (List<BundleBoxingCustom>)(from datos in lst
-                                                        group datos by new  { datos.Grupo, datos.Mesa, datos.Nombre, datos.Talla, datos.Seccion, datos.Saco, datos.Corte, datos.Estilo, datos.Login, datos.Fecha} into grupo
+                                                        group datos by new  { datos.Grupo, datos.Mesa, datos.Nombre, datos.Talla, datos.Seccion, datos.Saco, datos.Corte, datos.Estilo, datos.Capaje, datos.Bulto, datos.Yarda, datos.Login, datos.Fecha} into grupo
                                                         select new BundleBoxingCustom()
                                                         {
-                                                            Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).ToList().Count, "ㅤㅤㅤCapaje : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Capaje), "ㅤㅤㅤYarda : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Yarda)),
+                                                            Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje }).Count(), "ㅤㅤㅤCapaje : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje} ).Sum(s => s.Key.Capaje), "ㅤㅤㅤYarda : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Yarda)),
                                                             //Grupo = grupo.Key.Grupo,
                                                             Mesa = grupo.Key.Mesa,
                                                             Nombre = grupo.Key.Nombre,
                                                             Talla = grupo.Key.Talla,
-                                                            Bulto = grupo.Sum(s => s.Bulto),
-                                                            Capaje = grupo.Sum(s => s.Capaje),
+                                                            Bulto = grupo.Key.Bulto,
+                                                            Capaje = grupo.Key.Capaje,
                                                             Seccion = grupo.Key.Seccion,
                                                             Saco = grupo.Key.Saco,
-                                                            Yarda = grupo.Sum(s => s.Yarda),
+                                                            Yarda = grupo.Key.Yarda,
                                                             Corte = grupo.Key.Corte,
                                                             Estilo = grupo.Key.Estilo,
                                                             Login = grupo.Key.Login,
@@ -509,6 +534,13 @@ namespace RocedesAPI.Controllers.INV
                             if(_Boxin == null)
                             {
                                 json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, $"Serial # <b>{Datos.Serial}</b> no encontrado.", 0);
+                                return json;
+                            }
+
+                            if(!_Boxin.Activo)
+                            {
+                                Registro.Activo = false;
+                                json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, $"El Serial # <b>{Datos.Serial}</b> debe de pasar por un proceso de escaneo.", 0);
                                 return json;
                             }
 
