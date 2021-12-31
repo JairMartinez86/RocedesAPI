@@ -82,7 +82,7 @@ namespace RocedesAPI.Controllers.INV
                                                     orderby b.Seccion
                                                     select new BundleBoxingCustom()
                                                     {
-                                                        Grupo = (!b.EnSaco) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo + "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤMesa # ㅤ", b.NoMesa),
+                                                        Grupo = (!b.EnSaco) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo),
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
@@ -244,7 +244,7 @@ namespace RocedesAPI.Controllers.INV
 
                         if(Datos.Oper != string.Empty)
                         {
-                            foreach (BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.Oper.Equals(Datos.Oper) && w.Serial != Datos.Serial && !w.Activo))
+                            foreach (BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.Oper.Equals(Datos.Oper) && w.Bulto == Datos.Bulto && w.Serial != Datos.Serial && !w.Activo))
                             {
                                 b.Activo = true;
                                 b.Seccion = Datos.Seccion;
@@ -525,7 +525,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro.IdSaco = _Saco.IdSaco;
                             Registro.Saco = _Saco.Saco;
                             Registro.Bulto = 0;
-                            if (lst.Count > 0) Registro.Bulto = lst.Count;
+                            if (lst.Count > 0) Registro.Bulto = lst.Where(w => w.Corte == Registro.Corte  && w.Activo).GroupBy(g =>  g.Bulto).Count();
                         }
                         else
                         {
