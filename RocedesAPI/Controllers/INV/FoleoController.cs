@@ -156,5 +156,183 @@ namespace RocedesAPI.Controllers.INV
 
         }
 
+
+
+
+
+
+        [Route("api/Inventario/Foleo/GetDato")]
+        [HttpGet]
+        public string GetDato()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                {
+
+                    List<FoleoDatos> lst =  _Cnx.FoleoDatos.ToList();
+                                        
+ 
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+
+
+        [Route("api/Inventario/Folio/GuardarDato")]
+        [HttpPost]
+        public IHttpActionResult GuardarDato(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(GuardarDato(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string GuardarDatos(string d)
+        {
+            string json = string.Empty;
+
+
+
+
+
+            try
+            {
+                FoleoDatos Datos = JsonConvert.DeserializeObject<FoleoDatos>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        FoleoDatos Registro;
+                        if (Datos.IdFoleoDato == -1)
+                        {
+                            Registro = new FoleoDatos();
+                            Registro.Estilo = Datos.Estilo.TrimStart().TrimEnd().ToUpper();
+                            Registro.Pieza_grande = Datos.Pieza_grande;
+                            Registro.Pieza_pequena = Datos.Pieza_pequena;
+                            Registro.Pieza_doble = Datos.Pieza_doble;
+                            _Conexion.FoleoDatos.Add(Registro);
+                            Datos.IdFoleoDato = Registro.IdFoleoDato;
+                        }
+                        else
+                        {
+
+                            Registro = _Conexion.FoleoDatos.FirstOrDefault(f => f.IdFoleoDato == Datos.IdFoleoDato);
+                            Registro.Estilo = Datos.Estilo;
+                            Registro.Pieza_grande = Datos.Pieza_grande;
+                            Registro.Pieza_pequena = Datos.Pieza_pequena;
+                            Registro.Pieza_doble = Datos.Pieza_doble;
+                        }
+
+
+
+                        json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+
+
+
+
+
+
+        [Route("api/Inventario/Foleo/EliminarDato")]
+        [HttpPost]
+        public IHttpActionResult EliminarDato(int id)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(EliminarDatos(id));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string EliminarDatos(int id)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        FoleoDatos Registro = _Conexion.FoleoDatos.FirstOrDefault(f => f.IdFoleoDato == id);
+
+                        if (Registro != null) _Conexion.FoleoDatos.Remove(Registro);
+
+
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro Eliminado.", 0);
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
     }
 }

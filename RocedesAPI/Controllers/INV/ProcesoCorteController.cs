@@ -306,9 +306,9 @@ namespace RocedesAPI.Controllers.INV
                             Registro = new FactorDetalleCorte();
                             Registro.IdFactorCorte = Datos.IdFactorCorte;
                             Registro.Item = Datos.Item.TrimStart().TrimEnd().ToUpper();
-                            Registro.Componente = Datos.Componente.TrimStart().TrimEnd().ToUpper(); ;
-                            Registro.Estilo = Datos.Estilo.TrimStart().TrimEnd().ToUpper(); ;
-                            Registro.LayLimits = Datos.LayLimits.TrimStart().TrimEnd().ToUpper(); ;
+                            Registro.Componente = Datos.Componente.TrimStart().TrimEnd().ToUpper();
+                            Registro.Estilo = Datos.Estilo.TrimStart().TrimEnd().ToUpper();
+                            Registro.LayLimits = Datos.LayLimits.TrimStart().TrimEnd().ToUpper();
                             Registro.TotalPieces = Datos.TotalPieces;
                             Registro.StraightPerimeter = Datos.StraightPerimeter;
                             Registro.CurvedPerimeter = Datos.CurvedPerimeter;
@@ -398,7 +398,7 @@ namespace RocedesAPI.Controllers.INV
                     if (Registro != null) _Conexion.FactorDetalleCorte.Remove(Registro);
 
 
-                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro Guardado.", 0);
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, "Registro Eliminado.", 0);
 
                         _Conexion.SaveChanges();
                         scope.Complete();
