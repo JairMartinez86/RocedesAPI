@@ -160,6 +160,43 @@ namespace RocedesAPI.Controllers.INV
 
 
 
+        [Route("api/Inventario/Foleo/GetEstilo")]
+        [HttpGet]
+        public string GetEstilo(string filtro)
+        {
+
+            if (filtro == null) filtro = string.Empty;
+
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                {
+                    List<FoleoDatos> lst  = (from q in _Cnx.FoleoDatos
+                                  where q.Estilo.ToLower().Contains(filtro.TrimStart().TrimEnd().ToLower())
+                                  orderby q.Estilo, q.Estilo.Length
+                                  select q
+                                  ).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+
 
         [Route("api/Inventario/Foleo/GetDato")]
         [HttpGet]
@@ -194,14 +231,14 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/Folio/GuardarDato")]
+        [Route("api/Inventario/Foleo/GuardarDato")]
         [HttpPost]
         public IHttpActionResult GuardarDato(string d)
         {
             if (ModelState.IsValid)
             {
 
-                return Ok(GuardarDato(d));
+                return Ok(GuardarDatos(d));
 
             }
             else
