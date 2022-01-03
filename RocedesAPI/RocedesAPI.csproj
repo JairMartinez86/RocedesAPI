@@ -745,6 +745,15 @@
     <Compile Include="Models\FactorTendido.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FoleoDatos.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FoleoFactor.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FoleoProceso.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Material.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>

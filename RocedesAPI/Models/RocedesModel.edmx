@@ -156,6 +156,35 @@
           <Property Name="NoFactor" Type="int" Nullable="false" />
           <Property Name="ValorFactor" Type="decimal" Precision="18" Scale="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="FoleoDatos">
+          <Key>
+            <PropertyRef Name="IdFoleoDato" />
+          </Key>
+          <Property Name="IdFoleoDato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estilo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pieza_grande" Type="int" Nullable="false" />
+          <Property Name="Pieza_pequena" Type="int" Nullable="false" />
+          <Property Name="Shell" Type="int" Nullable="false" />
+          <Property Name="Pieza_doble" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoleoFactor">
+          <Key>
+            <PropertyRef Name="IdProcesoFoleoDet" />
+          </Key>
+          <Property Name="IdProcesoFoleoDet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProcesoFoleo" Type="int" Nullable="false" />
+          <Property Name="NoFactor" Type="int" Nullable="false" />
+          <Property Name="ValorFactor" Type="decimal" Precision="18" Scale="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoleoProceso">
+          <Key>
+            <PropertyRef Name="IdProcesoFoleo" />
+          </Key>
+          <Property Name="IdProcesoFoleo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Proceso" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="NoFactor" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Material">
           <Key>
             <PropertyRef Name="IdMaterial" />
@@ -300,6 +329,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FoleoFactor_FoleoProceso">
+          <End Role="FoleoProceso" Type="Self.FoleoProceso" Multiplicity="1" />
+          <End Role="FoleoFactor" Type="Self.FoleoFactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoleoProceso">
+              <PropertyRef Name="IdProcesoFoleo" />
+            </Principal>
+            <Dependent Role="FoleoFactor">
+              <PropertyRef Name="IdProcesoFoleo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Material_PresentacionSerial">
           <End Role="PresentacionSerial" Type="Self.PresentacionSerial" Multiplicity="1" />
           <End Role="Material" Type="Self.Material" Multiplicity="*" />
@@ -334,6 +375,9 @@
           <EntitySet Name="FactorCorte" EntityType="Self.FactorCorte" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorDetalleCorte" EntityType="Self.FactorDetalleCorte" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorTendido" EntityType="Self.FactorTendido" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="FoleoDatos" EntityType="Self.FoleoDatos" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="FoleoFactor" EntityType="Self.FoleoFactor" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="FoleoProceso" EntityType="Self.FoleoProceso" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="INV" store:Type="Tables" />
@@ -363,6 +407,10 @@
           <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="Self.FK_FactorTendido_ProcesosTendido">
             <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
             <End Role="FactorTendido" EntitySet="FactorTendido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoleoFactor_FoleoProceso" Association="Self.FK_FoleoFactor_FoleoProceso">
+            <End Role="FoleoProceso" EntitySet="FoleoProceso" />
+            <End Role="FoleoFactor" EntitySet="FoleoFactor" />
           </AssociationSet>
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="Self.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
@@ -449,6 +497,13 @@
           <AssociationSet Name="FK_FactorDetalleCorte_FactorCorte" Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte">
             <End Role="FactorCorte" EntitySet="FactorCorte" />
             <End Role="FactorDetalleCorte" EntitySet="FactorDetalleCorte" />
+          </AssociationSet>
+          <EntitySet Name="FoleoDatos" EntityType="AuditoriaModel.FoleoDatos" />
+          <EntitySet Name="FoleoFactor" EntityType="AuditoriaModel.FoleoFactor" />
+          <EntitySet Name="FoleoProceso" EntityType="AuditoriaModel.FoleoProceso" />
+          <AssociationSet Name="FK_FoleoFactor_FoleoProceso" Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso">
+            <End Role="FoleoProceso" EntitySet="FoleoProceso" />
+            <End Role="FoleoFactor" EntitySet="FoleoFactor" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -761,6 +816,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FoleoDatos">
+          <Key>
+            <PropertyRef Name="IdFoleoDato" />
+          </Key>
+          <Property Name="IdFoleoDato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pieza_grande" Type="Int32" Nullable="false" />
+          <Property Name="Pieza_pequena" Type="Int32" Nullable="false" />
+          <Property Name="Shell" Type="Int32" Nullable="false" />
+          <Property Name="Pieza_doble" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoleoFactor">
+          <Key>
+            <PropertyRef Name="IdProcesoFoleoDet" />
+          </Key>
+          <Property Name="IdProcesoFoleoDet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesoFoleo" Type="Int32" Nullable="false" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="FoleoProceso" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoFactor" ToRole="FoleoProceso" />
+        </EntityType>
+        <EntityType Name="FoleoProceso">
+          <Key>
+            <PropertyRef Name="IdProcesoFoleo" />
+          </Key>
+          <Property Name="IdProcesoFoleo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Proceso" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FoleoFactor" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoProceso" ToRole="FoleoFactor" />
+        </EntityType>
+        <Association Name="FK_FoleoFactor_FoleoProceso">
+          <End Type="AuditoriaModel.FoleoProceso" Role="FoleoProceso" Multiplicity="1" />
+          <End Type="AuditoriaModel.FoleoFactor" Role="FoleoFactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoleoProceso">
+              <PropertyRef Name="IdProcesoFoleo" />
+            </Principal>
+            <Dependent Role="FoleoFactor">
+              <PropertyRef Name="IdProcesoFoleo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1002,6 +1100,38 @@
                 <ScalarProperty Name="Item" ColumnName="Item" />
                 <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
                 <ScalarProperty Name="IdFactorDetalleCorte" ColumnName="IdFactorDetalleCorte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoleoDatos">
+            <EntityTypeMapping TypeName="AuditoriaModel.FoleoDatos">
+              <MappingFragment StoreEntitySet="FoleoDatos">
+                <ScalarProperty Name="Pieza_doble" ColumnName="Pieza_doble" />
+                <ScalarProperty Name="Shell" ColumnName="Shell" />
+                <ScalarProperty Name="Pieza_pequena" ColumnName="Pieza_pequena" />
+                <ScalarProperty Name="Pieza_grande" ColumnName="Pieza_grande" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="IdFoleoDato" ColumnName="IdFoleoDato" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoleoFactor">
+            <EntityTypeMapping TypeName="AuditoriaModel.FoleoFactor">
+              <MappingFragment StoreEntitySet="FoleoFactor">
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="IdProcesoFoleo" ColumnName="IdProcesoFoleo" />
+                <ScalarProperty Name="IdProcesoFoleoDet" ColumnName="IdProcesoFoleoDet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoleoProceso">
+            <EntityTypeMapping TypeName="AuditoriaModel.FoleoProceso">
+              <MappingFragment StoreEntitySet="FoleoProceso">
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="Proceso" ColumnName="Proceso" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdProcesoFoleo" ColumnName="IdProcesoFoleo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

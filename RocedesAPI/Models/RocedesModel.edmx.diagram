@@ -28,6 +28,10 @@
         <EntityTypeShape EntityType="AuditoriaModel.FactorCorte" Width="1.5" PointX="10.375" PointY="6.75" />
         <EntityTypeShape EntityType="AuditoriaModel.FactorDetalleCorte" Width="1.5" PointX="12.625" PointY="6.25" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" />
+        <EntityTypeShape EntityType="AuditoriaModel.FoleoDatos" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.FoleoFactor" Width="1.5" PointX="12.625" PointY="10.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.375" PointY="10.875" />
+        <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
