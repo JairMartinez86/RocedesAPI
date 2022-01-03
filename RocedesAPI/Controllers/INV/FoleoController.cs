@@ -75,7 +75,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/ProcesoTendido/Guardar")]
+        [Route("api/Inventario/Foleo/Guardar")]
         [HttpPost]
         public IHttpActionResult Guardar(string d)
         {
