@@ -217,7 +217,13 @@ namespace RocedesAPI.Controllers.INV
                         {
                             if (!RegisttroSaco.Abierto)
                             {
-                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra cerrado", 1);
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra cerrado.", 1);
+                                return json;
+                            }
+
+                            if(_Conexion.BundleBoxingEnvio.FirstOrDefault(f => f.Serial == RegisttroSaco.Serial) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra en proceso de envio.", 1);
                                 return json;
                             }
                         }
@@ -524,12 +530,22 @@ namespace RocedesAPI.Controllers.INV
                         if (_Saco != null)
                         {
                             List<BundleBoxing> lst = _Cnx.BundleBoxing.Where(w => w.IdSaco == _Saco.IdSaco).ToList();
+
+
+                            if(lst.Count == 0)
+                            {
+                                Registro.Activo = false;
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, $"El Saco # <b>{_Saco.Saco}</b> se encuentra vacio.", 1);
+                                return json;
+                            }
+
+
                             Registro.CorteCompleto = _Saco.CorteCompleto;
                             Registro.Corte = _Saco.Corte;
                             Registro.IdSaco = _Saco.IdSaco;
                             Registro.Saco = _Saco.Saco;
                             Registro.Bulto = 0;
-                            if (lst.Count > 0) Registro.Bulto = lst.Where(w => w.Corte == Registro.Corte  && w.Activo).GroupBy(g =>  g.Bulto).Count();
+                            Registro.Bulto = lst.Where(w => w.Corte == Registro.Corte  && w.Activo).GroupBy(g =>  g.Bulto).Count();
                         }
                         else
                         {
@@ -581,6 +597,7 @@ namespace RocedesAPI.Controllers.INV
                         json = Cls.Cls_Mensaje.Tojson(Envio, 1, string.Empty, $"Serial # <b>{Datos.Serial}</b> escaneado.", 0);
 
                         scope.Complete();
+                        scope.Dispose();
 
                     }
                 }

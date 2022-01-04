@@ -206,6 +206,12 @@ namespace RocedesAPI.Controllers.INV
                                             return json;
                                         }
 
+                                        if (_Conexion.BundleBoxingEnvio.FirstOrDefault(f => f.Serial == Registro.Serial) != null)
+                                        {
+                                            json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra en proceso de envio.", 1);
+                                            return json;
+                                        }
+
 
 
                                         Registro.IdUsuarioAbre = ((Datos.Estado == "Abrir") ? IdUsuario : (int?)null);
