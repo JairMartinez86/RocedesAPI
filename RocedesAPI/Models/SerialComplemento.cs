@@ -18,6 +18,7 @@ namespace RocedesAPI.Models
         public string Serial { get; set; }
         public string Pieza { get; set; }
         public int IdPresentacionSerial { get; set; }
+        public int NoMesa { get; set; }
         public int IdMaterial { get; set; }
         public int Cantidad { get; set; }
         public int Capaje { get; set; }

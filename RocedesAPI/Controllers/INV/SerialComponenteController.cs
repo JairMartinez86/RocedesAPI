@@ -38,6 +38,7 @@ namespace RocedesAPI.Controllers.INV
                                                               Serial = q.Serial,
                                                               Pieza = q.Pieza,
                                                               IdPresentacionSerial = q.IdPresentacionSerial,
+                                                              NoMesa = q.NoMesa,
                                                               PresentacionSerial = p.Presentacion,
                                                               IdMaterial = q.IdMaterial,
                                                               Material = m.Material1,

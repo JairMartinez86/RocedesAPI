@@ -12,6 +12,7 @@ namespace RocedesAPI.Models.Cls.INV
         public string Pieza = string.Empty;
         public int IdPresentacionSerial = 0;
         public string PresentacionSerial = string.Empty;
+        public int NoMesa = 0;
         public int IdMaterial = 0;
         public string Material = string.Empty;
         public int Cantidad = 0;

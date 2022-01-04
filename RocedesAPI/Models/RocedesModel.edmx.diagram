@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="8" PointY="6.875" />
         <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="5.75" PointY="6.875" />
         <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="0.75" PointY="6.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.75" PointY="0.75" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
         <AssociationConnector Association="AuditoriaModel.FK_Material_PresentacionSerial" />
@@ -32,6 +31,7 @@
         <EntityTypeShape EntityType="AuditoriaModel.FoleoFactor" Width="1.5" PointX="12.625" PointY="10.875" />
         <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.375" PointY="10.875" />
         <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
+        <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

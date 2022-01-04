@@ -130,23 +130,24 @@ namespace RocedesAPI.Controllers.INV
 
                     List<BundleBoxingCustom> lstGrupo = (List<BundleBoxingCustom>)(from datos in lst
                                                         group datos by new  { datos.Grupo, datos.Mesa, datos.Nombre, datos.Talla, datos.Seccion, datos.Saco, datos.Corte, datos.Estilo, datos.Capaje, datos.Bulto, datos.Yarda, datos.Login, datos.Fecha} into grupo
-                                                        select new BundleBoxingCustom()
-                                                        {
-                                                            Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje }).Count(), "ㅤㅤㅤCapaje : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje} ).Sum(s => s.Key.Capaje), "ㅤㅤㅤYarda : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Yarda)),
-                                                            //Grupo = grupo.Key.Grupo,
-                                                            Mesa = grupo.Key.Mesa,
-                                                            Nombre = grupo.Key.Nombre,
-                                                            Talla = grupo.Key.Talla,
-                                                            Bulto = grupo.Key.Bulto,
-                                                            Capaje = grupo.Key.Capaje,
-                                                            Seccion = grupo.Key.Seccion,
-                                                            Saco = grupo.Key.Saco,
-                                                            Yarda = grupo.Key.Yarda,
-                                                            Corte = grupo.Key.Corte,
-                                                            Estilo = grupo.Key.Estilo,
-                                                            Login = grupo.Key.Login,
-                                                            Fecha = grupo.Key.Fecha
-                                                        }).ToList();
+                                                        orderby grupo.Key.Grupo, grupo.Key.Mesa
+                                                                                   select new BundleBoxingCustom()
+                                                                                    {
+                                                                                        Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje }).Count(), "ㅤㅤㅤCapaje : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje} ).Sum(s => s.Key.Capaje), "ㅤㅤㅤYarda : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte &&  w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Yarda)),
+                                                                                        //Grupo = grupo.Key.Grupo,
+                                                                                        Mesa = grupo.Key.Mesa,
+                                                                                        Nombre = grupo.Key.Nombre,
+                                                                                        Talla = grupo.Key.Talla,
+                                                                                        Bulto = grupo.Key.Bulto,
+                                                                                        Capaje = grupo.Key.Capaje,
+                                                                                        Seccion = grupo.Key.Seccion,
+                                                                                        Saco = grupo.Key.Saco,
+                                                                                        Yarda = grupo.Key.Yarda,
+                                                                                        Corte = grupo.Key.Corte,
+                                                                                        Estilo = grupo.Key.Estilo,
+                                                                                        Login = grupo.Key.Login,
+                                                                                        Fecha = grupo.Key.Fecha
+                                                                                    }).ToList();
 
 
                     json = Cls.Cls_Mensaje.Tojson(lstGrupo, lstGrupo.Count, string.Empty, string.Empty, 0);
@@ -269,7 +270,7 @@ namespace RocedesAPI.Controllers.INV
                         Boxing.Activo = true;
                         Boxing.Seccion = Datos.Seccion;
                         Boxing.IdSaco = IdSaco;
-                        Boxing.NoMesa = Datos.Mesa;
+                        Boxing.NoMesa = (Boxing.NoMesa == 0) ? Datos.Mesa : Boxing.NoMesa;
                         Boxing.FechaRegistro = Fecha;
                         Boxing.IdUsuario = Idusuario;
 
@@ -337,6 +338,7 @@ namespace RocedesAPI.Controllers.INV
                             Serial = string.Empty,
                             Pieza = Datos.Pieza.TrimStart().TrimEnd().ToUpper(),
                             IdPresentacionSerial = Datos.IdPresentacionSerial,
+                            NoMesa = Datos.NoMesa,
                             IdMaterial = Datos.IdMaterial,
                             Cantidad = Datos.Cantidad,
                             Capaje = Datos.Capaje,
@@ -371,7 +373,7 @@ namespace RocedesAPI.Controllers.INV
 
                         BundleBoxing Boxing = new BundleBoxing
                         {
-                            NoMesa = 0,
+                            NoMesa = Registro.NoMesa,
                             Serial = Registro.Serial,
                             Nombre = Registro.Pieza,
                             Seccion = 0,
@@ -380,6 +382,7 @@ namespace RocedesAPI.Controllers.INV
                             Yarda = (_Conexion.PresentacionSerial.First( f => f.IdPresentacionSerial == Datos.IdPresentacionSerial).EsUnidad) ? 0 : Registro.Cantidad,
                             EnSaco = Registro.EnSaco,
                             IdSaco = null,
+                            Talla = string.Empty,
                             Corte = Registro.Corte,
                             CorteCompleto = Registro.CorteCompleto,
                             Estilo = Registro.Estilo,
