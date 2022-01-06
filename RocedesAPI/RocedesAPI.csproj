@@ -690,6 +690,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Auditoria\POrderController.cs" />
     <Compile Include="Controllers\INV\BundleBoxingController.cs" />
+    <Compile Include="Controllers\INV\FlujoController.cs" />
     <Compile Include="Controllers\INV\FoleoController.cs" />
     <Compile Include="Controllers\INV\MaterialController.cs" />
     <Compile Include="Controllers\INV\PresentacionSerialController.cs" />
@@ -1834,6 +1835,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BundleBoning\" />
+    <Folder Include="Views\Flujo\" />
     <Folder Include="Views\Foleo\" />
     <Folder Include="Views\Material\" />
     <Folder Include="Views\POrder\" />

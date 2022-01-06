@@ -98,11 +98,12 @@ namespace RocedesAPI.Controllers.INV
                     var _Query = (from q in _Cnx.FactorDetalleCorte
                                   join m in _Cnx.FactorCorte on q.IdFactorCorte equals m.IdFactorCorte
                                   where string.Concat(q.Componente, " ", q.Estilo, " ", q.LayLimits).ToLower().Contains(filtro.TrimStart().TrimEnd().ToLower())
-                                  group q by new { Componente = string.Concat(q.Componente, " ", q.Estilo, " ", q.LayLimits), q.IdFactorDetalleCorte }  into grupo
+                                  group q by new { Componente = string.Concat(q.Componente, " ", q.Estilo, " ", q.LayLimits), q.IdFactorDetalleCorte, q.Estilo }  into grupo
                                   orderby grupo.Key.Componente, grupo.Key.Componente.Length
                                   select new
                                   {
                                       Componente = grupo.Key.Componente,
+                                      Estilo = grupo.Key.Estilo,
                                       IdFactorDetalleCorte = grupo.Key.IdFactorDetalleCorte
                                   }).Take(20).ToList();
 
