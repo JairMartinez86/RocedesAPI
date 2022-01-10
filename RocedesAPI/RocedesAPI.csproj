@@ -734,6 +734,9 @@
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioPerfilCustom.cs" />
+    <Compile Include="Models\CodigoGSD.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Dset\DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -32,6 +32,7 @@
         <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.375" PointY="10.875" />
         <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
         <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.CodigoGSD" Width="1.5" PointX="10.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

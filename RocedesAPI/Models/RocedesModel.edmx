@@ -118,6 +118,14 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="CodigoGSD">
+          <Key>
+            <PropertyRef Name="IdCodGSD" />
+          </Key>
+          <Property Name="IdCodGSD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoGSD" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Tmus" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="FactorCorte">
           <Key>
             <PropertyRef Name="IdFactorCorte" />
@@ -373,6 +381,7 @@
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxingEnvio" EntityType="Self.BundleBoxingEnvio" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="CodigoGSD" EntityType="Self.CodigoGSD" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorCorte" EntityType="Self.FactorCorte" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorDetalleCorte" EntityType="Self.FactorDetalleCorte" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorTendido" EntityType="Self.FactorTendido" Schema="INV" store:Type="Tables" />
@@ -506,6 +515,7 @@
             <End Role="FoleoFactor" EntitySet="FoleoFactor" />
           </AssociationSet>
           <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
+          <EntitySet Name="CodigoGSD" EntityType="AuditoriaModel.CodigoGSD" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -861,6 +871,14 @@
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
         </EntityType>
+        <EntityType Name="CodigoGSD">
+          <Key>
+            <PropertyRef Name="IdCodGSD" />
+          </Key>
+          <Property Name="IdCodGSD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoGSD1" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1135,6 +1153,15 @@
                 <ScalarProperty Name="Pieza" ColumnName="Pieza" />
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="IdSerialComplemento" ColumnName="IdSerialComplemento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodigoGSD">
+            <EntityTypeMapping TypeName="AuditoriaModel.CodigoGSD">
+              <MappingFragment StoreEntitySet="CodigoGSD">
+                <ScalarProperty Name="Tmus" ColumnName="Tmus" />
+                <ScalarProperty Name="CodigoGSD1" ColumnName="CodigoGSD" />
+                <ScalarProperty Name="IdCodGSD" ColumnName="IdCodGSD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
