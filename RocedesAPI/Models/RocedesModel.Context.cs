@@ -44,5 +44,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<FoleoProceso> FoleoProceso { get; set; }
         public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
         public virtual DbSet<CodigoGSD> CodigoGSD { get; set; }
+        public virtual DbSet<Partes> Partes { get; set; }
+        public virtual DbSet<TipoTela> TipoTela { get; set; }
     }
 }

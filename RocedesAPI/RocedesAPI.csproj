@@ -727,6 +727,7 @@
     <Compile Include="Models\Cls\INV\FactorTendidoCustom.cs" />
     <Compile Include="Models\Cls\INV\FoleoFactorCustom.cs" />
     <Compile Include="Models\Cls\INV\MaterialCustom.cs" />
+    <Compile Include="Models\Cls\INV\PartesCustom.cs" />
     <Compile Include="Models\Cls\INV\PresentacionSerialCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoEstado.cs" />
@@ -734,6 +735,7 @@
     <Compile Include="Models\Cls\INV\SacoSerial.cs" />
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
+    <Compile Include="Models\Cls\INV\TiposTelaCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioPerfilCustom.cs" />
     <Compile Include="Models\CodigoGSD.cs">
@@ -765,6 +767,9 @@
     <Compile Include="Models\Material.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partes.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\POrder.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
@@ -793,6 +798,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Style.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TipoTela.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">

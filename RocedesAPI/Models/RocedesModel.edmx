@@ -202,6 +202,13 @@
           <Property Name="IdPresentacionSerial" Type="int" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Partes">
+          <Key>
+            <PropertyRef Name="IdParte" />
+          </Key>
+          <Property Name="IdParte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="PresentacionSerial">
           <Key>
             <PropertyRef Name="IdPresentacionSerial" />
@@ -241,6 +248,13 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="TipoTela">
+          <Key>
+            <PropertyRef Name="IdTela" />
+          </Key>
+          <Property Name="IdTela" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -389,9 +403,11 @@
           <EntitySet Name="FoleoFactor" EntityType="Self.FoleoFactor" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FoleoProceso" EntityType="Self.FoleoProceso" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="Partes" EntityType="Self.Partes" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="TipoTela" EntityType="Self.TipoTela" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="SIS" store:Type="Tables" />
           <AssociationSet Name="FK_Bundle_POrder" Association="Self.FK_Bundle_POrder">
@@ -516,6 +532,8 @@
           </AssociationSet>
           <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
           <EntitySet Name="CodigoGSD" EntityType="AuditoriaModel.CodigoGSD" />
+          <EntitySet Name="Partes" EntityType="AuditoriaModel.Partes" />
+          <EntitySet Name="TipoTela" EntityType="AuditoriaModel.TipoTela" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -879,6 +897,20 @@
           <Property Name="CodigoGSD1" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
         </EntityType>
+        <EntityType Name="Partes">
+          <Key>
+            <PropertyRef Name="IdParte" />
+          </Key>
+          <Property Name="IdParte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TipoTela">
+          <Key>
+            <PropertyRef Name="IdTela" />
+          </Key>
+          <Property Name="IdTela" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1162,6 +1194,22 @@
                 <ScalarProperty Name="Tmus" ColumnName="Tmus" />
                 <ScalarProperty Name="CodigoGSD1" ColumnName="CodigoGSD" />
                 <ScalarProperty Name="IdCodGSD" ColumnName="IdCodGSD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partes">
+            <EntityTypeMapping TypeName="AuditoriaModel.Partes">
+              <MappingFragment StoreEntitySet="Partes">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdParte" ColumnName="IdParte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoTela">
+            <EntityTypeMapping TypeName="AuditoriaModel.TipoTela">
+              <MappingFragment StoreEntitySet="TipoTela">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdTela" ColumnName="IdTela" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
