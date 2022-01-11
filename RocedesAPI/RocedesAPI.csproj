@@ -693,6 +693,7 @@
     <Compile Include="Controllers\INV\FlujoController.cs" />
     <Compile Include="Controllers\INV\FoleoController.cs" />
     <Compile Include="Controllers\INV\MaterialController.cs" />
+    <Compile Include="Controllers\INV\OperacionesController.cs" />
     <Compile Include="Controllers\INV\PresentacionSerialController.cs" />
     <Compile Include="Controllers\INV\ProcesoCorteController.cs" />
     <Compile Include="Controllers\INV\ProcesoTendidoController.cs" />
@@ -720,6 +721,7 @@
     <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
     <Compile Include="Models\Cls\INV\BundleBoxingEnvioCustom.cs" />
     <Compile Include="Models\Cls\INV\BundleBoxing_SacoCustom.cs" />
+    <Compile Include="Models\Cls\INV\CodigoGSDCustom.cs" />
     <Compile Include="Models\Cls\INV\FactorCorteCustom.cs" />
     <Compile Include="Models\Cls\INV\FactorDetalleCorteCustom.cs" />
     <Compile Include="Models\Cls\INV\FactorTendidoCustom.cs" />
@@ -1841,6 +1843,7 @@
     <Folder Include="Views\Flujo\" />
     <Folder Include="Views\Foleo\" />
     <Folder Include="Views\Material\" />
+    <Folder Include="Views\Operaciones\" />
     <Folder Include="Views\POrder\" />
     <Folder Include="Views\Presentacion\" />
     <Folder Include="Views\ProcesoCorte\" />
