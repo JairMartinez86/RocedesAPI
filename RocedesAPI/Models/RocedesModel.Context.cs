@@ -48,5 +48,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<TipoTela> TipoTela { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Sewing> Sewing { get; set; }
+        public virtual DbSet<SewingAccuracy> SewingAccuracy { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
     }
 }

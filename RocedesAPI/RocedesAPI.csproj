@@ -698,10 +698,12 @@
     <Compile Include="Controllers\INV\PresentacionSerialController.cs" />
     <Compile Include="Controllers\INV\ProcesoCorteController.cs" />
     <Compile Include="Controllers\INV\ProcesoTendidoController.cs" />
+    <Compile Include="Controllers\INV\ProductoController.cs" />
     <Compile Include="Controllers\INV\ReportViewerBoxinSerialController.cs" />
     <Compile Include="Controllers\INV\SacoController.cs" />
     <Compile Include="Controllers\INV\SerialComponenteController.cs" />
-    <Compile Include="Controllers\INV\SewingCustom.cs" />
+    <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
+    <Compile Include="Models\Cls\INV\SewingCustom.cs" />
     <Compile Include="Controllers\Reporte\ReportViewerController.cs" />
     <Compile Include="Controllers\SIS\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -741,6 +743,7 @@
     <Compile Include="Models\Cls\INV\SacoSerial.cs" />
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
+    <Compile Include="Models\Cls\INV\SewingAccuracyCustom.cs" />
     <Compile Include="Models\Cls\INV\TiposTelaCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioPerfilCustom.cs" />
@@ -785,6 +788,9 @@
     <Compile Include="Models\ProcesosTendido.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RocedesModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -804,6 +810,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sewing.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SewingAccuracy.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Style.cs">
@@ -1866,6 +1875,7 @@
     <Folder Include="Views\Presentacion\" />
     <Folder Include="Views\ProcesoCorte\" />
     <Folder Include="Views\ProcesoTendido\" />
+    <Folder Include="Views\Producto\" />
     <Folder Include="Views\ReportViewer\" />
     <Folder Include="Views\Report\" />
     <Folder Include="Views\Saco\" />

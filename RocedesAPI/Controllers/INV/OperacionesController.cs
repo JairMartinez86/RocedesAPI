@@ -544,5 +544,135 @@ namespace RocedesAPI.Controllers.INV
 
         }
         #endregion
+        #region "SEWING ACCURACY"
+
+        [Route("api/Inventario/Operaciones/GetSewingAccuracy")]
+        [HttpGet]
+        public string GetSewingAccuracy()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<SewingAccuracyCustom> lst = (from q in _Conexion.SewingAccuracy
+                                              select new SewingAccuracyCustom()
+                                              {
+                                                  IdSewingAccuracy = q.IdSewingAccuracy,
+                                                  Level = q.Level,
+                                                  Factor = q.Factor
+                                              }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Inventario/Operaciones/GuardarSewingAccuracy")]
+        [HttpPost]
+        public IHttpActionResult GuardarSewingAccuracy(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarSewingAccuracy(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarSewingAccuracy(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                SewingAccuracyCustom Datos = JsonConvert.DeserializeObject<SewingAccuracyCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        SewingAccuracy Registro = null;
+
+                        if (Datos.IdSewingAccuracy == -1)
+                        {
+                            if (_Conexion.SewingAccuracy.FirstOrDefault(f => f.Level.ToLower().Equals(Datos.Level.ToLower()) && f.IdSewingAccuracy != Datos.IdSewingAccuracy) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El Nivel ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+                            Registro = new SewingAccuracy
+                            {
+                                Level = Datos.Level.ToUpper(),
+                                Factor = Datos.Factor
+                            };
+                            _Conexion.SewingAccuracy.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdSewingAccuracy = Registro.IdSewingAccuracy;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.SewingAccuracy.Find(Datos.IdSewingAccuracy);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.SewingAccuracy.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Level = Datos.Level.ToUpper();
+                                Registro.Factor = Datos.Factor;
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
     }
 }

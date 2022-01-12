@@ -235,6 +235,14 @@
           <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NoFactor" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LevelOfComplexity" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SerialComplemento">
           <Key>
             <PropertyRef Name="IdSerialComplemento" />
@@ -264,6 +272,14 @@
           <Property Name="IdSewing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Level" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Factor" Type="decimal" Precision="8" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SewingAccuracy">
+          <Key>
+            <PropertyRef Name="IdSewingAccuracy" />
+          </Key>
+          <Property Name="IdSewingAccuracy" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Factor" Type="decimal" Precision="8" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoTela">
@@ -436,8 +452,10 @@
           <EntitySet Name="Partes" EntityType="Self.Partes" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Sewing" EntityType="Self.Sewing" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="SewingAccuracy" EntityType="Self.SewingAccuracy" Schema="INV" store:Type="Tables" />
           <EntitySet Name="TipoTela" EntityType="Self.TipoTela" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="SIS" store:Type="Tables" />
@@ -576,6 +594,8 @@
             <End Role="POrder" EntitySet="POrder" />
           </AssociationSet>
           <EntitySet Name="Sewing" EntityType="AuditoriaModel.Sewing" />
+          <EntitySet Name="SewingAccuracy" EntityType="AuditoriaModel.SewingAccuracy" />
+          <EntitySet Name="Product" EntityType="AuditoriaModel.Product" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -983,6 +1003,22 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
         </EntityType>
+        <EntityType Name="SewingAccuracy">
+          <Key>
+            <PropertyRef Name="IdSewingAccuracy" />
+          </Key>
+          <Property Name="IdSewingAccuracy" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfComplexity" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1301,6 +1337,24 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="IdSewing" ColumnName="IdSewing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SewingAccuracy">
+            <EntityTypeMapping TypeName="AuditoriaModel.SewingAccuracy">
+              <MappingFragment StoreEntitySet="SewingAccuracy">
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="IdSewingAccuracy" ColumnName="IdSewingAccuracy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="AuditoriaModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="LevelOfComplexity" ColumnName="LevelOfComplexity" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
