@@ -35,6 +35,9 @@
         <EntityTypeShape EntityType="AuditoriaModel.CodigoGSD" Width="1.5" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Partes" Width="1.5" PointX="12.625" PointY="0.625" />
         <EntityTypeShape EntityType="AuditoriaModel.TipoTela" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.Cliente" Width="1.5" PointX="3.375" PointY="12.875" />
+        <AssociationConnector Association="AuditoriaModel.FK_POrder_Cliente" />
+        <EntityTypeShape EntityType="AuditoriaModel.Sewing" Width="1.5" PointX="0.75" PointY="13.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

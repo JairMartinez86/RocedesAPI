@@ -42,5 +42,6 @@ namespace RocedesAPI.Models
         public virtual Style Style { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bundle> Bundle { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

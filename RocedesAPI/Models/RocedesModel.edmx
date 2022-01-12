@@ -18,6 +18,14 @@
           <Property Name="Quantity" Type="int" />
           <Property Name="Controlconcurrencia" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id_Cliente" />
+          </Key>
+          <Property Name="Id_Cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cliente" Type="nvarchar" MaxLength="50" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
         <EntityType Name="POrder">
           <Key>
             <PropertyRef Name="Id_Order" />
@@ -249,6 +257,15 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="Sewing">
+          <Key>
+            <PropertyRef Name="IdSewing" />
+          </Key>
+          <Property Name="IdSewing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Factor" Type="decimal" Precision="8" Scale="4" Nullable="false" />
+        </EntityType>
         <EntityType Name="TipoTela">
           <Key>
             <PropertyRef Name="IdTela" />
@@ -376,6 +393,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_POrder_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="POrder" Type="Self.POrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id_Cliente" />
+            </Principal>
+            <Dependent Role="POrder">
+              <PropertyRef Name="Id_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_POrder_Style">
           <End Role="Style" Type="Self.Style" Multiplicity="0..1" />
           <End Role="POrder" Type="Self.POrder" Multiplicity="*" />
@@ -390,6 +419,7 @@
         </Association>
         <EntityContainer Name="AuditoriaModelStoreContainer">
           <EntitySet Name="Bundle" EntityType="Self.Bundle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POrder" EntityType="Self.POrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Style" EntityType="Self.Style" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
@@ -407,6 +437,7 @@
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="Sewing" EntityType="Self.Sewing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="TipoTela" EntityType="Self.TipoTela" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="SIS" store:Type="Tables" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="SIS" store:Type="Tables" />
@@ -442,6 +473,10 @@
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
             <End Role="Material" EntitySet="Material" />
           </AssociationSet>
+          <AssociationSet Name="FK_POrder_Cliente" Association="Self.FK_POrder_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_POrder_Style" Association="Self.FK_POrder_Style">
             <End Role="Style" EntitySet="Style" />
             <End Role="POrder" EntitySet="POrder" />
@@ -475,6 +510,7 @@
           <Property Name="washed" Type="Boolean" />
           <NavigationProperty Name="Style" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="POrder" ToRole="Style" />
           <NavigationProperty Name="Bundle" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="POrder" ToRole="Bundle" />
+          <NavigationProperty Name="Cliente" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="POrder" ToRole="Cliente" />
         </EntityType>
         <EntityContainer Name="AuditoriaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="POrder" EntityType="Self.POrder" />
@@ -534,6 +570,12 @@
           <EntitySet Name="CodigoGSD" EntityType="AuditoriaModel.CodigoGSD" />
           <EntitySet Name="Partes" EntityType="AuditoriaModel.Partes" />
           <EntitySet Name="TipoTela" EntityType="AuditoriaModel.TipoTela" />
+          <EntitySet Name="Cliente" EntityType="AuditoriaModel.Cliente" />
+          <AssociationSet Name="FK_POrder_Cliente" Association="AuditoriaModel.FK_POrder_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
+          <EntitySet Name="Sewing" EntityType="AuditoriaModel.Sewing" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -911,6 +953,36 @@
           <Property Name="IdTela" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id_Cliente" />
+          </Key>
+          <Property Name="Id_Cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="Cliente" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_POrder_Cliente">
+          <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id_Cliente" />
+            </Principal>
+            <Dependent Role="POrder">
+              <PropertyRef Name="Id_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Sewing">
+          <Key>
+            <PropertyRef Name="IdSewing" />
+          </Key>
+          <Property Name="IdSewing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1210,6 +1282,25 @@
               <MappingFragment StoreEntitySet="TipoTela">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdTela" ColumnName="IdTela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="AuditoriaModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Cliente1" ColumnName="Cliente" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sewing">
+            <EntityTypeMapping TypeName="AuditoriaModel.Sewing">
+              <MappingFragment StoreEntitySet="Sewing">
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="IdSewing" ColumnName="IdSewing" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

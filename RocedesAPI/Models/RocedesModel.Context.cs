@@ -46,5 +46,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<CodigoGSD> CodigoGSD { get; set; }
         public virtual DbSet<Partes> Partes { get; set; }
         public virtual DbSet<TipoTela> TipoTela { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<Sewing> Sewing { get; set; }
     }
 }
