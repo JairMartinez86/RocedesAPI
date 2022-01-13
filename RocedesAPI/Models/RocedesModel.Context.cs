@@ -50,5 +50,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<Sewing> Sewing { get; set; }
         public virtual DbSet<SewingAccuracy> SewingAccuracy { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ClassOunce> ClassOunce { get; set; }
+        public virtual DbSet<MachineData> MachineData { get; set; }
     }
 }

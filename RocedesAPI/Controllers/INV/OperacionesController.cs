@@ -674,5 +674,296 @@ namespace RocedesAPI.Controllers.INV
 
         }
         #endregion
+
+        #region "OUNCE"
+
+        [Route("api/Inventario/Operaciones/GetOunce")]
+        [HttpGet]
+        public string GetOunce()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<ClassOunceCustom> lst = (from q in _Conexion.ClassOunce
+                                              select new ClassOunceCustom()
+                                              {
+                                                  IdOunce = q.IdOunce,
+                                                  Ounce = q.Ounce,
+                                                  Category = q.Category,
+                                                  FeedDog = q.FeedDog,
+                                                  Caliber = q.Caliber
+                                              }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Inventario/Operaciones/GuardarOunce")]
+        [HttpPost]
+        public IHttpActionResult GuardarOunce(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarOunce(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarOunce(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                ClassOunceCustom Datos = JsonConvert.DeserializeObject<ClassOunceCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        ClassOunce Registro = null;
+
+                        if (Datos.IdOunce == -1)
+                        {
+                            Registro = new ClassOunce
+                            {
+                                Ounce = Datos.Ounce,
+                                Category = Datos.Category.ToUpper(),
+                                FeedDog = Datos.FeedDog.ToUpper(),
+                                Caliber = Datos.Caliber
+                            };
+                            _Conexion.ClassOunce.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdOunce = Registro.IdOunce;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.ClassOunce.Find(Datos.IdOunce);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.ClassOunce.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Ounce = Datos.Ounce;
+                                Registro.Category = Datos.Category.ToUpper();
+                                Registro.FeedDog = Datos.FeedDog.ToUpper();
+                                Registro.Caliber = Datos.Caliber;
+       
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+
+        #region "OUNCE"
+
+        [Route("api/Inventario/Operaciones/GetDataMachine")]
+        [HttpGet]
+        public string GetDataMachine()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
+                                                  select new MachineDataCustom()
+                                                  {
+                                                      IdDataMachine = q.IdDataMachine,
+                                                      Name = q.Name,
+                                                      Stitch = q.Stitch,
+                                                      Rpm = q.Rpm,
+                                                      Delay = q.Delay,
+                                                      Personal = q.Personal,
+                                                      Fatigue = q.Fatigue,
+                                                      Nomenclature = q.Nomenclature,
+                                                      Machine = q.Machine,
+                                                      Description = q.Description,
+                                                      Needle = q.Needle
+                                                  }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Inventario/Operaciones/GuardarDataMachine")]
+        [HttpPost]
+        public IHttpActionResult GuardarDataMachine(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarDataMachine(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarDataMachine(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                MachineDataCustom Datos = JsonConvert.DeserializeObject<MachineDataCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        MachineData Registro = null;
+
+                        if (Datos.IdDataMachine == -1)
+                        {
+                            if (_Conexion.MachineData.FirstOrDefault(f => f.Stitch.ToLower().Equals(Datos.Stitch.ToLower()) && f.IdDataMachine != Datos.IdDataMachine) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El Stitch ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+                            Registro = new MachineData
+                            {
+                                Name = Datos.Name.ToUpper(),
+                                Stitch = Datos.Stitch.ToUpper(),
+                                Rpm = Datos.Rpm,
+                                Delay = Datos.Delay,
+                                Personal = Datos.Personal,
+                                Fatigue = Datos.Fatigue,
+                                Nomenclature = Datos.Nomenclature.ToUpper(),
+                                Machine = Datos.Machine.ToUpper(),
+                                Description = Datos.Description.ToUpper(),
+                                Needle = Datos.Needle.ToUpper()
+                            };
+                            _Conexion.MachineData.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdDataMachine = Registro.IdDataMachine;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.MachineData.Find(Datos.IdDataMachine);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.MachineData.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Name = Datos.Name.ToUpper();
+                                Registro.Stitch = Datos.Stitch.ToUpper();
+                                Registro.Rpm = Datos.Rpm;
+                                Registro.Delay = Datos.Delay;
+                                Registro.Personal = Datos.Personal;
+                                Registro.Fatigue = Datos.Fatigue;
+                                Registro.Nomenclature = Datos.Nomenclature.ToUpper();
+                                Registro.Machine = Datos.Machine.ToUpper();
+                                Registro.Description = Datos.Description.ToUpper();
+                                Registro.Needle = Datos.Needle.ToUpper();
+
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
     }
 }

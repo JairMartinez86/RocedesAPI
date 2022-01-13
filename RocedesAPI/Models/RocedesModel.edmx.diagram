@@ -40,6 +40,8 @@
         <EntityTypeShape EntityType="AuditoriaModel.Sewing" Width="1.5" PointX="0.75" PointY="13.75" />
         <EntityTypeShape EntityType="AuditoriaModel.SewingAccuracy" Width="1.5" PointX="12.375" PointY="3.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Product" Width="1.5" PointX="10.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.ClassOunce" Width="1.5" PointX="12.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.MachineData" Width="1.5" PointX="14.375" PointY="13.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

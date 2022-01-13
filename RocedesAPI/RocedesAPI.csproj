@@ -702,6 +702,11 @@
     <Compile Include="Controllers\INV\ReportViewerBoxinSerialController.cs" />
     <Compile Include="Controllers\INV\SacoController.cs" />
     <Compile Include="Controllers\INV\SerialComponenteController.cs" />
+    <Compile Include="Models\ClassOunce.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cls\INV\ClassOunceCustom.cs" />
+    <Compile Include="Models\Cls\INV\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
     <Compile Include="Models\Cls\INV\SewingCustom.cs" />
     <Compile Include="Controllers\Reporte\ReportViewerController.cs" />
@@ -771,6 +776,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FoleoProceso.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MachineData.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Material.cs">

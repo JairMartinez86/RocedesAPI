@@ -126,6 +126,16 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="ClassOunce">
+          <Key>
+            <PropertyRef Name="IdOunce" />
+          </Key>
+          <Property Name="IdOunce" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ounce" Type="int" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FeedDog" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Caliber" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="CodigoGSD">
           <Key>
             <PropertyRef Name="IdCodGSD" />
@@ -200,6 +210,22 @@
           <Property Name="Orden" Type="int" Nullable="false" />
           <Property Name="Proceso" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NoFactor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MachineData">
+          <Key>
+            <PropertyRef Name="IdDataMachine" />
+          </Key>
+          <Property Name="IdDataMachine" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Stitch" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rpm" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Delay" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Personal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Fatigue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Nomenclature" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Machine" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Needle" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -441,6 +467,7 @@
           <EntitySet Name="BundleBoxing" EntityType="Self.BundleBoxing" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="Self.BundleBoxing_Saco" Schema="INV" store:Type="Tables" />
           <EntitySet Name="BundleBoxingEnvio" EntityType="Self.BundleBoxingEnvio" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="ClassOunce" EntityType="Self.ClassOunce" Schema="INV" store:Type="Tables" />
           <EntitySet Name="CodigoGSD" EntityType="Self.CodigoGSD" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorCorte" EntityType="Self.FactorCorte" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FactorDetalleCorte" EntityType="Self.FactorDetalleCorte" Schema="INV" store:Type="Tables" />
@@ -448,6 +475,7 @@
           <EntitySet Name="FoleoDatos" EntityType="Self.FoleoDatos" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FoleoFactor" EntityType="Self.FoleoFactor" Schema="INV" store:Type="Tables" />
           <EntitySet Name="FoleoProceso" EntityType="Self.FoleoProceso" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="MachineData" EntityType="Self.MachineData" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Partes" EntityType="Self.Partes" Schema="INV" store:Type="Tables" />
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
@@ -596,6 +624,8 @@
           <EntitySet Name="Sewing" EntityType="AuditoriaModel.Sewing" />
           <EntitySet Name="SewingAccuracy" EntityType="AuditoriaModel.SewingAccuracy" />
           <EntitySet Name="Product" EntityType="AuditoriaModel.Product" />
+          <EntitySet Name="ClassOunce" EntityType="AuditoriaModel.ClassOunce" />
+          <EntitySet Name="MachineData" EntityType="AuditoriaModel.MachineData" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -1019,6 +1049,32 @@
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LevelOfComplexity" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="ClassOunce">
+          <Key>
+            <PropertyRef Name="IdOunce" />
+          </Key>
+          <Property Name="IdOunce" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ounce" Type="Int32" Nullable="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FeedDog" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Caliber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MachineData">
+          <Key>
+            <PropertyRef Name="IdDataMachine" />
+          </Key>
+          <Property Name="IdDataMachine" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Stitch" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rpm" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Delay" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Personal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Fatigue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Nomenclature" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Machine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Needle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1355,6 +1411,34 @@
                 <ScalarProperty Name="LevelOfComplexity" ColumnName="LevelOfComplexity" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassOunce">
+            <EntityTypeMapping TypeName="AuditoriaModel.ClassOunce">
+              <MappingFragment StoreEntitySet="ClassOunce">
+                <ScalarProperty Name="Caliber" ColumnName="Caliber" />
+                <ScalarProperty Name="FeedDog" ColumnName="FeedDog" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Ounce" ColumnName="Ounce" />
+                <ScalarProperty Name="IdOunce" ColumnName="IdOunce" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MachineData">
+            <EntityTypeMapping TypeName="AuditoriaModel.MachineData">
+              <MappingFragment StoreEntitySet="MachineData">
+                <ScalarProperty Name="Needle" ColumnName="Needle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Machine" ColumnName="Machine" />
+                <ScalarProperty Name="Nomenclature" ColumnName="Nomenclature" />
+                <ScalarProperty Name="Fatigue" ColumnName="Fatigue" />
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+                <ScalarProperty Name="Delay" ColumnName="Delay" />
+                <ScalarProperty Name="Rpm" ColumnName="Rpm" />
+                <ScalarProperty Name="Stitch" ColumnName="Stitch" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
