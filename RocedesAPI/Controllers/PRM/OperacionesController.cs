@@ -21,7 +21,7 @@ namespace RocedesAPI.Controllers.INV
 
         #region "CODIGO GSD"
 
-        [Route("api/Inventario/Operaciones/GetCodigoGSD")]
+        [Route("api/Premium/Operaciones/GetCodigoGSD")]
         [HttpGet]
         public string GetCodigoGSD()
         {
@@ -57,7 +57,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarCodigoGSD")]
+        [Route("api/Premium/Operaciones/GuardarCodigoGSD")]
         [HttpPost]
         public IHttpActionResult GuardarCodigoGSD(string d)
         {
@@ -154,7 +154,7 @@ namespace RocedesAPI.Controllers.INV
 
         #region "PARTES"
 
-        [Route("api/Inventario/Operaciones/GetPartes")]
+        [Route("api/Premium/Operaciones/GetPartes")]
         [HttpGet]
         public string GetPartes()
         {
@@ -189,7 +189,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarPartes")]
+        [Route("api/Premium/Operaciones/GuardarPartes")]
         [HttpPost]
         public IHttpActionResult GuardarPartes(string d)
         {
@@ -284,7 +284,7 @@ namespace RocedesAPI.Controllers.INV
 
         #region "TIPOS TELA"
 
-        [Route("api/Inventario/Operaciones/GetTela")]
+        [Route("api/Premium/Operaciones/GetTela")]
         [HttpGet]
         public string GetTela()
         {
@@ -319,7 +319,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarTela")]
+        [Route("api/Premium/Operaciones/GuardarTela")]
         [HttpPost]
         public IHttpActionResult GuardarTela(string d)
         {
@@ -413,7 +413,7 @@ namespace RocedesAPI.Controllers.INV
 
         #region "SEWING"
 
-        [Route("api/Inventario/Operaciones/GetSewing")]
+        [Route("api/Premium/Operaciones/GetSewing")]
         [HttpGet]
         public string GetSewing()
         {
@@ -450,7 +450,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarSewing")]
+        [Route("api/Premium/Operaciones/GuardarSewing")]
         [HttpPost]
         public IHttpActionResult GuardarSewing(string d)
         {
@@ -546,7 +546,7 @@ namespace RocedesAPI.Controllers.INV
         #endregion
         #region "SEWING ACCURACY"
 
-        [Route("api/Inventario/Operaciones/GetSewingAccuracy")]
+        [Route("api/Premium/Operaciones/GetSewingAccuracy")]
         [HttpGet]
         public string GetSewingAccuracy()
         {
@@ -582,7 +582,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarSewingAccuracy")]
+        [Route("api/Premium/Operaciones/GuardarSewingAccuracy")]
         [HttpPost]
         public IHttpActionResult GuardarSewingAccuracy(string d)
         {
@@ -677,7 +677,7 @@ namespace RocedesAPI.Controllers.INV
 
         #region "OUNCE"
 
-        [Route("api/Inventario/Operaciones/GetOunce")]
+        [Route("api/Premium/Operaciones/GetOunce")]
         [HttpGet]
         public string GetOunce()
         {
@@ -715,7 +715,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarOunce")]
+        [Route("api/Premium/Operaciones/GuardarOunce")]
         [HttpPost]
         public IHttpActionResult GuardarOunce(string d)
         {
@@ -812,7 +812,7 @@ namespace RocedesAPI.Controllers.INV
 
         #region "OUNCE"
 
-        [Route("api/Inventario/Operaciones/GetDataMachine")]
+        [Route("api/Premium/Operaciones/GetDataMachine")]
         [HttpGet]
         public string GetDataMachine()
         {
@@ -856,7 +856,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/Operaciones/GuardarDataMachine")]
+        [Route("api/Premium/Operaciones/GuardarDataMachine")]
         [HttpPost]
         public IHttpActionResult GuardarDataMachine(string d)
         {

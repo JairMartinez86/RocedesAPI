@@ -691,13 +691,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Auditoria\POrderController.cs" />
     <Compile Include="Controllers\INV\BundleBoxingController.cs" />
-    <Compile Include="Controllers\INV\FlujoController.cs" />
-    <Compile Include="Controllers\INV\FoleoController.cs" />
+    <Compile Include="Controllers\PRM\FlujoController.cs" />
+    <Compile Include="Controllers\PRM\FoleoController.cs" />
     <Compile Include="Controllers\INV\MaterialController.cs" />
-    <Compile Include="Controllers\INV\OperacionesController.cs" />
+    <Compile Include="Controllers\PRM\OperacionesController.cs" />
     <Compile Include="Controllers\INV\PresentacionSerialController.cs" />
-    <Compile Include="Controllers\INV\ProcesoCorteController.cs" />
-    <Compile Include="Controllers\INV\ProcesoTendidoController.cs" />
+    <Compile Include="Controllers\PRM\ProcesoCorteController.cs" />
+    <Compile Include="Controllers\PRM\ProcesoTendidoController.cs" />
     <Compile Include="Controllers\INV\ProductoController.cs" />
     <Compile Include="Controllers\INV\ReportViewerBoxinSerialController.cs" />
     <Compile Include="Controllers\INV\SacoController.cs" />
@@ -705,10 +705,10 @@
     <Compile Include="Models\ClassOunce.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cls\INV\ClassOunceCustom.cs" />
-    <Compile Include="Models\Cls\INV\MachineDataCustom.cs" />
+    <Compile Include="Models\Cls\PRM\ClassOunceCustom.cs" />
+    <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
-    <Compile Include="Models\Cls\INV\SewingCustom.cs" />
+    <Compile Include="Models\Cls\PRM\SewingCustom.cs" />
     <Compile Include="Controllers\Reporte\ReportViewerController.cs" />
     <Compile Include="Controllers\SIS\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -734,13 +734,13 @@
     <Compile Include="Models\Cls\INV\BundleBoxingCustom.cs" />
     <Compile Include="Models\Cls\INV\BundleBoxingEnvioCustom.cs" />
     <Compile Include="Models\Cls\INV\BundleBoxing_SacoCustom.cs" />
-    <Compile Include="Models\Cls\INV\CodigoGSDCustom.cs" />
-    <Compile Include="Models\Cls\INV\FactorCorteCustom.cs" />
-    <Compile Include="Models\Cls\INV\FactorDetalleCorteCustom.cs" />
-    <Compile Include="Models\Cls\INV\FactorTendidoCustom.cs" />
-    <Compile Include="Models\Cls\INV\FoleoFactorCustom.cs" />
+    <Compile Include="Models\Cls\PRM\CodigoGSDCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FactorCorteCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FactorDetalleCorteCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FactorTendidoCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FoleoFactorCustom.cs" />
     <Compile Include="Models\Cls\INV\MaterialCustom.cs" />
-    <Compile Include="Models\Cls\INV\PartesCustom.cs" />
+    <Compile Include="Models\Cls\PRM\PartesCustom.cs" />
     <Compile Include="Models\Cls\INV\PresentacionSerialCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoCustom.cs" />
     <Compile Include="Models\Cls\INV\SacoEstado.cs" />
@@ -748,8 +748,8 @@
     <Compile Include="Models\Cls\INV\SacoSerial.cs" />
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
-    <Compile Include="Models\Cls\INV\SewingAccuracyCustom.cs" />
-    <Compile Include="Models\Cls\INV\TiposTelaCustom.cs" />
+    <Compile Include="Models\Cls\PRM\SewingAccuracyCustom.cs" />
+    <Compile Include="Models\Cls\PRM\TiposTelaCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioPerfilCustom.cs" />
     <Compile Include="Models\CodigoGSD.cs">

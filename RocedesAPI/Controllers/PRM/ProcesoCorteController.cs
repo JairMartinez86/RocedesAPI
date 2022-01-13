@@ -17,7 +17,7 @@ namespace RocedesAPI.Controllers.INV
     public class ProcesoCorteController : ApiController
     {
 
-        [Route("api/Inventario/ProcesoCorte/Get")]
+        [Route("api/Premium/ProcesoCorte/Get")]
         [HttpGet]
         public string Get()
         {
@@ -82,7 +82,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
-        [Route("api/Inventario/ProcesoCorte/GetAuto")]
+        [Route("api/Premium/ProcesoCorte/GetAuto")]
         [HttpGet]
         public string GetAuto(string filtro)
         {
@@ -126,7 +126,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/ProcesoCorte/GetDetalle")]
+        [Route("api/Premium/ProcesoCorte/GetDetalle")]
         [HttpGet]
         public string GetDetalle(int IdFactorDetalleCorte)
         {
@@ -200,7 +200,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/ProcesoCorte/GuardarFactor")]
+        [Route("api/Premium/ProcesoCorte/GuardarFactor")]
         [HttpPost]
         public IHttpActionResult Guardar(string d)
         {
@@ -267,7 +267,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/ProcesoCorte/GuardarDetalle")]
+        [Route("api/Premium/ProcesoCorte/GuardarDetalle")]
         [HttpPost]
         public IHttpActionResult GuardarDetalle(string d)
         {
@@ -364,7 +364,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/ProcesoCorte/EliminarDetalle")]
+        [Route("api/Premium/ProcesoCorte/EliminarDetalle")]
         [HttpPost]
         public IHttpActionResult EliminarDetalle(int id)
         {

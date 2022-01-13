@@ -16,7 +16,7 @@ namespace RocedesAPI.Controllers.INV
 {
     public class ProcesoTendidoController : ApiController
     {
-        [Route("api/Inventario/ProcesoTendido/Get")]
+        [Route("api/Premium/ProcesoTendido/Get")]
         [HttpGet]
         public string Get()
         {
@@ -93,7 +93,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/ProcesoTendido/Guardar")]
+        [Route("api/Premium/ProcesoTendido/Guardar")]
         [HttpPost]
         public IHttpActionResult Guardar(string d)
         {

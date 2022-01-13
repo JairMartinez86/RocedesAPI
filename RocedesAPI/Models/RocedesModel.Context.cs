@@ -30,27 +30,27 @@ namespace RocedesAPI.Models
         public virtual DbSet<Style> Style { get; set; }
         public virtual DbSet<Bundle> Bundle { get; set; }
         public virtual DbSet<BundleBoxing_Saco> BundleBoxing_Saco { get; set; }
-        public virtual DbSet<FactorTendido> FactorTendido { get; set; }
         public virtual DbSet<Material> Material { get; set; }
         public virtual DbSet<PresentacionSerial> PresentacionSerial { get; set; }
-        public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
         public virtual DbSet<BundleBoxingEnvio> BundleBoxingEnvio { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
         public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
+        public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ClassOunce> ClassOunce { get; set; }
+        public virtual DbSet<CodigoGSD> CodigoGSD { get; set; }
         public virtual DbSet<FactorCorte> FactorCorte { get; set; }
         public virtual DbSet<FactorDetalleCorte> FactorDetalleCorte { get; set; }
+        public virtual DbSet<FactorTendido> FactorTendido { get; set; }
         public virtual DbSet<FoleoDatos> FoleoDatos { get; set; }
         public virtual DbSet<FoleoFactor> FoleoFactor { get; set; }
         public virtual DbSet<FoleoProceso> FoleoProceso { get; set; }
-        public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
-        public virtual DbSet<CodigoGSD> CodigoGSD { get; set; }
+        public virtual DbSet<MachineData> MachineData { get; set; }
         public virtual DbSet<Partes> Partes { get; set; }
-        public virtual DbSet<TipoTela> TipoTela { get; set; }
-        public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Sewing> Sewing { get; set; }
         public virtual DbSet<SewingAccuracy> SewingAccuracy { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<ClassOunce> ClassOunce { get; set; }
-        public virtual DbSet<MachineData> MachineData { get; set; }
+        public virtual DbSet<TipoTela> TipoTela { get; set; }
+        public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
     }
 }

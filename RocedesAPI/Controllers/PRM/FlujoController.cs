@@ -16,7 +16,7 @@ namespace RocedesAPI.Controllers.INV
 {
     public class FlujoController : ApiController
     {
-        [Route("api/Inventario/Flujo/Get")]
+        [Route("api/Premium/Flujo/Get")]
         [HttpGet]
         public string Get(int IdFactorDetalleCorte, string Estilo)
         {

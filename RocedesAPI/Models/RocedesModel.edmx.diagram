@@ -12,36 +12,36 @@
         <EntityTypeShape EntityType="AuditoriaModel.Bundle" Width="1.5" PointX="8" PointY="11.75" />
         <AssociationConnector Association="AuditoriaModel.FK_Bundle_POrder" />
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="3.375" PointY="16.625" />
-        <EntityTypeShape EntityType="AuditoriaModel.FactorTendido" Width="1.5" PointX="3" PointY="6.875" />
         <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="8" PointY="6.875" />
         <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="5.75" PointY="6.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="0.75" PointY="6.875" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" />
-        <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
         <AssociationConnector Association="AuditoriaModel.FK_Material_PresentacionSerial" />
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxingEnvio" Width="1.5" PointX="3" PointY="21.375" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" />
         <EntityTypeShape EntityType="AuditoriaModel.UsuarioPerfil" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3" PointY="26.625" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Usuario" />
-        <EntityTypeShape EntityType="AuditoriaModel.FactorCorte" Width="1.5" PointX="10.375" PointY="6.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.FactorDetalleCorte" Width="1.5" PointX="12.625" PointY="6.25" />
-        <AssociationConnector Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" />
-        <EntityTypeShape EntityType="AuditoriaModel.FoleoDatos" Width="1.5" PointX="3.375" PointY="9.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.FoleoFactor" Width="1.5" PointX="12.625" PointY="10.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.375" PointY="10.875" />
-        <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
         <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.375" PointY="0.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.CodigoGSD" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.Partes" Width="1.5" PointX="12.625" PointY="0.625" />
-        <EntityTypeShape EntityType="AuditoriaModel.TipoTela" Width="1.5" PointX="10.375" PointY="3.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Cliente" Width="1.5" PointX="3.375" PointY="12.875" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Cliente" />
-        <EntityTypeShape EntityType="AuditoriaModel.Sewing" Width="1.5" PointX="0.75" PointY="13.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.SewingAccuracy" Width="1.5" PointX="12.375" PointY="3.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Product" Width="1.5" PointX="10.375" PointY="13.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.ClassOunce" Width="1.5" PointX="12.375" PointY="13.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.MachineData" Width="1.5" PointX="14.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.ClassOunce" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.CodigoGSD" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.FactorCorte" Width="1.5" PointX="10.75" PointY="4.5" />
+        <EntityTypeShape EntityType="AuditoriaModel.FactorDetalleCorte" Width="1.5" PointX="13" PointY="4" />
+        <EntityTypeShape EntityType="AuditoriaModel.FactorTendido" Width="1.5" PointX="3.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.FoleoDatos" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.FoleoFactor" Width="1.5" PointX="13" PointY="0.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.75" PointY="0.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.MachineData" Width="1.5" PointX="12.75" PointY="8.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.Partes" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.Sewing" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.SewingAccuracy" Width="1.5" PointX="14.75" PointY="8.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.TipoTela" Width="1.5" PointX="14.75" PointY="11.75" />
+        <AssociationConnector Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" />
+        <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
+        <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="1.5" PointY="33.75" />
+        <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

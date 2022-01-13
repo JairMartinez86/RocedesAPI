@@ -15,7 +15,7 @@ namespace RocedesAPI.Controllers.INV
 {
     public class FoleoController : ApiController
     {
-        [Route("api/Inventario/Foleo/Get")]
+        [Route("api/Premium/Foleo/Get")]
         [HttpGet]
         public string Get()
         {
@@ -75,7 +75,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/Foleo/Guardar")]
+        [Route("api/Premium/Foleo/Guardar")]
         [HttpPost]
         public IHttpActionResult Guardar(string d)
         {
@@ -160,7 +160,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/Foleo/GetEstilo")]
+        [Route("api/Premium/Foleo/GetEstilo")]
         [HttpGet]
         public string GetEstilo(string filtro)
         {
@@ -198,7 +198,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/Foleo/GetDato")]
+        [Route("api/Premium/Foleo/GetDato")]
         [HttpGet]
         public string GetDato()
         {
@@ -231,7 +231,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/Foleo/GuardarDato")]
+        [Route("api/Premium/Foleo/GuardarDato")]
         [HttpPost]
         public IHttpActionResult GuardarDato(string d)
         {
@@ -315,7 +315,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        [Route("api/Inventario/Foleo/EliminarDato")]
+        [Route("api/Premium/Foleo/EliminarDato")]
         [HttpPost]
         public IHttpActionResult EliminarDato(int id)
         {
