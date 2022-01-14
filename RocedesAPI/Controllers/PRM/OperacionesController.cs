@@ -23,7 +23,7 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/Premium/Operaciones/GetCodigoGSD")]
         [HttpGet]
-        public string GetCodigoGSD()
+        public string GetCodigoGSD(string codigo)
         {
             string json = string.Empty;
 
@@ -33,6 +33,7 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<CodigoGSDCustom> lst = (from q in _Conexion.CodigoGSD
+                                                 where q.CodigoGSD1 == ((codigo == string.Empty) ? q.CodigoGSD1 : codigo)
                                                  select new CodigoGSDCustom()
                                                  {
                                                      IdCodGSD = q.IdCodGSD,
@@ -415,7 +416,7 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/Premium/Operaciones/GetSewing")]
         [HttpGet]
-        public string GetSewing()
+        public string GetSewing(string codigo)
         {
             string json = string.Empty;
 
@@ -425,7 +426,8 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<SewingCustom> lst = (from q in _Conexion.Sewing
-                                                 select new SewingCustom()
+                                              where q.Code == ((codigo == string.Empty)? q.Code : codigo)
+                                              select new SewingCustom()
                                                  {
                                                      IdSewing = q.IdSewing,
                                                      Level = q.Level,
@@ -548,7 +550,7 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/Premium/Operaciones/GetSewingAccuracy")]
         [HttpGet]
-        public string GetSewingAccuracy()
+        public string GetSewingAccuracy(string level)
         {
             string json = string.Empty;
 
@@ -558,12 +560,13 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<SewingAccuracyCustom> lst = (from q in _Conexion.SewingAccuracy
-                                              select new SewingAccuracyCustom()
-                                              {
-                                                  IdSewingAccuracy = q.IdSewingAccuracy,
-                                                  Level = q.Level,
-                                                  Factor = q.Factor
-                                              }).ToList();
+                                                      where q.Level == ((level == string.Empty) ? q.Level : level)
+                                                      select new SewingAccuracyCustom()
+                                                      {
+                                                          IdSewingAccuracy = q.IdSewingAccuracy,
+                                                          Level = q.Level,
+                                                          Factor = q.Factor
+                                                      }).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
 
@@ -856,6 +859,52 @@ namespace RocedesAPI.Controllers.INV
         }
 
 
+        [Route("api/Premium/Operaciones/GetDataMachineAuto")]
+        [HttpGet]
+        public string GetDataMachine(string nombre)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
+                                                   where q.Name.ToLower().StartsWith(nombre.TrimEnd().ToLower())
+                                                   orderby q.Name, q.Name.Length
+                                                   select new MachineDataCustom()
+                                                   {
+                                                       IdDataMachine = q.IdDataMachine,
+                                                       Name = q.Name,
+                                                       Stitch = q.Stitch,
+                                                       Rpm = q.Rpm,
+                                                       Delay = q.Delay,
+                                                       Personal = q.Personal,
+                                                       Fatigue = q.Fatigue,
+                                                       Nomenclature = q.Nomenclature,
+                                                       Machine = q.Machine,
+                                                       Description = q.Description,
+                                                       Needle = q.Needle
+                                                   }).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
         [Route("api/Premium/Operaciones/GuardarDataMachine")]
         [HttpPost]
         public IHttpActionResult GuardarDataMachine(string d)
@@ -872,6 +921,9 @@ namespace RocedesAPI.Controllers.INV
             }
 
         }
+
+
+
 
         private string _GuardarDataMachine(string d)
         {
