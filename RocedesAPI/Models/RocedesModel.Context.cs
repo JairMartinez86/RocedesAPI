@@ -52,5 +52,7 @@ namespace RocedesAPI.Models
         public virtual DbSet<SewingAccuracy> SewingAccuracy { get; set; }
         public virtual DbSet<TipoTela> TipoTela { get; set; }
         public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
+        public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
+        public virtual DbSet<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
     }
 }

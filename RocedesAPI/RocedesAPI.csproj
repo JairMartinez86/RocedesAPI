@@ -708,6 +708,7 @@
     <Compile Include="Models\Cls\PRM\ClassOunceCustom.cs" />
     <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
+    <Compile Include="Models\Cls\PRM\MethodAnalysisCustom.cs" />
     <Compile Include="Models\Cls\PRM\SewingCustom.cs" />
     <Compile Include="Controllers\Reporte\ReportViewerController.cs" />
     <Compile Include="Controllers\SIS\UsuarioController.cs" />
@@ -782,6 +783,12 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Material.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MethodAnalysis.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MethodAnalysisDetalle.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Partes.cs">

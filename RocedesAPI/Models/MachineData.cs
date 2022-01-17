@@ -14,6 +14,12 @@ namespace RocedesAPI.Models
     
     public partial class MachineData
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MachineData()
+        {
+            this.MethodAnalysis = new HashSet<MethodAnalysis>();
+        }
+    
         public int IdDataMachine { get; set; }
         public string Name { get; set; }
         public string Stitch { get; set; }
@@ -25,5 +31,8 @@ namespace RocedesAPI.Models
         public string Machine { get; set; }
         public string Description { get; set; }
         public string Needle { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MethodAnalysis> MethodAnalysis { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RocedesAPI.Models;
 using RocedesAPI.Models.Cls.INV;
+using RocedesAPI.Models.Cls.PRM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -319,6 +320,42 @@ namespace RocedesAPI.Controllers.INV
             return json;
         }
 
+
+        [Route("api/Premium/Operaciones/GetTelaAuto")]
+        [HttpGet]
+        public string GetTelaAuto(string nombre)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<TiposTelaCustom> lst = (from q in _Conexion.TipoTela
+                                                   where q.Nombre.ToLower().StartsWith(nombre.TrimEnd().ToLower())
+                                                   orderby q.Nombre, q.Nombre.Length
+                                                   select new TiposTelaCustom()
+                                                   {
+                                                       IdTela = q.IdTela,
+                                                       Nombre = q.Nombre
+                                                   }).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
 
         [Route("api/Premium/Operaciones/GuardarTela")]
         [HttpPost]
@@ -813,7 +850,7 @@ namespace RocedesAPI.Controllers.INV
         #endregion
 
 
-        #region "OUNCE"
+        #region "DATA MACHINE"
 
         [Route("api/Premium/Operaciones/GetDataMachine")]
         [HttpGet]
@@ -997,6 +1034,107 @@ namespace RocedesAPI.Controllers.INV
 
                         }
 
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+
+
+        #region "DATA MACHINE"
+
+
+        [Route("api/Premium/Operaciones/NuevoMethodAnalysis")]
+        [HttpPost]
+        public IHttpActionResult NuevoMethodAnalysis(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_NuevoMethodAnalysis(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+
+
+        private string _NuevoMethodAnalysis(string d)
+        {
+            string json = string.Empty;
+
+            MethodAnalysisCustom Datos = JsonConvert.DeserializeObject<MethodAnalysisCustom>(d);
+
+            try
+            {
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        string Codigo = string.Empty;
+
+                        MethodAnalysis Registro = new MethodAnalysis
+                        {
+                            Codigo = string.Empty,
+                            Operacion = Datos.Operacion.ToUpper().TrimEnd(),
+                            IdDataMachine = Datos.IdDataMachine,
+                            DataMachine = Datos.DataMachine.ToUpper().TrimEnd(),
+                            Puntadas = Datos.Puntadas,
+                            ManejoPaquete = Datos.ManejoPaquete.ToUpper().TrimEnd(),
+                            Rate = Datos.Rate,
+                            JornadaLaboral = Datos.JornadaLaboral,
+                            IdTela = Datos.IdTela,
+                            Onza = Datos.Onza,
+                            MateriaPrima_1 = Datos.MateriaPrima_1.ToUpper().TrimEnd(),
+                            MateriaPrima_2 = Datos.MateriaPrima_2.ToUpper().TrimEnd(),
+                            MateriaPrima_3 = Datos.MateriaPrima_3.ToUpper().TrimEnd(),
+                            MateriaPrima_4 = Datos.MateriaPrima_4.ToUpper().TrimEnd(),
+                            MateriaPrima_5 = Datos.MateriaPrima_5.ToUpper().TrimEnd(),
+                            MateriaPrima_6 = Datos.MateriaPrima_6.ToUpper().TrimEnd(),
+                            MateriaPrima_7 = Datos.MateriaPrima_7.ToUpper().TrimEnd(),
+                            ParteSeccion = Datos.ParteSeccion.ToUpper(),
+                            TipoConstruccion = Datos.TipoConstruccion.ToUpper().TrimEnd(),
+                            FechaRegistro = DateTime.Now,
+                            IdUsuario = _Conexion.Usuario.First( u => u.Login == Datos.Usuario).IdUsuario
+                        };
+                        _Conexion.MethodAnalysis.Add(Registro);
+
+                        _Conexion.SaveChanges();
+
+                        Codigo = _Conexion.MethodAnalysis.Where(w => w.Codigo != string.Empty).Max(m => m.Codigo);
+                        if (Codigo != null)
+                            Codigo = (Convert.ToInt32(Codigo) + 1).ToString();
+                        else
+                            Codigo = "1";
+
+                        Codigo = Codigo.PadLeft(10, '0');
+                        Registro.Codigo = Codigo;
+
+
+                        json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, "Registro Guardado.", 0);
 
                         _Conexion.SaveChanges();
                         scope.Complete();

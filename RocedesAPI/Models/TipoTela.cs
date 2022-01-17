@@ -14,7 +14,16 @@ namespace RocedesAPI.Models
     
     public partial class TipoTela
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TipoTela()
+        {
+            this.MethodAnalysis = new HashSet<MethodAnalysis>();
+        }
+    
         public int IdTela { get; set; }
         public string Nombre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MethodAnalysis> MethodAnalysis { get; set; }
     }
 }

@@ -275,6 +275,48 @@
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Needle" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="MethodAnalysis">
+          <Key>
+            <PropertyRef Name="IdMethodAnalysis" />
+          </Key>
+          <Property Name="IdMethodAnalysis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Operacion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdDataMachine" Type="int" Nullable="false" />
+          <Property Name="DataMachine" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Puntadas" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="ManejoPaquete" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="JornadaLaboral" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="IdTela" Type="int" Nullable="false" />
+          <Property Name="Onza" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="MateriaPrima_1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_3" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_5" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_6" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_7" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParteSeccion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TipoConstruccion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MethodAnalysisDetalle">
+          <Key>
+            <PropertyRef Name="IdDetMethodAnalysis" />
+          </Key>
+          <Property Name="IdDetMethodAnalysis" Type="int" Nullable="false" />
+          <Property Name="Codigo1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo3" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Freq" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Tmus" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Sec" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Sam" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
         <EntityType Name="Partes">
           <Key>
             <PropertyRef Name="IdParte" />
@@ -435,6 +477,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MethodAnalysis_MachineData">
+          <End Role="MachineData" Type="Self.MachineData" Multiplicity="1" />
+          <End Role="MethodAnalysis" Type="Self.MethodAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MachineData">
+              <PropertyRef Name="IdDataMachine" />
+            </Principal>
+            <Dependent Role="MethodAnalysis">
+              <PropertyRef Name="IdDataMachine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MethodAnalysis_TipoTela">
+          <End Role="TipoTela" Type="Self.TipoTela" Multiplicity="1" />
+          <End Role="MethodAnalysis" Type="Self.MethodAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoTela">
+              <PropertyRef Name="IdTela" />
+            </Principal>
+            <Dependent Role="MethodAnalysis">
+              <PropertyRef Name="IdTela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_POrder_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="POrder" Type="Self.POrder" Multiplicity="*" />
@@ -480,6 +546,8 @@
           <EntitySet Name="FoleoFactor" EntityType="Self.FoleoFactor" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FoleoProceso" EntityType="Self.FoleoProceso" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="MachineData" EntityType="Self.MachineData" Schema="PRM" store:Type="Tables" />
+          <EntitySet Name="MethodAnalysis" EntityType="Self.MethodAnalysis" Schema="PRM" store:Type="Tables" />
+          <EntitySet Name="MethodAnalysisDetalle" EntityType="Self.MethodAnalysisDetalle" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="Partes" EntityType="Self.Partes" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="Sewing" EntityType="Self.Sewing" Schema="PRM" store:Type="Tables" />
@@ -518,6 +586,14 @@
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="Self.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
             <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MethodAnalysis_MachineData" Association="Self.FK_MethodAnalysis_MachineData">
+            <End Role="MachineData" EntitySet="MachineData" />
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="Self.FK_MethodAnalysis_TipoTela">
+            <End Role="TipoTela" EntitySet="TipoTela" />
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
           </AssociationSet>
           <AssociationSet Name="FK_POrder_Cliente" Association="Self.FK_POrder_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -625,6 +701,16 @@
           <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido">
             <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
             <End Role="FactorTendido" EntitySet="FactorTendido" />
+          </AssociationSet>
+          <EntitySet Name="MethodAnalysis" EntityType="AuditoriaModel.MethodAnalysis" />
+          <EntitySet Name="MethodAnalysisDetalle" EntityType="AuditoriaModel.MethodAnalysisDetalle" />
+          <AssociationSet Name="FK_MethodAnalysis_MachineData" Association="AuditoriaModel.FK_MethodAnalysis_MachineData">
+            <End Role="MachineData" EntitySet="MachineData" />
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="AuditoriaModel.FK_MethodAnalysis_TipoTela">
+            <End Role="TipoTela" EntitySet="TipoTela" />
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -997,6 +1083,7 @@
           <Property Name="Machine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Needle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MachineData" ToRole="MethodAnalysis" />
         </EntityType>
         <EntityType Name="Partes">
           <Key>
@@ -1028,6 +1115,7 @@
           </Key>
           <Property Name="IdTela" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="TipoTela" ToRole="MethodAnalysis" />
         </EntityType>
         <Association Name="FK_FactorDetalleCorte_FactorCorte">
           <End Type="AuditoriaModel.FactorCorte" Role="FactorCorte" Multiplicity="1" />
@@ -1072,6 +1160,74 @@
             </Principal>
             <Dependent Role="FactorTendido">
               <PropertyRef Name="IdProcesoTendido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MethodAnalysis">
+          <Key>
+            <PropertyRef Name="IdMethodAnalysis" />
+          </Key>
+          <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Operacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdDataMachine" Type="Int32" Nullable="false" />
+          <Property Name="DataMachine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Puntadas" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="ManejoPaquete" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="JornadaLaboral" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="IdTela" Type="Int32" Nullable="false" />
+          <Property Name="Onza" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="MateriaPrima_1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_5" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_6" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_7" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ParteSeccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoConstruccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
+          <NavigationProperty Name="TipoTela" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="MethodAnalysis" ToRole="TipoTela" />
+        </EntityType>
+        <EntityType Name="MethodAnalysisDetalle">
+          <Key>
+            <PropertyRef Name="IdDetMethodAnalysis" />
+          </Key>
+          <Property Name="IdDetMethodAnalysis" Type="Int32" Nullable="false" />
+          <Property Name="Codigo1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Freq" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="Sec" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+        </EntityType>
+        <Association Name="FK_MethodAnalysis_MachineData">
+          <End Type="AuditoriaModel.MachineData" Role="MachineData" Multiplicity="1" />
+          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MachineData">
+              <PropertyRef Name="IdDataMachine" />
+            </Principal>
+            <Dependent Role="MethodAnalysis">
+              <PropertyRef Name="IdDataMachine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MethodAnalysis_TipoTela">
+          <End Type="AuditoriaModel.TipoTela" Role="TipoTela" Multiplicity="1" />
+          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoTela">
+              <PropertyRef Name="IdTela" />
+            </Principal>
+            <Dependent Role="MethodAnalysis">
+              <PropertyRef Name="IdTela" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1439,6 +1595,50 @@
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MethodAnalysis">
+            <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysis">
+              <MappingFragment StoreEntitySet="MethodAnalysis">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="TipoConstruccion" ColumnName="TipoConstruccion" />
+                <ScalarProperty Name="ParteSeccion" ColumnName="ParteSeccion" />
+                <ScalarProperty Name="MateriaPrima_7" ColumnName="MateriaPrima_7" />
+                <ScalarProperty Name="MateriaPrima_6" ColumnName="MateriaPrima_6" />
+                <ScalarProperty Name="MateriaPrima_5" ColumnName="MateriaPrima_5" />
+                <ScalarProperty Name="MateriaPrima_4" ColumnName="MateriaPrima_4" />
+                <ScalarProperty Name="MateriaPrima_3" ColumnName="MateriaPrima_3" />
+                <ScalarProperty Name="MateriaPrima_2" ColumnName="MateriaPrima_2" />
+                <ScalarProperty Name="MateriaPrima_1" ColumnName="MateriaPrima_1" />
+                <ScalarProperty Name="Onza" ColumnName="Onza" />
+                <ScalarProperty Name="IdTela" ColumnName="IdTela" />
+                <ScalarProperty Name="JornadaLaboral" ColumnName="JornadaLaboral" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="ManejoPaquete" ColumnName="ManejoPaquete" />
+                <ScalarProperty Name="Puntadas" ColumnName="Puntadas" />
+                <ScalarProperty Name="DataMachine" ColumnName="DataMachine" />
+                <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
+                <ScalarProperty Name="Operacion" ColumnName="Operacion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MethodAnalysisDetalle">
+            <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysisDetalle">
+              <MappingFragment StoreEntitySet="MethodAnalysisDetalle">
+                <ScalarProperty Name="Sam" ColumnName="Sam" />
+                <ScalarProperty Name="Sec" ColumnName="Sec" />
+                <ScalarProperty Name="Tmus" ColumnName="Tmus" />
+                <ScalarProperty Name="Freq" ColumnName="Freq" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo4" ColumnName="Codigo4" />
+                <ScalarProperty Name="Codigo3" ColumnName="Codigo3" />
+                <ScalarProperty Name="Codigo2" ColumnName="Codigo2" />
+                <ScalarProperty Name="Codigo1" ColumnName="Codigo1" />
+                <ScalarProperty Name="IdDetMethodAnalysis" ColumnName="IdDetMethodAnalysis" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
