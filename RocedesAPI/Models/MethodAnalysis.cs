@@ -14,6 +14,12 @@ namespace RocedesAPI.Models
     
     public partial class MethodAnalysis
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MethodAnalysis()
+        {
+            this.MethodAnalysisDetalle = new HashSet<MethodAnalysisDetalle>();
+        }
+    
         public int IdMethodAnalysis { get; set; }
         public string Codigo { get; set; }
         public string Operacion { get; set; }
@@ -39,5 +45,7 @@ namespace RocedesAPI.Models
     
         public virtual MachineData MachineData { get; set; }
         public virtual TipoTela TipoTela { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
     }
 }

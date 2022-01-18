@@ -42,10 +42,11 @@
         <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
         <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="1.5" PointY="33.75" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
-        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysis" Width="1.5" PointX="17" PointY="8.25" />
-        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysisDetalle" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysis" Width="1.5" PointX="17" PointY="8.125" />
+        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysisDetalle" Width="1.5" PointX="19.25" PointY="9.375" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_MachineData" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_TipoTela" />
+        <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

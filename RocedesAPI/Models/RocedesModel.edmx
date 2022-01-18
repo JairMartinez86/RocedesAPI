@@ -306,7 +306,8 @@
           <Key>
             <PropertyRef Name="IdDetMethodAnalysis" />
           </Key>
-          <Property Name="IdDetMethodAnalysis" Type="int" Nullable="false" />
+          <Property Name="IdDetMethodAnalysis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMethodAnalysis" Type="int" Nullable="false" />
           <Property Name="Codigo1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Codigo2" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Codigo3" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -501,6 +502,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
+          <End Role="MethodAnalysis" Type="Self.MethodAnalysis" Multiplicity="1" />
+          <End Role="MethodAnalysisDetalle" Type="Self.MethodAnalysisDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MethodAnalysis">
+              <PropertyRef Name="IdMethodAnalysis" />
+            </Principal>
+            <Dependent Role="MethodAnalysisDetalle">
+              <PropertyRef Name="IdMethodAnalysis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_POrder_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="POrder" Type="Self.POrder" Multiplicity="*" />
@@ -594,6 +607,10 @@
           <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="Self.FK_MethodAnalysis_TipoTela">
             <End Role="TipoTela" EntitySet="TipoTela" />
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle" Association="Self.FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+            <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
           </AssociationSet>
           <AssociationSet Name="FK_POrder_Cliente" Association="Self.FK_POrder_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -711,6 +728,10 @@
           <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="AuditoriaModel.FK_MethodAnalysis_TipoTela">
             <End Role="TipoTela" EntitySet="TipoTela" />
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle" Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+            <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -1191,12 +1212,14 @@
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
           <NavigationProperty Name="TipoTela" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="MethodAnalysis" ToRole="TipoTela" />
+          <NavigationProperty Name="MethodAnalysisDetalle" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysis" ToRole="MethodAnalysisDetalle" />
         </EntityType>
         <EntityType Name="MethodAnalysisDetalle">
           <Key>
             <PropertyRef Name="IdDetMethodAnalysis" />
           </Key>
-          <Property Name="IdDetMethodAnalysis" Type="Int32" Nullable="false" />
+          <Property Name="IdDetMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" />
           <Property Name="Codigo1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Codigo2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Codigo3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1206,6 +1229,7 @@
           <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="Sec" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysisDetalle" ToRole="MethodAnalysis" />
         </EntityType>
         <Association Name="FK_MethodAnalysis_MachineData">
           <End Type="AuditoriaModel.MachineData" Role="MachineData" Multiplicity="1" />
@@ -1228,6 +1252,18 @@
             </Principal>
             <Dependent Role="MethodAnalysis">
               <PropertyRef Name="IdTela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
+          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="1" />
+          <End Type="AuditoriaModel.MethodAnalysisDetalle" Role="MethodAnalysisDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MethodAnalysis">
+              <PropertyRef Name="IdMethodAnalysis" />
+            </Principal>
+            <Dependent Role="MethodAnalysisDetalle">
+              <PropertyRef Name="IdMethodAnalysis" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1638,6 +1674,7 @@
                 <ScalarProperty Name="Codigo3" ColumnName="Codigo3" />
                 <ScalarProperty Name="Codigo2" ColumnName="Codigo2" />
                 <ScalarProperty Name="Codigo1" ColumnName="Codigo1" />
+                <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
                 <ScalarProperty Name="IdDetMethodAnalysis" ColumnName="IdDetMethodAnalysis" />
               </MappingFragment>
             </EntityTypeMapping>

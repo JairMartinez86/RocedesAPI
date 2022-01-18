@@ -15,6 +15,7 @@ namespace RocedesAPI.Models
     public partial class MethodAnalysisDetalle
     {
         public int IdDetMethodAnalysis { get; set; }
+        public int IdMethodAnalysis { get; set; }
         public string Codigo1 { get; set; }
         public string Codigo2 { get; set; }
         public string Codigo3 { get; set; }
@@ -24,5 +25,7 @@ namespace RocedesAPI.Models
         public decimal Tmus { get; set; }
         public decimal Sec { get; set; }
         public decimal Sam { get; set; }
+    
+        public virtual MethodAnalysis MethodAnalysis { get; set; }
     }
 }

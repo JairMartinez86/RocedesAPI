@@ -1057,17 +1057,18 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        #region "DATA MACHINE"
+        #region "METOD ANALYSIS"
 
 
-        [Route("api/Premium/Operaciones/NuevoMethodAnalysis")]
+
+        [Route("api/Premium/Operaciones/GuardarMethodAnalysis")]
         [HttpPost]
-        public IHttpActionResult NuevoMethodAnalysis(string d)
+        public IHttpActionResult GuardarMethodAnalysis(MethodAnalysisData d)
         {
             if (ModelState.IsValid)
             {
 
-                return Ok(_NuevoMethodAnalysis(d));
+                return Ok(_GuardarMethodAnalysis(d.d, d.d2));
 
             }
             else
@@ -1077,14 +1078,10 @@ namespace RocedesAPI.Controllers.INV
 
         }
 
-
-
-
-        private string _NuevoMethodAnalysis(string d)
+        private string _GuardarMethodAnalysis(MethodAnalysisCustom Datos1, MethosAnalisysDetCustom[] Datos2)
         {
             string json = string.Empty;
 
-            MethodAnalysisCustom Datos = JsonConvert.DeserializeObject<MethodAnalysisCustom>(d);
 
             try
             {
@@ -1093,54 +1090,134 @@ namespace RocedesAPI.Controllers.INV
                 {
                     using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     {
+                        MethodAnalysis Registro = _Conexion.MethodAnalysis.Find(Datos1.IdMethodAnalysis);
 
-                        string Codigo = string.Empty;
 
-                        MethodAnalysis Registro = new MethodAnalysis
+                        if (Registro == null)
                         {
-                            Codigo = string.Empty,
-                            Operacion = Datos.Operacion.ToUpper().TrimEnd(),
-                            IdDataMachine = Datos.IdDataMachine,
-                            DataMachine = Datos.DataMachine.ToUpper().TrimEnd(),
-                            Puntadas = Datos.Puntadas,
-                            ManejoPaquete = Datos.ManejoPaquete.ToUpper().TrimEnd(),
-                            Rate = Datos.Rate,
-                            JornadaLaboral = Datos.JornadaLaboral,
-                            IdTela = Datos.IdTela,
-                            Onza = Datos.Onza,
-                            MateriaPrima_1 = Datos.MateriaPrima_1.ToUpper().TrimEnd(),
-                            MateriaPrima_2 = Datos.MateriaPrima_2.ToUpper().TrimEnd(),
-                            MateriaPrima_3 = Datos.MateriaPrima_3.ToUpper().TrimEnd(),
-                            MateriaPrima_4 = Datos.MateriaPrima_4.ToUpper().TrimEnd(),
-                            MateriaPrima_5 = Datos.MateriaPrima_5.ToUpper().TrimEnd(),
-                            MateriaPrima_6 = Datos.MateriaPrima_6.ToUpper().TrimEnd(),
-                            MateriaPrima_7 = Datos.MateriaPrima_7.ToUpper().TrimEnd(),
-                            ParteSeccion = Datos.ParteSeccion.ToUpper(),
-                            TipoConstruccion = Datos.TipoConstruccion.ToUpper().TrimEnd(),
-                            FechaRegistro = DateTime.Now,
-                            IdUsuario = _Conexion.Usuario.First( u => u.Login == Datos.Usuario).IdUsuario
-                        };
-                        _Conexion.MethodAnalysis.Add(Registro);
+                            string Codigo = string.Empty;
 
-                        _Conexion.SaveChanges();
+                            Registro = new MethodAnalysis
+                            {
+                                Codigo = string.Empty,
+                                Operacion = Datos1.Operacion.ToUpper().TrimEnd(),
+                                IdDataMachine = Datos1.IdDataMachine,
+                                DataMachine = Datos1.DataMachine.ToUpper().TrimEnd(),
+                                Puntadas = Datos1.Puntadas,
+                                ManejoPaquete = Datos1.ManejoPaquete.ToUpper().TrimEnd(),
+                                Rate = Datos1.Rate,
+                                JornadaLaboral = Datos1.JornadaLaboral,
+                                IdTela = Datos1.IdTela,
+                                Onza = Datos1.Onza,
+                                MateriaPrima_1 = Datos1.MateriaPrima_1.ToUpper().TrimEnd(),
+                                MateriaPrima_2 = Datos1.MateriaPrima_2.ToUpper().TrimEnd(),
+                                MateriaPrima_3 = Datos1.MateriaPrima_3.ToUpper().TrimEnd(),
+                                MateriaPrima_4 = Datos1.MateriaPrima_4.ToUpper().TrimEnd(),
+                                MateriaPrima_5 = Datos1.MateriaPrima_5.ToUpper().TrimEnd(),
+                                MateriaPrima_6 = Datos1.MateriaPrima_6.ToUpper().TrimEnd(),
+                                MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd(),
+                                ParteSeccion = Datos1.ParteSeccion.ToUpper(),
+                                TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd(),
+                                FechaRegistro = DateTime.Now,
+                                IdUsuario = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario
+                            };
+                            _Conexion.MethodAnalysis.Add(Registro);
 
-                        Codigo = _Conexion.MethodAnalysis.Where(w => w.Codigo != string.Empty).Max(m => m.Codigo);
-                        if (Codigo != null)
-                            Codigo = (Convert.ToInt32(Codigo) + 1).ToString();
+                            _Conexion.SaveChanges();
+
+                            Codigo = _Conexion.MethodAnalysis.Where(w => w.Codigo != string.Empty).Max(m => m.Codigo);
+                            if (Codigo != null)
+                                Codigo = (Convert.ToInt32(Codigo) + 1).ToString();
+                            else
+                                Codigo = "1";
+
+                            Codigo = Codigo.PadLeft(10, '0');
+                            Registro.Codigo = Codigo;
+
+                            Datos1.IdMethodAnalysis = Registro.IdMethodAnalysis;
+                            Datos1.Codigo = Codigo;
+
+
+                            _Conexion.SaveChanges();
+                        }
                         else
-                            Codigo = "1";
+                        {
+                            Registro.Operacion = Datos1.Operacion.ToUpper().TrimEnd();
+                            Registro.IdDataMachine = Datos1.IdDataMachine;
+                            Registro.DataMachine = Datos1.DataMachine.ToUpper().TrimEnd();
+                            Registro.Puntadas = Datos1.Puntadas;
+                            Registro.ManejoPaquete = Datos1.ManejoPaquete.ToUpper().TrimEnd();
+                            Registro.Rate = Datos1.Rate;
+                            Registro.JornadaLaboral = Datos1.JornadaLaboral;
+                            Registro.IdTela = Datos1.IdTela;
+                            Registro.Onza = Datos1.Onza;
+                            Registro.MateriaPrima_1 = Datos1.MateriaPrima_1.ToUpper().TrimEnd();
+                            Registro.MateriaPrima_2 = Datos1.MateriaPrima_2.ToUpper().TrimEnd();
+                            Registro.MateriaPrima_3 = Datos1.MateriaPrima_3.ToUpper().TrimEnd();
+                            Registro.MateriaPrima_4 = Datos1.MateriaPrima_4.ToUpper().TrimEnd();
+                            Registro.MateriaPrima_5 = Datos1.MateriaPrima_5.ToUpper().TrimEnd();
+                            Registro.MateriaPrima_6 = Datos1.MateriaPrima_6.ToUpper().TrimEnd();
+                            Registro.MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd();
+                            Registro.ParteSeccion = Datos1.ParteSeccion.ToUpper();
+                            Registro.TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd();
 
-                        Codigo = Codigo.PadLeft(10, '0');
-                        Registro.Codigo = Codigo;
+                            _Conexion.SaveChanges();
+                        }
 
 
-                        json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, "Registro Guardado.", 0);
+                        foreach(MethosAnalisysDetCustom DetalleCustom in Datos2)
+                        {
+                            MethodAnalysisDetalle Detalle = _Conexion.MethodAnalysisDetalle.Find(DetalleCustom.IdDetMethodAnalysis);
 
-                        _Conexion.SaveChanges();
+                            if(Detalle == null)
+                            {
+                                Detalle = new MethodAnalysisDetalle
+                                {
+                                    IdMethodAnalysis = Registro.IdMethodAnalysis,
+                                    Codigo1 = DetalleCustom.Codigo1.ToUpper().TrimEnd(),
+                                    Codigo2 = DetalleCustom.Codigo2.ToUpper().TrimEnd(),
+                                    Codigo3 = DetalleCustom.Codigo3.ToUpper().TrimEnd(),
+                                    Codigo4 = DetalleCustom.Codigo4.ToUpper().TrimEnd(),
+                                    Descripcion = DetalleCustom.Descripcion.ToUpper().TrimEnd(),
+                                    Freq = DetalleCustom.Freq,
+                                    Tmus = DetalleCustom.Tmus,
+                                    Sec = DetalleCustom.Sec,
+                                    Sam = DetalleCustom.Sam
+                                };
+                                _Conexion.MethodAnalysisDetalle.Add(Detalle);
+                            }
+                            else
+                            {
+                                Detalle.IdMethodAnalysis = Registro.IdMethodAnalysis;
+                                Detalle.Codigo1 = DetalleCustom.Codigo1.ToUpper().TrimEnd();
+                                Detalle.Codigo2 = DetalleCustom.Codigo2.ToUpper().TrimEnd();
+                                Detalle.Codigo3 = DetalleCustom.Codigo3.ToUpper().TrimEnd();
+                                Detalle.Codigo4 = DetalleCustom.Codigo4.ToUpper().TrimEnd();
+                                Detalle.Descripcion = DetalleCustom.Descripcion.ToUpper().TrimEnd();
+                                Detalle.Freq = DetalleCustom.Freq;
+                                Detalle.Tmus = DetalleCustom.Tmus;
+                                Detalle.Sec = DetalleCustom.Sec;
+                                Detalle.Sam = DetalleCustom.Sam;
+                            }
+
+                            _Conexion.SaveChanges();
+                            DetalleCustom.IdDetMethodAnalysis = Detalle.IdDetMethodAnalysis;
+
+
+                        }
+
+
+                        List<object> lst = new List<object>();
+                        lst.Add(Datos1);
+                        lst.Add(Datos2);
+
+
+
+                        json = Cls.Cls_Mensaje.Tojson(lst, 1, string.Empty, "Registro Guardado.", 0);
+
+
                         scope.Complete();
                         scope.Dispose();
-
-
 
                     }
                 }
@@ -1154,6 +1231,59 @@ namespace RocedesAPI.Controllers.INV
             return json;
 
         }
+
+
+        [Route("api/Premium/Operaciones/EliminarMethodAnalysis")]
+        [HttpPost]
+        public IHttpActionResult EliminarMethodAnalysis(int IdMethodAnalysis)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_EliminarMethodAnalysis(IdMethodAnalysis));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _EliminarMethodAnalysis(int IdMethodAnalysis)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    { 
+
+                        MethodAnalysisDetalle Detalle = _Conexion.MethodAnalysisDetalle.Find(IdMethodAnalysis);
+                        _Conexion.MethodAnalysisDetalle.Remove(Detalle);
+
+                        json = Cls.Cls_Mensaje.Tojson(Detalle, 1, string.Empty, "Registro Eliminado.", 0);
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+
         #endregion
     }
 }
