@@ -46,12 +46,12 @@ namespace RocedesAPI.Models
         public virtual DbSet<FoleoDatos> FoleoDatos { get; set; }
         public virtual DbSet<FoleoFactor> FoleoFactor { get; set; }
         public virtual DbSet<FoleoProceso> FoleoProceso { get; set; }
-        public virtual DbSet<MachineData> MachineData { get; set; }
         public virtual DbSet<Partes> Partes { get; set; }
         public virtual DbSet<Sewing> Sewing { get; set; }
         public virtual DbSet<SewingAccuracy> SewingAccuracy { get; set; }
         public virtual DbSet<TipoTela> TipoTela { get; set; }
         public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
+        public virtual DbSet<MachineData> MachineData { get; set; }
         public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
         public virtual DbSet<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
     }

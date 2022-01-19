@@ -1103,6 +1103,12 @@ namespace RocedesAPI.Controllers.INV
                                 Operacion = Datos1.Operacion.ToUpper().TrimEnd(),
                                 IdDataMachine = Datos1.IdDataMachine,
                                 DataMachine = Datos1.DataMachine.ToUpper().TrimEnd(),
+                                Stitch = Datos1.Stitch,
+                                Delay = Datos1.Delay,
+                                Personal = Datos1.Personal,
+                                Fatigue = Datos1.Fatigue,
+                                Rpm = Datos1.Rpm,
+                                Sewing = Datos1.Sewing,
                                 Puntadas = Datos1.Puntadas,
                                 ManejoPaquete = Datos1.ManejoPaquete.ToUpper().TrimEnd(),
                                 Rate = Datos1.Rate,
@@ -1119,8 +1125,17 @@ namespace RocedesAPI.Controllers.INV
                                 ParteSeccion = Datos1.ParteSeccion.ToUpper(),
                                 TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd(),
                                 FechaRegistro = DateTime.Now,
-                                IdUsuario = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario
-                            };
+                                IdUsuario = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario,
+                                Tmus_Mac = Datos1.Tmus_Mac,
+                                Tmus_MinL = Datos1.Tmus_MinL,
+                                Min_Mac = Datos1.Min_Mac,
+                                Min_NML = Datos1.Min_NML,
+                                Min_Mac_CC = Datos1.Min_Mac_CC,
+                                Min_NML_CC = Datos1.Min_NML_CC,
+                                Sam = Datos1.Sam,
+                                ProducJL = Datos1.ProducJL,
+                                Precio = Datos1.Precio
+                        };
                             _Conexion.MethodAnalysis.Add(Registro);
 
                             _Conexion.SaveChanges();
@@ -1145,6 +1160,12 @@ namespace RocedesAPI.Controllers.INV
                             Registro.Operacion = Datos1.Operacion.ToUpper().TrimEnd();
                             Registro.IdDataMachine = Datos1.IdDataMachine;
                             Registro.DataMachine = Datos1.DataMachine.ToUpper().TrimEnd();
+                            Registro.Stitch = Datos1.Stitch;
+                            Registro.Delay = Datos1.Delay;
+                            Registro.Personal = Datos1.Personal;
+                            Registro.Fatigue = Datos1.Fatigue;
+                            Registro.Rpm = Datos1.Rpm;
+                            Registro.Sewing = Datos1.Sewing;
                             Registro.Puntadas = Datos1.Puntadas;
                             Registro.ManejoPaquete = Datos1.ManejoPaquete.ToUpper().TrimEnd();
                             Registro.Rate = Datos1.Rate;
@@ -1160,6 +1181,15 @@ namespace RocedesAPI.Controllers.INV
                             Registro.MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd();
                             Registro.ParteSeccion = Datos1.ParteSeccion.ToUpper();
                             Registro.TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd();
+                            Registro.Tmus_Mac = Datos1.Tmus_Mac;
+                            Registro.Tmus_MinL = Datos1.Tmus_MinL;
+                            Registro.Min_Mac = Datos1.Min_Mac;
+                            Registro.Min_NML = Datos1.Min_NML;
+                            Registro.Min_Mac_CC = Datos1.Min_Mac_CC;
+                            Registro.Min_NML_CC = Datos1.Min_NML_CC;
+                            Registro.Sam = Datos1.Sam;
+                            Registro.ProducJL = Datos1.ProducJL;
+                            Registro.Precio = Datos1.Precio;
 
                             _Conexion.SaveChanges();
                         }

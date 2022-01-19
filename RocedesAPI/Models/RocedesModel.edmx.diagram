@@ -33,7 +33,6 @@
         <EntityTypeShape EntityType="AuditoriaModel.FoleoDatos" Width="1.5" PointX="10.75" PointY="8.75" />
         <EntityTypeShape EntityType="AuditoriaModel.FoleoFactor" Width="1.5" PointX="13" PointY="0.875" />
         <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.75" PointY="0.875" />
-        <EntityTypeShape EntityType="AuditoriaModel.MachineData" Width="1.5" PointX="12.75" PointY="8.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Partes" Width="1.5" PointX="12.75" PointY="12.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Sewing" Width="1.5" PointX="0.75" PointY="13.75" />
         <EntityTypeShape EntityType="AuditoriaModel.SewingAccuracy" Width="1.5" PointX="14.75" PointY="8.75" />
@@ -42,8 +41,9 @@
         <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
         <EntityTypeShape EntityType="AuditoriaModel.ProcesosTendido" Width="1.5" PointX="1.5" PointY="33.75" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
-        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysis" Width="1.5" PointX="17" PointY="8.125" />
-        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysisDetalle" Width="1.5" PointX="19.25" PointY="9.375" />
+        <EntityTypeShape EntityType="AuditoriaModel.MachineData" Width="1.5" PointX="14.75" PointY="15.875" />
+        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysis" Width="1.5" PointX="17" PointY="11.125" />
+        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysisDetalle" Width="1.5" PointX="19.25" PointY="13.875" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_MachineData" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_TipoTela" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" />

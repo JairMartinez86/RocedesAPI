@@ -12,6 +12,12 @@ namespace RocedesAPI.Models.Cls.PRM
         public string Operacion = string.Empty;
         public int IdDataMachine = 0;
         public string DataMachine = string.Empty;
+        public string Stitch = string.Empty;
+        public decimal Delay = 0;
+        public decimal Personal = 0;
+        public decimal Fatigue = 0;
+        public decimal Rpm = 0;
+        public decimal Sewing = 0;
         public decimal Puntadas = 0;
         public string ManejoPaquete = string.Empty;
         public decimal Rate = 0;
@@ -30,5 +36,14 @@ namespace RocedesAPI.Models.Cls.PRM
         public DateTime FechaRegistro = DateTime.Now;
         public int IdUsuario = 0;
         public string Usuario = string.Empty;
+        public decimal Tmus_Mac = 0;
+        public decimal Tmus_MinL = 0;
+        public decimal Min_Mac = 0;
+        public decimal Min_NML = 0;
+        public decimal Min_Mac_CC = 0;
+        public decimal Min_NML_CC = 0;
+        public decimal Sam = 0;
+        public decimal ProducJL = 0;
+        public decimal Precio = 0;
     }
 }

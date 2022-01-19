@@ -25,6 +25,12 @@ namespace RocedesAPI.Models
         public string Operacion { get; set; }
         public int IdDataMachine { get; set; }
         public string DataMachine { get; set; }
+        public string Stitch { get; set; }
+        public decimal Delay { get; set; }
+        public decimal Personal { get; set; }
+        public decimal Fatigue { get; set; }
+        public decimal Rpm { get; set; }
+        public decimal Sewing { get; set; }
         public decimal Puntadas { get; set; }
         public string ManejoPaquete { get; set; }
         public decimal Rate { get; set; }
@@ -42,6 +48,15 @@ namespace RocedesAPI.Models
         public string TipoConstruccion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public int IdUsuario { get; set; }
+        public decimal Tmus_Mac { get; set; }
+        public decimal Tmus_MinL { get; set; }
+        public decimal Min_Mac { get; set; }
+        public decimal Min_NML { get; set; }
+        public decimal Min_Mac_CC { get; set; }
+        public decimal Min_NML_CC { get; set; }
+        public decimal Sam { get; set; }
+        public decimal ProducJL { get; set; }
+        public decimal Precio { get; set; }
     
         public virtual MachineData MachineData { get; set; }
         public virtual TipoTela TipoTela { get; set; }
