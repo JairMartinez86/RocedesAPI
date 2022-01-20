@@ -4,6 +4,7 @@ using RocedesAPI.Models.Cls.INV;
 using RocedesAPI.Models.Cls.PRM;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Transactions;
 using System.Web;
@@ -27,6 +28,7 @@ namespace RocedesAPI.Controllers.INV
         public string GetCodigoGSD(string codigo)
         {
             string json = string.Empty;
+            if (codigo == null) codigo = string.Empty;
 
             try
             {
@@ -326,6 +328,7 @@ namespace RocedesAPI.Controllers.INV
         public string GetTelaAuto(string nombre)
         {
             string json = string.Empty;
+            
 
             try
             {
@@ -456,7 +459,7 @@ namespace RocedesAPI.Controllers.INV
         public string GetSewing(string codigo)
         {
             string json = string.Empty;
-
+            if (codigo == null) codigo = string.Empty;
             try
             {
                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
@@ -590,6 +593,7 @@ namespace RocedesAPI.Controllers.INV
         public string GetSewingAccuracy(string level)
         {
             string json = string.Empty;
+            if (level == null) level = string.Empty;
 
             try
             {
@@ -898,10 +902,10 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/Premium/Operaciones/GetDataMachineAuto")]
         [HttpGet]
-        public string GetDataMachine(string nombre)
+        public string GetDataMachineAuto(string nombre)
         {
             string json = string.Empty;
-
+   
             try
             {
                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
@@ -1059,6 +1063,83 @@ namespace RocedesAPI.Controllers.INV
 
         #region "METOD ANALYSIS"
 
+        [Route("api/Premium/Operaciones/GetMethodAnalysis")]
+        [HttpGet]
+        public string GetMethodAnalysis(string FechaInicio, string FechaFin)
+        {
+            string json = string.Empty;
+
+            DateTime Inicio = new DateTime(1900, 1, 1);
+            DateTime Fin =  DateTime.Now;
+
+            if (FechaInicio != null) Inicio = Convert.ToDateTime(FechaInicio);
+            if (FechaFin != null) Fin = Convert.ToDateTime(FechaFin);
+
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+                    List<MethodAnalysis> lstMethod = _Conexion.MethodAnalysis.Where(w => EntityFunctions.TruncateTime(w.FechaRegistro) >= Inicio.Date && EntityFunctions.TruncateTime(w.FechaRegistro) <= Fin.Date).ToList();
+
+
+                    List<MethodAnalysisCustom> lst = (from q in lstMethod
+                                                      select new MethodAnalysisCustom()
+                                                   {
+                                                       Codigo = q.Codigo,
+                                                       Operacion = q.Operacion,
+                                                       IdDataMachine = q.IdDataMachine,
+                                                       DataMachine = q.DataMachine,
+                                                       Stitch = q.Stitch,
+                                                       Delay = q.Delay,
+                                                       Personal = q.Personal,
+                                                       Fatigue = q.Fatigue,
+                                                       Rpm = q.Rpm,
+                                                       Sewing = q.Sewing,
+                                                       Puntadas = q.Puntadas,
+                                                       ManejoPaquete = q.ManejoPaquete,
+                                                       Rate = q.Rate,
+                                                       JornadaLaboral = q.JornadaLaboral,
+                                                       IdTela = q.IdTela,
+                                                       Onza = q.Onza,
+                                                       MateriaPrima_1 = q.MateriaPrima_1,
+                                                       MateriaPrima_2 = q.MateriaPrima_2,
+                                                       MateriaPrima_3 = q.MateriaPrima_3,
+                                                       MateriaPrima_4 = q.MateriaPrima_4,
+                                                       MateriaPrima_5 = q.MateriaPrima_5,
+                                                       MateriaPrima_6 = q.MateriaPrima_6,
+                                                       MateriaPrima_7 = q.MateriaPrima_7,
+                                                       ParteSeccion = q.ParteSeccion,
+                                                       TipoConstruccion = q.TipoConstruccion,
+                                                       FechaRegistro = q.FechaRegistro,
+                                                       IdUsuario = q.IdUsuario,
+                                                       Usuario = _Conexion.Usuario.First(u => u.IdUsuario == q.IdUsuario).Login,
+                                                       Tmus_Mac = q.Tmus_Mac,
+                                                       Tmus_MinL = q.Tmus_MinL,
+                                                       Min_Mac = q.Min_Mac,
+                                                       Min_NML = q.Min_NML,
+                                                       Min_Mac_CC = q.Min_Mac_CC,
+                                                       Min_NML_CC = q.Min_NML_CC,
+                                                       Sam = q.Sam,
+                                                       ProducJL = q.ProducJL,
+                                                       Precio = q.Precio
+                                                   }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
 
 
         [Route("api/Premium/Operaciones/GuardarMethodAnalysis")]
