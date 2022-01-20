@@ -1162,7 +1162,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro.DataMachine = Datos1.DataMachine.ToUpper().TrimEnd();
                             Registro.Stitch = Datos1.Stitch;
                             Registro.Delay = Datos1.Delay;
-                            Registro.Personal = Datos1.Personal;
+                            Registro.Personal = Datos1.Personal;  
                             Registro.Fatigue = Datos1.Fatigue;
                             Registro.Rpm = Datos1.Rpm;
                             Registro.Sewing = Datos1.Sewing;
