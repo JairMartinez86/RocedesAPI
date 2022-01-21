@@ -281,6 +281,8 @@
           </Key>
           <Property Name="IdMethodAnalysis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProcesoManufact" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TipoProducto" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Operacion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdDataMachine" Type="int" Nullable="false" />
           <Property Name="DataMachine" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -303,7 +305,7 @@
           <Property Name="MateriaPrima_5" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MateriaPrima_6" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MateriaPrima_7" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ParteSeccion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TipoConstruccion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
@@ -316,6 +318,8 @@
           <Property Name="Sam" Type="decimal" Precision="18" Scale="6" Nullable="false" />
           <Property Name="ProducJL" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Precio" Type="decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="IdUsuarioModifica" Type="int" />
+          <Property Name="FechaModifica" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="MethodAnalysisDetalle">
           <Key>
@@ -1205,6 +1209,8 @@
           </Key>
           <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ProcesoManufact" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoProducto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Operacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdDataMachine" Type="Int32" Nullable="false" />
           <Property Name="DataMachine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1227,7 +1233,7 @@
           <Property Name="MateriaPrima_5" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MateriaPrima_6" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MateriaPrima_7" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ParteSeccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Familia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TipoConstruccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
@@ -1240,6 +1246,8 @@
           <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
           <Property Name="ProducJL" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="IdUsuarioModifica" Type="Int32" />
+          <Property Name="FechaModifica" Type="DateTime" Precision="7" />
           <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
           <NavigationProperty Name="TipoTela" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="MethodAnalysis" ToRole="TipoTela" />
           <NavigationProperty Name="MethodAnalysisDetalle" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysis" ToRole="MethodAnalysisDetalle" />
@@ -1667,6 +1675,8 @@
           <EntitySetMapping Name="MethodAnalysis">
             <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysis">
               <MappingFragment StoreEntitySet="MethodAnalysis">
+                <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="ProducJL" ColumnName="ProducJL" />
                 <ScalarProperty Name="Sam" ColumnName="Sam" />
@@ -1679,7 +1689,7 @@
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="TipoConstruccion" ColumnName="TipoConstruccion" />
-                <ScalarProperty Name="ParteSeccion" ColumnName="ParteSeccion" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
                 <ScalarProperty Name="MateriaPrima_7" ColumnName="MateriaPrima_7" />
                 <ScalarProperty Name="MateriaPrima_6" ColumnName="MateriaPrima_6" />
                 <ScalarProperty Name="MateriaPrima_5" ColumnName="MateriaPrima_5" />
@@ -1702,6 +1712,8 @@
                 <ScalarProperty Name="DataMachine" ColumnName="DataMachine" />
                 <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
                 <ScalarProperty Name="Operacion" ColumnName="Operacion" />
+                <ScalarProperty Name="TipoProducto" ColumnName="TipoProducto" />
+                <ScalarProperty Name="ProcesoManufact" ColumnName="ProcesoManufact" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
               </MappingFragment>

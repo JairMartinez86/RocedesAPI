@@ -1083,47 +1083,116 @@ namespace RocedesAPI.Controllers.INV
                     List<MethodAnalysis> lstMethod = _Conexion.MethodAnalysis.Where(w => EntityFunctions.TruncateTime(w.FechaRegistro) >= Inicio.Date && EntityFunctions.TruncateTime(w.FechaRegistro) <= Fin.Date).ToList();
 
 
-                    List<MethodAnalysisCustom> lst = (from q in lstMethod
-                                                      select new MethodAnalysisCustom()
-                                                   {
-                                                       Codigo = q.Codigo,
-                                                       Operacion = q.Operacion,
-                                                       IdDataMachine = q.IdDataMachine,
-                                                       DataMachine = q.DataMachine,
-                                                       Stitch = q.Stitch,
-                                                       Delay = q.Delay,
-                                                       Personal = q.Personal,
-                                                       Fatigue = q.Fatigue,
-                                                       Rpm = q.Rpm,
-                                                       Sewing = q.Sewing,
-                                                       Puntadas = q.Puntadas,
-                                                       ManejoPaquete = q.ManejoPaquete,
-                                                       Rate = q.Rate,
-                                                       JornadaLaboral = q.JornadaLaboral,
-                                                       IdTela = q.IdTela,
-                                                       Onza = q.Onza,
-                                                       MateriaPrima_1 = q.MateriaPrima_1,
-                                                       MateriaPrima_2 = q.MateriaPrima_2,
-                                                       MateriaPrima_3 = q.MateriaPrima_3,
-                                                       MateriaPrima_4 = q.MateriaPrima_4,
-                                                       MateriaPrima_5 = q.MateriaPrima_5,
-                                                       MateriaPrima_6 = q.MateriaPrima_6,
-                                                       MateriaPrima_7 = q.MateriaPrima_7,
-                                                       ParteSeccion = q.ParteSeccion,
-                                                       TipoConstruccion = q.TipoConstruccion,
-                                                       FechaRegistro = q.FechaRegistro,
-                                                       IdUsuario = q.IdUsuario,
-                                                       Usuario = _Conexion.Usuario.First(u => u.IdUsuario == q.IdUsuario).Login,
-                                                       Tmus_Mac = q.Tmus_Mac,
-                                                       Tmus_MinL = q.Tmus_MinL,
-                                                       Min_Mac = q.Min_Mac,
-                                                       Min_NML = q.Min_NML,
-                                                       Min_Mac_CC = q.Min_Mac_CC,
-                                                       Min_NML_CC = q.Min_NML_CC,
-                                                       Sam = q.Sam,
-                                                       ProducJL = q.ProducJL,
-                                                       Precio = q.Precio
-                                                   }).ToList();
+                    var lst = (from q in lstMethod
+                               join t in _Conexion.TipoTela on q.IdTela equals t.IdTela
+                               join m in _Conexion.MachineData on q.IdDataMachine equals m.IdDataMachine
+                               join o in _Conexion.ClassOunce on q.Onza equals o.Ounce into unionO
+                               from u_o in unionO.DefaultIfEmpty()
+
+                               select new
+                               {
+                                   IdMethodAnalysis = q.IdMethodAnalysis,
+                                   Codigo = q.Codigo,
+                                   ProcesoManufact = q.ProcesoManufact,
+                                   TipoProducto = q.TipoProducto,
+                                   Operacion = q.Operacion,
+                                   IdDataMachine = q.IdDataMachine,
+                                   DataMachine = q.DataMachine,
+                                   Stitch = q.Stitch,
+                                   Delay = q.Delay,
+                                   Personal = q.Personal,
+                                   Fatigue = q.Fatigue,
+                                   Rpm = q.Rpm,
+                                   Sewing = q.Sewing,
+                                   Puntadas = q.Puntadas,
+                                   ManejoPaquete = q.ManejoPaquete,
+                                   Rate = q.Rate,
+                                   JornadaLaboral = q.JornadaLaboral,
+                                   IdTela = q.IdTela,
+                                   Tela = t.Nombre,
+                                   Onza = q.Onza,
+                                   MateriaPrima_1 = q.MateriaPrima_1,
+                                   MateriaPrima_2 = q.MateriaPrima_2,
+                                   MateriaPrima_3 = q.MateriaPrima_3,
+                                   MateriaPrima_4 = q.MateriaPrima_4,
+                                   MateriaPrima_5 = q.MateriaPrima_5,
+                                   MateriaPrima_6 = q.MateriaPrima_6,
+                                   MateriaPrima_7 = q.MateriaPrima_7,
+                                   Familia = q.Familia,
+                                   TipoConstruccion = q.TipoConstruccion,
+                                   FechaRegistro = q.FechaRegistro,
+                                   IdUsuario = q.IdUsuario,
+                                   Usuario = _Conexion.Usuario.First(u => u.IdUsuario == q.IdUsuario).Login,
+                                   Tmus_Mac = q.Tmus_Mac,
+                                   Tmus_MinL = q.Tmus_MinL,
+                                   Min_Mac = q.Min_Mac,
+                                   Min_NML = q.Min_NML,
+                                   Min_Mac_CC = q.Min_Mac_CC,
+                                   Min_NML_CC = q.Min_NML_CC,
+                                   Sam = q.Sam,
+                                   ProducJL = q.ProducJL,
+                                   Precio = q.Precio,
+                                   IdUsuarioModifica = q.IdUsuarioModifica,
+                                   UsuarioModifica = (q.IdUsuarioModifica == null ? string.Empty : _Conexion.Usuario.First(u => u.IdUsuario == (int)q.IdUsuarioModifica).Login),
+                                   FechaModifica = q.FechaModifica,
+                                   UbicacionSecuencia = string.Empty,
+                                   Machine = m.Machine,
+                                   Needle = m.Needle,
+                                   Caliber = (u_o == null) ? string.Empty : u_o.Caliber,
+                                   FeedDog = (u_o == null) ? string.Empty : u_o.FeedDog,
+                                   CodPrensatela = string.Empty,
+                                   TipoFolder = string.Empty
+
+                               }).ToList();
+
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+        [Route("api/Premium/Operaciones/GetDetMethodAnalysis")]
+        [HttpGet]
+        public string GetDetMethodAnalysis(int IdMethodAnalysis)
+        {
+            string json = string.Empty;
+
+      
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<MethosAnalisysDetCustom> lst = (from q in _Conexion.MethodAnalysisDetalle
+                                                         where q.IdMethodAnalysis == IdMethodAnalysis
+                                                         select new MethosAnalisysDetCustom
+                                                         {
+                                                             IdDetMethodAnalysis = q.IdDetMethodAnalysis,
+                                                             IdMethodAnalysis = q.IdMethodAnalysis,
+                                                             Codigo1 = q.Codigo1.ToUpper().TrimEnd(),
+                                                             Codigo2 = q.Codigo2.ToUpper().TrimEnd(),
+                                                             Codigo3 = q.Codigo3.ToUpper().TrimEnd(),
+                                                             Codigo4 = q.Codigo4.ToUpper().TrimEnd(),
+                                                             Descripcion = q.Descripcion.ToUpper().TrimEnd(),
+                                                             Freq = q.Freq,
+                                                             Tmus = q.Tmus,
+                                                             Sec = q.Sec,
+                                                             Sam = q.Sam
+
+                                                         }).ToList();
+
+
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
 
@@ -1181,6 +1250,8 @@ namespace RocedesAPI.Controllers.INV
                             Registro = new MethodAnalysis
                             {
                                 Codigo = string.Empty,
+                                ProcesoManufact = Datos1.ProcesoManufact.ToUpper().TrimEnd(),
+                                TipoProducto = Datos1.TipoProducto.ToUpper().TrimEnd(),
                                 Operacion = Datos1.Operacion.ToUpper().TrimEnd(),
                                 IdDataMachine = Datos1.IdDataMachine,
                                 DataMachine = Datos1.DataMachine.ToUpper().TrimEnd(),
@@ -1203,7 +1274,7 @@ namespace RocedesAPI.Controllers.INV
                                 MateriaPrima_5 = Datos1.MateriaPrima_5.ToUpper().TrimEnd(),
                                 MateriaPrima_6 = Datos1.MateriaPrima_6.ToUpper().TrimEnd(),
                                 MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd(),
-                                ParteSeccion = Datos1.ParteSeccion.ToUpper(),
+                                Familia = Datos1.Familia.ToUpper(),
                                 TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd(),
                                 FechaRegistro = DateTime.Now,
                                 IdUsuario = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario,
@@ -1238,6 +1309,9 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
+                            Registro.Codigo = Datos1.Codigo;
+                            Registro.ProcesoManufact = Datos1.ProcesoManufact.ToUpper().TrimEnd();
+                            Registro.TipoProducto = Datos1.TipoProducto.ToUpper().TrimEnd();
                             Registro.Operacion = Datos1.Operacion.ToUpper().TrimEnd();
                             Registro.IdDataMachine = Datos1.IdDataMachine;
                             Registro.DataMachine = Datos1.DataMachine.ToUpper().TrimEnd();
@@ -1260,7 +1334,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro.MateriaPrima_5 = Datos1.MateriaPrima_5.ToUpper().TrimEnd();
                             Registro.MateriaPrima_6 = Datos1.MateriaPrima_6.ToUpper().TrimEnd();
                             Registro.MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd();
-                            Registro.ParteSeccion = Datos1.ParteSeccion.ToUpper();
+                            Registro.Familia = Datos1.Familia.ToUpper();
                             Registro.TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd();
                             Registro.Tmus_Mac = Datos1.Tmus_Mac;
                             Registro.Tmus_MinL = Datos1.Tmus_MinL;
@@ -1271,6 +1345,9 @@ namespace RocedesAPI.Controllers.INV
                             Registro.Sam = Datos1.Sam;
                             Registro.ProducJL = Datos1.ProducJL;
                             Registro.Precio = Datos1.Precio;
+                            Registro.IdUsuarioModifica = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario;
+                            Registro.FechaModifica = DateTime.Now;
+                            
 
                             _Conexion.SaveChanges();
                         }
@@ -1346,12 +1423,12 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/Premium/Operaciones/EliminarMethodAnalysis")]
         [HttpPost]
-        public IHttpActionResult EliminarMethodAnalysis(int IdMethodAnalysis)
+        public IHttpActionResult EliminarMethodAnalysis(int IdMethodAnalysis, string user)
         {
             if (ModelState.IsValid)
             {
 
-                return Ok(_EliminarMethodAnalysis(IdMethodAnalysis));
+                return Ok(_EliminarMethodAnalysis(IdMethodAnalysis, user));
 
             }
             else
@@ -1361,7 +1438,7 @@ namespace RocedesAPI.Controllers.INV
 
         }
 
-        private string _EliminarMethodAnalysis(int IdMethodAnalysis)
+        private string _EliminarMethodAnalysis(int IdDetMethodAnalysis, string user)
         {
             string json = string.Empty;
 
@@ -1374,8 +1451,13 @@ namespace RocedesAPI.Controllers.INV
                     using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     { 
 
-                        MethodAnalysisDetalle Detalle = _Conexion.MethodAnalysisDetalle.Find(IdMethodAnalysis);
+                        MethodAnalysisDetalle Detalle = _Conexion.MethodAnalysisDetalle.Find(IdDetMethodAnalysis);
                         _Conexion.MethodAnalysisDetalle.Remove(Detalle);
+
+                        MethodAnalysis Registro = _Conexion.MethodAnalysis.Find(Detalle.IdMethodAnalysis);
+                        Registro.IdUsuarioModifica = _Conexion.Usuario.First(u => u.Login == user).IdUsuario;
+                        Registro.FechaModifica = DateTime.Now;
+
 
                         json = Cls.Cls_Mensaje.Tojson(Detalle, 1, string.Empty, "Registro Eliminado.", 0);
                         _Conexion.SaveChanges();

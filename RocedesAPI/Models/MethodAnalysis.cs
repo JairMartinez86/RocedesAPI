@@ -22,6 +22,8 @@ namespace RocedesAPI.Models
     
         public int IdMethodAnalysis { get; set; }
         public string Codigo { get; set; }
+        public string ProcesoManufact { get; set; }
+        public string TipoProducto { get; set; }
         public string Operacion { get; set; }
         public int IdDataMachine { get; set; }
         public string DataMachine { get; set; }
@@ -44,7 +46,7 @@ namespace RocedesAPI.Models
         public string MateriaPrima_5 { get; set; }
         public string MateriaPrima_6 { get; set; }
         public string MateriaPrima_7 { get; set; }
-        public string ParteSeccion { get; set; }
+        public string Familia { get; set; }
         public string TipoConstruccion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public int IdUsuario { get; set; }
@@ -57,6 +59,8 @@ namespace RocedesAPI.Models
         public decimal Sam { get; set; }
         public decimal ProducJL { get; set; }
         public decimal Precio { get; set; }
+        public Nullable<int> IdUsuarioModifica { get; set; }
+        public Nullable<System.DateTime> FechaModifica { get; set; }
     
         public virtual MachineData MachineData { get; set; }
         public virtual TipoTela TipoTela { get; set; }

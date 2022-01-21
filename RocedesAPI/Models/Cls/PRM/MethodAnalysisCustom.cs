@@ -9,6 +9,8 @@ namespace RocedesAPI.Models.Cls.PRM
     {
         public int IdMethodAnalysis = 0;
         public string Codigo = string.Empty;
+        public string ProcesoManufact = string.Empty;
+        public string TipoProducto = string.Empty;
         public string Operacion = string.Empty;
         public int IdDataMachine = 0;
         public string DataMachine = string.Empty;
@@ -31,7 +33,7 @@ namespace RocedesAPI.Models.Cls.PRM
         public string MateriaPrima_5 = string.Empty;
         public string MateriaPrima_6 = string.Empty;
         public string MateriaPrima_7 = string.Empty;
-        public string ParteSeccion = string.Empty;
+        public string Familia = string.Empty;
         public string TipoConstruccion = string.Empty;
         public DateTime FechaRegistro = DateTime.Now;
         public int IdUsuario = 0;
@@ -45,5 +47,8 @@ namespace RocedesAPI.Models.Cls.PRM
         public decimal Sam = 0;
         public decimal ProducJL = 0;
         public decimal Precio = 0;
+        public Nullable<int> IdUsuarioModifica = null;
+        public string UsuarioModifica = string.Empty;
+        public Nullable<DateTime> FechaModifica = null;
     }
 }
