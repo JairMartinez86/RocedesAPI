@@ -23,6 +23,7 @@ namespace RocedesAPI.Models
         public int IdMethodAnalysis { get; set; }
         public string Codigo { get; set; }
         public string ProcesoManufact { get; set; }
+        public int IdProducto { get; set; }
         public string TipoProducto { get; set; }
         public string Operacion { get; set; }
         public int IdDataMachine { get; set; }

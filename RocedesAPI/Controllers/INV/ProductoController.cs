@@ -52,6 +52,43 @@ namespace RocedesAPI.Controllers.INV
             return json;
         }
 
+        [Route("api/Inventario/Producto/GetAuto")]
+        [HttpGet]
+        public string GetAuto(string nombre)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<ProductoCustom> lst = (from q in _Conexion.Product
+                                                 where q.Nombre.ToLower().StartsWith(nombre.TrimEnd().ToLower())
+                                                 orderby q.Nombre, q.Nombre.Length
+                                                 select new ProductoCustom()
+                                                 {
+                                                     IdProducto = q.IdProducto,
+                                                     Nombre = q.Nombre
+                                                 }).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
 
         [Route("api/Inventario/Producto/Guardar")]
         [HttpPost]

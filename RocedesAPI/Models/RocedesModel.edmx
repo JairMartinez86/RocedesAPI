@@ -282,6 +282,7 @@
           <Property Name="IdMethodAnalysis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ProcesoManufact" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="TipoProducto" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Operacion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdDataMachine" Type="int" Nullable="false" />
@@ -1210,6 +1211,7 @@
           <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ProcesoManufact" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
           <Property Name="TipoProducto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Operacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdDataMachine" Type="Int32" Nullable="false" />
@@ -1713,6 +1715,7 @@
                 <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
                 <ScalarProperty Name="Operacion" ColumnName="Operacion" />
                 <ScalarProperty Name="TipoProducto" ColumnName="TipoProducto" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="ProcesoManufact" ColumnName="ProcesoManufact" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />

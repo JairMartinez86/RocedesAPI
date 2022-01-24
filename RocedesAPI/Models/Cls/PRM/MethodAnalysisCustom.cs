@@ -10,6 +10,7 @@ namespace RocedesAPI.Models.Cls.PRM
         public int IdMethodAnalysis = 0;
         public string Codigo = string.Empty;
         public string ProcesoManufact = string.Empty;
+        public int IdProducto = 0;
         public string TipoProducto = string.Empty;
         public string Operacion = string.Empty;
         public int IdDataMachine = 0;

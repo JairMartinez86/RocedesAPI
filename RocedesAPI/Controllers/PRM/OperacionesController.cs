@@ -1094,6 +1094,7 @@ namespace RocedesAPI.Controllers.INV
                                    IdMethodAnalysis = q.IdMethodAnalysis,
                                    Codigo = q.Codigo,
                                    ProcesoManufact = q.ProcesoManufact,
+                                   IdProducto = q.IdProducto,
                                    TipoProducto = q.TipoProducto,
                                    Operacion = q.Operacion,
                                    IdDataMachine = q.IdDataMachine,
@@ -1251,6 +1252,7 @@ namespace RocedesAPI.Controllers.INV
                             {
                                 Codigo = string.Empty,
                                 ProcesoManufact = Datos1.ProcesoManufact.ToUpper().TrimEnd(),
+                                IdProducto = Datos1.IdProducto,
                                 TipoProducto = Datos1.TipoProducto.ToUpper().TrimEnd(),
                                 Operacion = Datos1.Operacion.ToUpper().TrimEnd(),
                                 IdDataMachine = Datos1.IdDataMachine,
@@ -1311,6 +1313,7 @@ namespace RocedesAPI.Controllers.INV
                         {
                             Registro.Codigo = Datos1.Codigo;
                             Registro.ProcesoManufact = Datos1.ProcesoManufact.ToUpper().TrimEnd();
+                            Registro.IdProducto = Datos1.IdProducto;
                             Registro.TipoProducto = Datos1.TipoProducto.ToUpper().TrimEnd();
                             Registro.Operacion = Datos1.Operacion.ToUpper().TrimEnd();
                             Registro.IdDataMachine = Datos1.IdDataMachine;
