@@ -32,8 +32,8 @@ namespace RocedesAPI.Controllers.CXC
                                                  select new ClienteCustom()
                                                  {
                                                      IdCliente = q.Id_Cliente,
-                                                     Cliente = q.Cliente1,
-                                                     Estado = (bool)q.Estado
+                                                     Cliente = (q.Cliente1 == null?  string.Empty : q.Cliente1),
+                                                     Estado = (q.Estado == null ? false : true)
                                                  }).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);

@@ -4,6 +4,7 @@ using RocedesAPI.Models.Cls.INV;
 using RocedesAPI.Models.Cls.PRM;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Transactions;
@@ -1080,8 +1081,8 @@ namespace RocedesAPI.Controllers.INV
             {
                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                 {
-                    List<MethodAnalysis> lstMethod = _Conexion.MethodAnalysis.Where(w => EntityFunctions.TruncateTime(w.FechaRegistro) >= Inicio.Date && EntityFunctions.TruncateTime(w.FechaRegistro) <= Fin.Date).ToList();
-
+                    List<MethodAnalysis> lstMethod = _Conexion.MethodAnalysis.Where(w => DbFunctions.TruncateTime(w.FechaRegistro) >= Inicio.Date && DbFunctions.TruncateTime(w.FechaRegistro) <= Fin.Date).ToList();
+               
 
                     var lst = (from q in lstMethod
                                join t in _Conexion.TipoTela on q.IdTela equals t.IdTela
@@ -1426,12 +1427,12 @@ namespace RocedesAPI.Controllers.INV
 
         [Route("api/Premium/Operaciones/EliminarMethodAnalysis")]
         [HttpPost]
-        public IHttpActionResult EliminarMethodAnalysis(int IdMethodAnalysis, string user)
+        public IHttpActionResult EliminarMethodAnalysis(int IdDetMethodAnalysis, string user)
         {
             if (ModelState.IsValid)
             {
 
-                return Ok(_EliminarMethodAnalysis(IdMethodAnalysis, user));
+                return Ok(_EliminarMethodAnalysis(IdDetMethodAnalysis, user));
 
             }
             else
@@ -1463,6 +1464,68 @@ namespace RocedesAPI.Controllers.INV
 
 
                         json = Cls.Cls_Mensaje.Tojson(Detalle, 1, string.Empty, "Registro Eliminado.", 0);
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+
+
+        [Route("api/Premium/Operaciones/EliminarMatrixOperacion")]
+        [HttpPost]
+        public IHttpActionResult EliminarMatrixOperacion(int IdMethodAnalysis, string user)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_EliminarMatrixOperacion(IdMethodAnalysis, user));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _EliminarMatrixOperacion(int IdMethodAnalysis, string user)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+
+                        MethodAnalysis Registro = _Conexion.MethodAnalysis.Find(IdMethodAnalysis);
+
+                        foreach(MethodAnalysisDetalle Detalle in _Conexion.MethodAnalysisDetalle.Where(w => w.IdMethodAnalysis == Registro.IdMethodAnalysis))
+                        {
+                            _Conexion.MethodAnalysisDetalle.Remove(Detalle);
+                        }
+
+
+                        _Conexion.MethodAnalysis.Remove(Registro);
+
+       
+
+                        json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, "Registro Eliminado.", 0);
                         _Conexion.SaveChanges();
                         scope.Complete();
                         scope.Dispose();
