@@ -739,6 +739,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Auditoria\POrderController.cs" />
     <Compile Include="Controllers\INV\BundleBoxingController.cs" />
+    <Compile Include="Controllers\PLN\PlaningController.cs" />
     <Compile Include="Controllers\PRM\FlujoController.cs" />
     <Compile Include="Controllers\PRM\FoleoController.cs" />
     <Compile Include="Controllers\INV\MaterialController.cs" />
@@ -753,6 +754,7 @@
     <Compile Include="Models\ClassOunce.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cls\PLN\PlaningCustom.cs" />
     <Compile Include="Models\Cls\PRM\ClassOunceCustom.cs" />
     <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
@@ -842,6 +844,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Partes.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlaningSwing.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\POrder.cs">
@@ -1936,6 +1941,7 @@
     <Folder Include="Views\Foleo\" />
     <Folder Include="Views\Material\" />
     <Folder Include="Views\Operaciones\" />
+    <Folder Include="Views\Planing\" />
     <Folder Include="Views\POrder\" />
     <Folder Include="Views\Presentacion\" />
     <Folder Include="Views\ProcesoCorte\" />

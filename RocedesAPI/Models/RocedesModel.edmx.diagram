@@ -47,6 +47,8 @@
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_MachineData" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_TipoTela" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" />
+        <EntityTypeShape EntityType="AuditoriaModel.PlaningSwing" Width="1.5" PointX="5.625" PointY="12.75" />
+        <AssociationConnector Association="AuditoriaModel.FK_PlaningSwing_Cliente" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
