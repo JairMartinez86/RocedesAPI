@@ -41,8 +41,8 @@ public class PlottedFormat
     public string Cut = string.Empty;
     public string Style = string.Empty;
     public string Cliente = string.Empty;
-    public string Marker = string.Empty;
     public decimal largo = 0;
+    public string Marker = string.Empty;
     public Nullable<DateTime> foleo_date_body = null;
 }
 
@@ -236,6 +236,8 @@ namespace RocedesAPI.Controllers.PLN
                                             Price = 0,
                                             Total = 0
                                         };
+
+                                        _Conexion.PlanningSwing.Add(Planing);
                                     }
                                     else
                                     {
@@ -256,7 +258,7 @@ namespace RocedesAPI.Controllers.PLN
 
 
 
-                            case "datos-plotted":
+                            case "datos-plotter":
 
 
                                 List<PlottedFormat> _FomatoPlotted = new List<PlottedFormat>();
@@ -268,11 +270,11 @@ namespace RocedesAPI.Controllers.PLN
                                     _FomatoPlotted.Add(new PlottedFormat
                                     {
                                         Week = Datos[0],
-                                        Cut = Datos[2],
-                                        Style = Datos[3],
-                                        Cliente = Datos[4],
+                                        Cut = Datos[1],
+                                        Style = Datos[2],
+                                        Cliente = Datos[3],
+                                        largo = Convert.ToDecimal(Datos[4]),
                                         Marker = Datos[5],
-                                        largo = Convert.ToInt32(Datos[6]),
                                         foleo_date_body = (Datos[6] == string.Empty) ? null : (DateTime?)Convert.ToDateTime(Datos[6])
                                     });
 
@@ -306,6 +308,7 @@ namespace RocedesAPI.Controllers.PLN
 
                                     Planing.Marker = Registro.Marker.TrimStart().TrimEnd();
                                     Planing.Largo = Registro.largo;
+                                    Planing.Marker = Registro.Marker;
                                     Planing.foleo_date_body = Registro.foleo_date_body;
 
                                 }
