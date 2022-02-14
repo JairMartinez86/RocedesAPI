@@ -18,7 +18,7 @@ namespace RocedesAPI.Models
         public Cliente()
         {
             this.POrder = new HashSet<POrder>();
-            this.PlaningSwing = new HashSet<PlaningSwing>();
+            this.PlanningSwing = new HashSet<PlanningSwing>();
         }
     
         public int Id_Cliente { get; set; }
@@ -28,6 +28,6 @@ namespace RocedesAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<POrder> POrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlaningSwing> PlaningSwing { get; set; }
+        public virtual ICollection<PlanningSwing> PlanningSwing { get; set; }
     }
 }

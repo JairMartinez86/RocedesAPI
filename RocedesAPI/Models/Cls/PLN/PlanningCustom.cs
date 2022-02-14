@@ -5,7 +5,7 @@ using System.Web;
 
 namespace RocedesAPI.Models.Cls.PLN
 {
-    public class PlaningCustom
+    public class PlanningCustom
     {
         public int IdPlaningSwing = 0;
         public string Week = string.Empty;

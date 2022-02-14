@@ -754,7 +754,7 @@
     <Compile Include="Models\ClassOunce.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cls\PLN\PlaningCustom.cs" />
+    <Compile Include="Models\Cls\PLN\PlanningCustom.cs" />
     <Compile Include="Models\Cls\PRM\ClassOunceCustom.cs" />
     <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
@@ -846,7 +846,7 @@
     <Compile Include="Models\Partes.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlaningSwing.cs">
+    <Compile Include="Models\PlanningSwing.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\POrder.cs">

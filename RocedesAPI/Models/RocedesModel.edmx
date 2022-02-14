@@ -174,7 +174,7 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
-        <EntityType Name="PlaningSwing">
+        <EntityType Name="PlanningSwing">
           <Key>
             <PropertyRef Name="IdPlaningSwing" />
           </Key>
@@ -577,12 +577,12 @@
         </Association>
         <Association Name="FK_PlaningSwing_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="PlaningSwing" Type="Self.PlaningSwing" Multiplicity="*" />
+          <End Role="PlanningSwing" Type="Self.PlanningSwing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="Id_Cliente" />
             </Principal>
-            <Dependent Role="PlaningSwing">
+            <Dependent Role="PlanningSwing">
               <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -623,7 +623,7 @@
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
-          <EntitySet Name="PlaningSwing" EntityType="Self.PlaningSwing" Schema="PNL" store:Type="Tables" />
+          <EntitySet Name="PlanningSwing" EntityType="Self.PlanningSwing" Schema="PNL" store:Type="Tables" />
           <EntitySet Name="ClassOunce" EntityType="Self.ClassOunce" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="CodigoGSD" EntityType="Self.CodigoGSD" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FactorCorte" EntityType="Self.FactorCorte" Schema="PRM" store:Type="Tables" />
@@ -688,7 +688,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_PlaningSwing_Cliente" Association="Self.FK_PlaningSwing_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="PlaningSwing" EntitySet="PlaningSwing" />
+            <End Role="PlanningSwing" EntitySet="PlanningSwing" />
           </AssociationSet>
           <AssociationSet Name="FK_POrder_Cliente" Association="Self.FK_POrder_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -811,10 +811,10 @@
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
             <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
           </AssociationSet>
-          <EntitySet Name="PlaningSwing" EntityType="AuditoriaModel.PlaningSwing" />
+          <EntitySet Name="PlanningSwing" EntityType="AuditoriaModel.PlanningSwing" />
           <AssociationSet Name="FK_PlaningSwing_Cliente" Association="AuditoriaModel.FK_PlaningSwing_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="PlaningSwing" EntitySet="PlaningSwing" />
+            <End Role="PlanningSwing" EntitySet="PlanningSwing" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -1061,7 +1061,7 @@
           <Property Name="Cliente1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="Cliente" ToRole="POrder" />
-          <NavigationProperty Name="PlaningSwing" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="Cliente" ToRole="PlaningSwing" />
+          <NavigationProperty Name="PlanningSwing" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="Cliente" ToRole="PlanningSwing" />
         </EntityType>
         <Association Name="FK_POrder_Cliente">
           <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="0..1" />
@@ -1371,7 +1371,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PlaningSwing">
+        <EntityType Name="PlanningSwing">
           <Key>
             <PropertyRef Name="IdPlaningSwing" />
           </Key>
@@ -1411,16 +1411,16 @@
           <Property Name="Rib" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="Cliente" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="PlaningSwing" ToRole="Cliente" />
+          <NavigationProperty Name="Cliente" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="PlanningSwing" ToRole="Cliente" />
         </EntityType>
         <Association Name="FK_PlaningSwing_Cliente">
           <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="AuditoriaModel.PlaningSwing" Role="PlaningSwing" Multiplicity="*" />
+          <End Type="AuditoriaModel.PlanningSwing" Role="PlanningSwing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="Id_Cliente" />
             </Principal>
-            <Dependent Role="PlaningSwing">
+            <Dependent Role="PlanningSwing">
               <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -1857,9 +1857,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PlaningSwing">
-            <EntityTypeMapping TypeName="AuditoriaModel.PlaningSwing">
-              <MappingFragment StoreEntitySet="PlaningSwing">
+          <EntitySetMapping Name="PlanningSwing">
+            <EntityTypeMapping TypeName="AuditoriaModel.PlanningSwing">
+              <MappingFragment StoreEntitySet="PlanningSwing">
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Rib" ColumnName="Rib" />

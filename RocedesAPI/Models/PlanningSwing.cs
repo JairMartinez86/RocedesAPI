@@ -12,7 +12,7 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PlaningSwing
+    public partial class PlanningSwing
     {
         public int IdPlaningSwing { get; set; }
         public string Week { get; set; }

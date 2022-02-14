@@ -23,7 +23,7 @@ public class IUpload
 }
 
 
-public class PlaningFormat
+public class PlanningFormat
 {
     public string Week = string.Empty;
     public string Cliente = string.Empty;
@@ -31,6 +31,17 @@ public class PlaningFormat
     public string Cut = string.Empty;
     public string Style = string.Empty;
     public decimal Quant = 0;
+}
+
+
+public class PlottedFormat
+{
+    public string Week = string.Empty;
+    public string Cut = string.Empty;
+    public string Style = string.Empty;
+    public string Cliente = string.Empty;
+    public string Marker = string.Empty;
+    public decimal largo = 0;
 }
 
 namespace RocedesAPI.Controllers.PLN
@@ -51,9 +62,9 @@ namespace RocedesAPI.Controllers.PLN
             {
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
-                    List<PlaningCustom> lst = (from q in _Cnx.PlaningSwing
+                    List<PlanningCustom> lst = (from q in _Cnx.PlanningSwing
                                                join cl in _Cnx.Cliente on q.IdCliente equals cl.Id_Cliente
-                                            select new PlaningCustom
+                                            select new PlanningCustom
                                             {
                                                 Week = q.Week,
                                                 IdCliente = q.IdCliente,
@@ -135,7 +146,9 @@ namespace RocedesAPI.Controllers.PLN
 
             try
             {
-       
+
+                PlanningSwing Planing = null;
+                Cliente _Cliente = null;
 
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
                 {
@@ -146,13 +159,13 @@ namespace RocedesAPI.Controllers.PLN
                         {
                             case "datos-planing":
 
-                                List<PlaningFormat> _FomatoPlaning  = new List<PlaningFormat>();
+                                List<PlanningFormat> _FomatoPlaning  = new List<PlanningFormat>();
 
                                 foreach (object item in (JsonConvert.DeserializeObject<List<object>>(_IUload.datos.ToString())).ToList())
                                 {
                                     string[] Datos = JsonConvert.DeserializeObject<List<string>>(item.ToString()).ToArray();
 
-                                    _FomatoPlaning.Add(new PlaningFormat {
+                                    _FomatoPlaning.Add(new PlanningFormat {
                                         Week = Datos[0],
                                         Cliente = Datos[1],
                                         Linea = Datos[2],
@@ -165,9 +178,9 @@ namespace RocedesAPI.Controllers.PLN
                                 }
 
 
-                                foreach (PlaningFormat Registro in _FomatoPlaning)
+                                foreach (PlanningFormat Registro in _FomatoPlaning)
                                 {
-                                    Cliente _Cliente = null;
+                                    
 
                                     _Cliente = _Conexion.Cliente.FirstOrDefault(f => f.Cliente1.TrimStart().TrimEnd().ToLower().Equals(Registro.Cliente.TrimStart().TrimEnd().ToLower()));
 
@@ -178,11 +191,11 @@ namespace RocedesAPI.Controllers.PLN
                                     }
 
 
-                                    PlaningSwing Planing = _Conexion.PlaningSwing.FirstOrDefault(f => f.Week == Registro.Week && f.IdCliente == _Cliente.Id_Cliente && f.Linea == Registro.Linea && f.Cut == Registro.Cut && f.Style == Registro.Style);
+                                    Planing = _Conexion.PlanningSwing.FirstOrDefault(f => f.Week == Registro.Week && f.IdCliente == _Cliente.Id_Cliente && f.Linea == Registro.Linea && f.Cut == Registro.Cut && f.Style == Registro.Style);
 
                                     if(Planing == null)
                                     {
-                                        Planing = new PlaningSwing
+                                        Planing = new PlanningSwing
                                         {
                                             Week = Registro.Week,
                                             IdCliente = _Cliente.Id_Cliente,
@@ -235,6 +248,63 @@ namespace RocedesAPI.Controllers.PLN
                                 }
 
          
+                                break;
+
+
+
+                            case "datos-plotted":
+
+
+                                List<PlottedFormat> _FomatoPlotted = new List<PlottedFormat>();
+
+                                foreach (object item in (JsonConvert.DeserializeObject<List<object>>(_IUload.datos.ToString())).ToList())
+                                {
+                                    string[] Datos = JsonConvert.DeserializeObject<List<string>>(item.ToString()).ToArray();
+
+                                    _FomatoPlotted.Add(new PlottedFormat
+                                    {
+                                        Week = Datos[0],
+                                        Cut = Datos[2],
+                                        Style = Datos[3],
+                                        Cliente = Datos[4],
+                                        Marker = Datos[5],
+                                        largo = Convert.ToInt32(Datos[6])
+                                    });
+
+
+                                }
+
+
+                                foreach (PlottedFormat Registro in _FomatoPlotted)
+                                {
+
+                                    _Cliente = _Conexion.Cliente.FirstOrDefault(f => f.Cliente1.TrimStart().TrimEnd().ToLower().Equals(Registro.Cliente.TrimStart().TrimEnd().ToLower()));
+
+                                    if (_Cliente == null)
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"Cliente  <b>{Registro.Cliente}</b> no encontrado.", 1);
+                                        return json;
+                                    }
+
+
+                                    Planing = _Conexion.PlanningSwing.FirstOrDefault(f => f.Week == Registro.Week && f.IdCliente == _Cliente.Id_Cliente  && f.Cut == Registro.Cut && f.Style == Registro.Style);
+
+
+
+                                    if (Planing == null)
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se ha encontado el planning para el corte  <b>{string.Concat(Registro.Cut , " " , Registro.Style)}</b>.", 1);
+                                        return json;
+                                    }
+
+
+
+                                    Planing.Marker = Registro.Marker.TrimStart().TrimEnd();
+                                    Planing.Largo = Registro.largo;
+
+                                }
+
+
                                 break;
                         }
 
