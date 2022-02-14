@@ -31,7 +31,7 @@ public class PlanningFormat
     public string Cut = string.Empty;
     public string Style = string.Empty;
     public decimal Quant = 0;
-    public Nullable<DateTime> Cut_date_body = null;
+    public Nullable<DateTime> Fecha = null;
 }
 
 
@@ -43,7 +43,7 @@ public class PlottedFormat
     public string Cliente = string.Empty;
     public decimal largo = 0;
     public string Marker = string.Empty;
-    public Nullable<DateTime> foleo_date_body = null;
+    public Nullable<DateTime> Fecha = null;
 }
 
 namespace RocedesAPI.Controllers.PLN
@@ -174,7 +174,7 @@ namespace RocedesAPI.Controllers.PLN
                                         Cut = Datos[3],
                                         Style = Datos[4],
                                         Quant =  Convert.ToInt32(Datos[5]),
-                                        Cut_date_body = (Datos[6] == string.Empty)? null : (DateTime?)Convert.ToDateTime(Datos[6]) 
+                                        Fecha = (Datos[6] == string.Empty)? null : (DateTime?)Convert.ToDateTime(Datos[6]) 
                                     });
 
 
@@ -213,7 +213,7 @@ namespace RocedesAPI.Controllers.PLN
                                             Cutting_plan = string.Empty,
                                             Cut = Registro.Cut,
                                             Style = Registro.Style,
-                                            Cut_date_body = Registro.Cut_date_body,
+                                            Cut_date_body = Registro.Fecha,
                                             foleo_date_body = null,
                                             In_plant = null,
                                             Quant = Registro.Quant,
@@ -246,7 +246,7 @@ namespace RocedesAPI.Controllers.PLN
                                         Planing.Linea = Registro.Linea.TrimStart().TrimEnd();
                                         Planing.Cut = Registro.Cut.TrimStart().TrimEnd();
                                         Planing.Style = Registro.Style.TrimStart().TrimEnd();
-                                        Planing.Cut_date_body = Registro.Cut_date_body;
+                                        Planing.Cut_date_body = Registro.Fecha;
                                         Planing.Quant = Registro.Quant;
 
                                     }
@@ -275,7 +275,7 @@ namespace RocedesAPI.Controllers.PLN
                                         Cliente = Datos[3],
                                         largo = Convert.ToDecimal(Datos[4]),
                                         Marker = Datos[5],
-                                        foleo_date_body = (Datos[6] == string.Empty) ? null : (DateTime?)Convert.ToDateTime(Datos[6])
+                                        Fecha = (Datos[6] == string.Empty) ? null : (DateTime?)Convert.ToDateTime(Datos[6])
                                     });
 
 
@@ -309,7 +309,7 @@ namespace RocedesAPI.Controllers.PLN
                                     Planing.Marker = Registro.Marker.TrimStart().TrimEnd();
                                     Planing.Largo = Registro.largo;
                                     Planing.Marker = Registro.Marker;
-                                    Planing.foleo_date_body = Registro.foleo_date_body;
+                                    Planing.foleo_date_body = Registro.Fecha;
 
                                 }
 
