@@ -1243,11 +1243,13 @@ namespace RocedesAPI.Controllers.INV
                     using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                     {
                         MethodAnalysis Registro = _Conexion.MethodAnalysis.Find(Datos1.IdMethodAnalysis);
-
+                        
+                        DateTime Fecha = DateTime.Now;
 
                         if (Registro == null)
                         {
                             string Codigo = string.Empty;
+                            
 
                             Registro = new MethodAnalysis
                             {
@@ -1279,7 +1281,7 @@ namespace RocedesAPI.Controllers.INV
                                 MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd(),
                                 Familia = Datos1.Familia.ToUpper(),
                                 TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd(),
-                                FechaRegistro = DateTime.Now,
+                                FechaRegistro = Fecha,
                                 IdUsuario = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario,
                                 Tmus_Mac = Datos1.Tmus_Mac,
                                 Tmus_MinL = Datos1.Tmus_MinL,
@@ -1350,7 +1352,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro.ProducJL = Datos1.ProducJL;
                             Registro.Precio = Datos1.Precio;
                             Registro.IdUsuarioModifica = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario;
-                            Registro.FechaModifica = DateTime.Now;
+                            Registro.FechaModifica = Fecha;
                             
 
                             _Conexion.SaveChanges();
