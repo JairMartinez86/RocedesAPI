@@ -50,7 +50,7 @@ namespace RocedesAPI.Controllers.PLN
     {
 
 
-        [Route("api/Pln/Planing/Get")]
+        [Route("api/Pln/Planning/Get")]
         [HttpGet]
         public string Get()
         {
@@ -122,7 +122,7 @@ namespace RocedesAPI.Controllers.PLN
         }
 
 
-        [Route("api/Pln/Planing/SubirArchivo")]
+        [Route("api/Pln/Planning/SubirArchivo")]
         [HttpPost]
         public IHttpActionResult SubirArchivo(IUpload _IUload)
         {
@@ -157,7 +157,7 @@ namespace RocedesAPI.Controllers.PLN
 
                         switch(_IUload.link)
                         {
-                            case "datos-planing":
+                            case "datos-planning":
 
                                 List<PlanningFormat> _FomatoPlaning  = new List<PlanningFormat>();
 

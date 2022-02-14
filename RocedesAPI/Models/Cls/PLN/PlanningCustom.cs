@@ -7,7 +7,7 @@ namespace RocedesAPI.Models.Cls.PLN
 {
     public class PlanningCustom
     {
-        public int IdPlaningSwing = 0;
+        public int IdPlanningSwing = 0;
         public string Week = string.Empty;
         public int IdCliente = 0;
         public string Cliente = string.Empty;

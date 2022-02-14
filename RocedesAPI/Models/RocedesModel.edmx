@@ -176,9 +176,9 @@
         </EntityType>
         <EntityType Name="PlanningSwing">
           <Key>
-            <PropertyRef Name="IdPlaningSwing" />
+            <PropertyRef Name="IdPlanningSwing" />
           </Key>
-          <Property Name="IdPlaningSwing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPlanningSwing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Week" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdCliente" Type="int" Nullable="false" />
           <Property Name="Modulo" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -1373,9 +1373,9 @@
         </Association>
         <EntityType Name="PlanningSwing">
           <Key>
-            <PropertyRef Name="IdPlaningSwing" />
+            <PropertyRef Name="IdPlanningSwing" />
           </Key>
-          <Property Name="IdPlaningSwing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPlanningSwing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Week" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdCliente" Type="Int32" Nullable="false" />
           <Property Name="Modulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1895,7 +1895,7 @@
                 <ScalarProperty Name="Modulo" ColumnName="Modulo" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="IdPlaningSwing" ColumnName="IdPlaningSwing" />
+                <ScalarProperty Name="IdPlanningSwing" ColumnName="IdPlanningSwing" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -14,7 +14,7 @@ namespace RocedesAPI.Models
     
     public partial class PlanningSwing
     {
-        public int IdPlaningSwing { get; set; }
+        public int IdPlanningSwing { get; set; }
         public string Week { get; set; }
         public int IdCliente { get; set; }
         public string Modulo { get; set; }
