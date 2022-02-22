@@ -26,6 +26,7 @@ namespace RocedesAPI.Models.Cls.PLN
         public Nullable<DateTime> foleo_date_body = null;
         public Nullable<DateTime> In_plant = null;
         public decimal Quant = 0;
+        public string Status_cut = string.Empty;
         public string Status_comp = string.Empty;
         public string Status_cuerpo = string.Empty;
         public string Foleo = string.Empty;

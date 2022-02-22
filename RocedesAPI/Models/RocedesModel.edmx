@@ -206,6 +206,7 @@
           <Property Name="foleo_date_body" Type="date" />
           <Property Name="In_plant" Type="date" />
           <Property Name="Quant" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Status_cut" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status_comp" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status_cuerpo" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Foleo" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -822,12 +823,12 @@
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
             <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
           </AssociationSet>
+          <EntitySet Name="Linea" EntityType="AuditoriaModel.Linea" />
           <EntitySet Name="PlanningSwing" EntityType="AuditoriaModel.PlanningSwing" />
           <AssociationSet Name="FK_PlaningSwing_Cliente" Association="AuditoriaModel.FK_PlaningSwing_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="PlanningSwing" EntitySet="PlanningSwing" />
           </AssociationSet>
-          <EntitySet Name="Linea" EntityType="AuditoriaModel.Linea" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -1383,6 +1384,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="IdLinea" />
+          </Key>
+          <Property Name="IdLinea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Linea1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Modulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdLineaPrincipal" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="PlanningSwing">
           <Key>
             <PropertyRef Name="IdPlanningSwing" />
@@ -1405,6 +1416,7 @@
           <Property Name="foleo_date_body" Type="DateTime" Precision="0" />
           <Property Name="In_plant" Type="DateTime" Precision="0" />
           <Property Name="Quant" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Status_cut" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status_comp" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status_cuerpo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Foleo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1437,16 +1449,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Linea">
-          <Key>
-            <PropertyRef Name="IdLinea" />
-          </Key>
-          <Property Name="IdLinea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Linea1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Modulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdLineaPrincipal" Type="Int32" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1879,6 +1881,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Linea">
+            <EntityTypeMapping TypeName="AuditoriaModel.Linea">
+              <MappingFragment StoreEntitySet="Linea">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdLineaPrincipal" ColumnName="IdLineaPrincipal" />
+                <ScalarProperty Name="Modulo" ColumnName="Modulo" />
+                <ScalarProperty Name="Linea1" ColumnName="Linea" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PlanningSwing">
             <EntityTypeMapping TypeName="AuditoriaModel.PlanningSwing">
               <MappingFragment StoreEntitySet="PlanningSwing">
@@ -1900,6 +1913,7 @@
                 <ScalarProperty Name="Foleo" ColumnName="Foleo" />
                 <ScalarProperty Name="Status_cuerpo" ColumnName="Status_cuerpo" />
                 <ScalarProperty Name="Status_comp" ColumnName="Status_comp" />
+                <ScalarProperty Name="Status_cut" ColumnName="Status_cut" />
                 <ScalarProperty Name="Quant" ColumnName="Quant" />
                 <ScalarProperty Name="In_plant" ColumnName="In_plant" />
                 <ScalarProperty Name="foleo_date_body" ColumnName="foleo_date_body" />
@@ -1918,17 +1932,6 @@
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Week" ColumnName="Week" />
                 <ScalarProperty Name="IdPlanningSwing" ColumnName="IdPlanningSwing" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Linea">
-            <EntityTypeMapping TypeName="AuditoriaModel.Linea">
-              <MappingFragment StoreEntitySet="Linea">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdLineaPrincipal" ColumnName="IdLineaPrincipal" />
-                <ScalarProperty Name="Modulo" ColumnName="Modulo" />
-                <ScalarProperty Name="Linea1" ColumnName="Linea" />
-                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

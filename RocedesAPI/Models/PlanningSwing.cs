@@ -32,6 +32,7 @@ namespace RocedesAPI.Models
         public Nullable<System.DateTime> foleo_date_body { get; set; }
         public Nullable<System.DateTime> In_plant { get; set; }
         public decimal Quant { get; set; }
+        public string Status_cut { get; set; }
         public string Status_comp { get; set; }
         public string Status_cuerpo { get; set; }
         public string Foleo { get; set; }

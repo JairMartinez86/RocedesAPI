@@ -44,6 +44,15 @@ public class AsignacionCorteFormat
     public string Comment = string.Empty;
 }
 
+public class PlotterFormat
+{
+    public string Week = string.Empty;
+    public string cut = string.Empty;
+    public string Style = string.Empty;
+    public decimal Largo = 0;
+    public string Marker = string.Empty;
+}
+
 namespace RocedesAPI.Controllers.PLN
 {
     public class PlaningController : ApiController
@@ -66,6 +75,7 @@ namespace RocedesAPI.Controllers.PLN
                                                join cl in _Cnx.Cliente on q.IdCliente equals cl.Id_Cliente
                                             select new PlanningCustom
                                             {
+                                                IdPlanningSwing = q.IdPlanningSwing,
                                                 Week = q.Week,
                                                 IdCliente = q.IdCliente,
                                                 Cliente = cl.Cliente1,
@@ -84,6 +94,7 @@ namespace RocedesAPI.Controllers.PLN
                                                 foleo_date_body = q.foleo_date_body,
                                                 In_plant = q.In_plant,
                                                 Quant = q.Quant,
+                                                Status_cut = q.Status_cut,
                                                 Status_comp = q.Status_comp,
                                                 Status_cuerpo = q.Status_cuerpo,
                                                 Foleo = q.Foleo,
@@ -231,6 +242,7 @@ namespace RocedesAPI.Controllers.PLN
                                             foleo_date_body = null,
                                             In_plant = null,
                                             Quant = Registro.Quant,
+                                            Status_cut = string.Empty,
                                             Status_comp = string.Empty,
                                             Status_cuerpo = string.Empty,
                                             Foleo = string.Empty,
@@ -307,9 +319,18 @@ namespace RocedesAPI.Controllers.PLN
                                         return json;
                                     }
 
-                                    switch(Registro.Location)
+                                    switch(Registro.Location.TrimStart().TrimEnd().ToUpper())
                                     {
-                                        case "Rocedes 5":
+                                        case "ROCEDES 5":
+                                            Planing.Ct = "READY";
+                                            break;
+                                        case "ROC5":
+                                            Planing.Ct = "READY";
+                                            break;
+                                        case "ROC 5":
+                                            Planing.Ct = "READY";
+                                            break;
+                                        case "ROC 05":
                                             Planing.Ct = "READY";
                                             break;
                                         case "SHORT FABRIC":
@@ -327,6 +348,55 @@ namespace RocedesAPI.Controllers.PLN
 
 
                                 break;
+
+                            case "datos-plotter":
+
+                                List<PlotterFormat> _FomatoPlotter = new List<PlotterFormat>();
+
+                                foreach (object item in (JsonConvert.DeserializeObject<List<object>>(_IUload.datos.ToString())).ToList())
+                                {
+                                    string[] Datos = JsonConvert.DeserializeObject<List<string>>(item.ToString()).ToArray();
+
+                                    _FomatoPlotter.Add(new PlotterFormat
+                                    {
+                                        Week = Datos[0],
+                                        cut = Datos[1],
+                                        Style = Datos[2],
+                                        Largo = Convert.ToDecimal(Datos[3]),
+                                        Marker = Datos[4]
+                                    });
+
+
+                                }
+
+
+                                foreach (PlotterFormat Registro in _FomatoPlotter)
+                                {
+
+                                    Planing = _Conexion.PlanningSwing.FirstOrDefault(f => f.Week == Registro.Week && f.Cut == Registro.cut  && f.Style == Registro.Style);
+
+
+                                    if (Planing == null)
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se ha encontado el planning para el corte  <b>{string.Concat(Registro.cut, " ", Registro.Style)}</b>.", 1);
+                                        return json;
+                                    }
+
+                                    if (Planing.Ct != "READY" && Planing.Ct != "ON HOLD")
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"El corte <b>{string.Concat(Registro.cut, " ", Registro.Style)}</b> debe de tener un estado de <b>READY</b> Y/O <b>ON HOLD</b>.", 1);
+                                        return json;
+                                    }
+
+                                    Planing.Largo = Registro.Largo;
+                                    Planing.Marker = Registro.Marker;
+
+                                }
+
+
+                                break;
+
+
                         }
 
 
@@ -354,6 +424,70 @@ namespace RocedesAPI.Controllers.PLN
         }
 
 
-     
+
+        [Route("api/Pln/Planning/GuardarEstadoCorte")]
+        [HttpPost]
+        public IHttpActionResult GuardarEstadoCorte(int IdPlanningSwing, string estado)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarEstadoCorte(IdPlanningSwing, estado));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarEstadoCorte(int IdPlanningSwing, string estado)
+        {
+            string json = string.Empty;
+            if (estado == "NONE") estado = string.Empty;
+
+            try
+            {
+
+               
+      
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        PlanningSwing Planing  = _Conexion.PlanningSwing.FirstOrDefault(f => f.IdPlanningSwing == IdPlanningSwing);
+
+                        if (Planing == null)
+                        {
+                            json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"Registro no encontrado.", 1);
+                            return json;
+                        }
+
+                        Planing.Status_cut = estado;
+
+
+                        json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, "Registro Guardado.", 0);
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+
+
+
     }
 }
