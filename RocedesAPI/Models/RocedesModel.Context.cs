@@ -55,5 +55,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
         public virtual DbSet<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
         public virtual DbSet<PlanningSwing> PlanningSwing { get; set; }
+        public virtual DbSet<Linea> Linea { get; set; }
     }
 }

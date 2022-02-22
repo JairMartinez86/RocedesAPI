@@ -831,6 +831,9 @@
     <Compile Include="Models\FoleoProceso.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Linea.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MachineData.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>

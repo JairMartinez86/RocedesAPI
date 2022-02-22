@@ -49,6 +49,7 @@
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" />
         <EntityTypeShape EntityType="AuditoriaModel.PlanningSwing" Width="1.5" PointX="5.625" PointY="12.75" />
         <AssociationConnector Association="AuditoriaModel.FK_PlaningSwing_Cliente" />
+        <EntityTypeShape EntityType="AuditoriaModel.Linea" Width="1.5" PointX="15.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

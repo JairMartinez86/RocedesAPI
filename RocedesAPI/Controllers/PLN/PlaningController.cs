@@ -26,24 +26,22 @@ public class IUpload
 public class PlanningFormat
 {
     public string Week = string.Empty;
-    public string Cliente = string.Empty;
     public string Linea = string.Empty;
     public string Cut = string.Empty;
     public string Style = string.Empty;
     public decimal Quant = 0;
-    public Nullable<DateTime> Fecha = null;
 }
 
 
-public class PlottedFormat
+public class AsignacionCorteFormat
 {
-    public string Week = string.Empty;
+    
     public string Cut = string.Empty;
     public string Style = string.Empty;
-    public string Cliente = string.Empty;
-    public decimal largo = 0;
-    public string Marker = string.Empty;
-    public Nullable<DateTime> Fecha = null;
+    public string Linea = string.Empty;
+    public string Week = string.Empty;
+    public string Location = string.Empty;
+    public string Comment = string.Empty;
 }
 
 namespace RocedesAPI.Controllers.PLN
@@ -151,6 +149,8 @@ namespace RocedesAPI.Controllers.PLN
 
                 PlanningSwing Planing = null;
                 Cliente _Cliente = null;
+                POrder _Po = null;
+                Linea _Ln = null;
 
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
                 {
@@ -169,12 +169,10 @@ namespace RocedesAPI.Controllers.PLN
 
                                     _FomatoPlaning.Add(new PlanningFormat {
                                         Week = Datos[0],
-                                        Cliente = Datos[1],
-                                        Linea = Datos[2],
-                                        Cut = Datos[3],
-                                        Style = Datos[4],
-                                        Quant =  Convert.ToInt32(Datos[5]),
-                                        Fecha = (Datos[6] == string.Empty)? null : (DateTime?)Convert.ToDateTime(Datos[6]) 
+                                        Linea = Datos[1],
+                                        Cut = Datos[2],
+                                        Style = Datos[3],
+                                        Quant =  Convert.ToInt32(Datos[4]),
                                     });
 
 
@@ -183,13 +181,29 @@ namespace RocedesAPI.Controllers.PLN
 
                                 foreach (PlanningFormat Registro in _FomatoPlaning)
                                 {
-                                    
 
-                                    _Cliente = _Conexion.Cliente.FirstOrDefault(f => f.Cliente1.TrimStart().TrimEnd().ToLower().Equals(Registro.Cliente.TrimStart().TrimEnd().ToLower()));
+                                    _Po = _Conexion.POrder.FirstOrDefault(f => f.POrder1.TrimStart().TrimEnd().Equals(Registro.Cut.TrimStart().TrimEnd()));
+
+                                    if (_Po == null)
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se encuentra registrada el Corte No.  <b>{Registro.Cut}</b>.", 1);
+                                        return json;
+                                    }
+
+                                    _Cliente = _Conexion.Cliente.FirstOrDefault(f => f.Id_Cliente == _Po.Id_Cliente);
 
                                     if(_Cliente == null)
                                     {
-                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"Cliente  <b>{Registro.Cliente}</b> no encontrado.", 1);
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se encuentra el Cliente para el Corte No.  <b>{Registro.Cut}</b>.", 1);
+                                        return json;
+                                    }
+
+
+                                    _Ln = _Conexion.Linea.FirstOrDefault(f => f.Linea1 == Registro.Linea);
+
+                                    if (_Ln == null)
+                                    {
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se encuentra el Modulo para la linea  <b>{Registro.Linea}</b>.", 1);
                                         return json;
                                     }
 
@@ -202,7 +216,7 @@ namespace RocedesAPI.Controllers.PLN
                                         {
                                             Week = Registro.Week,
                                             IdCliente = _Cliente.Id_Cliente,
-                                            Modulo = string.Empty,
+                                            Modulo = _Ln.Modulo,
                                             Linea = Registro.Linea,
                                             Cut_date_all_component = null,
                                             Ct = string.Empty,
@@ -213,7 +227,7 @@ namespace RocedesAPI.Controllers.PLN
                                             Cutting_plan = string.Empty,
                                             Cut = Registro.Cut,
                                             Style = Registro.Style,
-                                            Cut_date_body = Registro.Fecha,
+                                            Cut_date_body = null,
                                             foleo_date_body = null,
                                             In_plant = null,
                                             Quant = Registro.Quant,
@@ -246,7 +260,6 @@ namespace RocedesAPI.Controllers.PLN
                                         Planing.Linea = Registro.Linea.TrimStart().TrimEnd();
                                         Planing.Cut = Registro.Cut.TrimStart().TrimEnd();
                                         Planing.Style = Registro.Style.TrimStart().TrimEnd();
-                                        Planing.Cut_date_body = Registro.Fecha;
                                         Planing.Quant = Registro.Quant;
 
                                     }
@@ -258,58 +271,57 @@ namespace RocedesAPI.Controllers.PLN
 
 
 
-                            case "datos-plotter":
+                            case "datos-asignacion-corte":
 
 
-                                List<PlottedFormat> _FomatoPlotted = new List<PlottedFormat>();
+                                 List<AsignacionCorteFormat> _FomatoAsignacionCorte = new List<AsignacionCorteFormat>();
 
                                 foreach (object item in (JsonConvert.DeserializeObject<List<object>>(_IUload.datos.ToString())).ToList())
                                 {
                                     string[] Datos = JsonConvert.DeserializeObject<List<string>>(item.ToString()).ToArray();
 
-                                    _FomatoPlotted.Add(new PlottedFormat
+                                    _FomatoAsignacionCorte.Add(new AsignacionCorteFormat
                                     {
-                                        Week = Datos[0],
-                                        Cut = Datos[1],
-                                        Style = Datos[2],
-                                        Cliente = Datos[3],
-                                        largo = Convert.ToDecimal(Datos[4]),
-                                        Marker = Datos[5],
-                                        Fecha = (Datos[6] == string.Empty) ? null : (DateTime?)Convert.ToDateTime(Datos[6])
+                                        Cut = Datos[0],
+                                        Style = Datos[1],
+                                        Linea = Datos[2],
+                                        Week = Datos[3],
+                                        Location = Datos[4],
+                                        Comment = Datos[5]
                                     });
 
 
                                 }
 
 
-                                foreach (PlottedFormat Registro in _FomatoPlotted)
+                                foreach (AsignacionCorteFormat Registro in _FomatoAsignacionCorte)
                                 {
 
-                                    _Cliente = _Conexion.Cliente.FirstOrDefault(f => f.Cliente1.TrimStart().TrimEnd().ToLower().Equals(Registro.Cliente.TrimStart().TrimEnd().ToLower()));
-
-                                    if (_Cliente == null)
-                                    {
-                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"Cliente  <b>{Registro.Cliente}</b> no encontrado.", 1);
-                                        return json;
-                                    }
-
-
-                                    Planing = _Conexion.PlanningSwing.FirstOrDefault(f => f.Week == Registro.Week && f.IdCliente == _Cliente.Id_Cliente  && f.Cut == Registro.Cut && f.Style == Registro.Style);
+                                    Planing = _Conexion.PlanningSwing.FirstOrDefault(f => f.Week == Registro.Week && f.Linea == Registro.Linea && f.Cut == Registro.Cut && f.Style == Registro.Style);
 
 
 
                                     if (Planing == null)
                                     {
-                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se ha encontado el planning para el corte  <b>{string.Concat(Registro.Cut , " " , Registro.Style)}</b>.", 1);
+                                        json = Cls.Cls_Mensaje.Tojson(null, -1, string.Empty, $"No se ha encontado el planning para el corte  <b>{string.Concat(Registro.Cut , " " , Registro.Style, " ", Registro.Linea)}</b>.", 1);
                                         return json;
                                     }
 
+                                    switch(Registro.Location)
+                                    {
+                                        case "Rocedes 5":
+                                            Planing.Ct = "READY";
+                                            break;
+                                        case "SHORT FABRIC":
+                                            Planing.Ct = "SHORT FABRIC";
+                                            break;
+                                        default:
+                                            Planing.Ct = "ON HOLD";
+                                            break;
 
+                                    }
 
-                                    Planing.Marker = Registro.Marker.TrimStart().TrimEnd();
-                                    Planing.Largo = Registro.largo;
-                                    Planing.Marker = Registro.Marker;
-                                    Planing.foleo_date_body = Registro.Fecha;
+                                    Planing.NotasEspeciales = Registro.Comment;
 
                                 }
 

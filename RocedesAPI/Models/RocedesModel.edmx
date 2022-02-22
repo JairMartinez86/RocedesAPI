@@ -174,6 +174,16 @@
           <Property Name="IdUsuarioInactiva" Type="int" />
           <Property Name="FechaInactivo" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="IdLinea" />
+          </Key>
+          <Property Name="IdLinea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Linea" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Modulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdLineaPrincipal" Type="int" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="PlanningSwing">
           <Key>
             <PropertyRef Name="IdPlanningSwing" />
@@ -623,6 +633,7 @@
           <EntitySet Name="PresentacionSerial" EntityType="Self.PresentacionSerial" Schema="INV" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="INV" store:Type="Tables" />
           <EntitySet Name="SerialComplemento" EntityType="Self.SerialComplemento" Schema="INV" store:Type="Tables" />
+          <EntitySet Name="Linea" EntityType="Self.Linea" Schema="PNL" store:Type="Tables" />
           <EntitySet Name="PlanningSwing" EntityType="Self.PlanningSwing" Schema="PNL" store:Type="Tables" />
           <EntitySet Name="ClassOunce" EntityType="Self.ClassOunce" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="CodigoGSD" EntityType="Self.CodigoGSD" Schema="PRM" store:Type="Tables" />
@@ -816,6 +827,7 @@
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="PlanningSwing" EntitySet="PlanningSwing" />
           </AssociationSet>
+          <EntitySet Name="Linea" EntityType="AuditoriaModel.Linea" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -1425,6 +1437,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="IdLinea" />
+          </Key>
+          <Property Name="IdLinea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Linea1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Modulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdLineaPrincipal" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1896,6 +1918,17 @@
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Week" ColumnName="Week" />
                 <ScalarProperty Name="IdPlanningSwing" ColumnName="IdPlanningSwing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Linea">
+            <EntityTypeMapping TypeName="AuditoriaModel.Linea">
+              <MappingFragment StoreEntitySet="Linea">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdLineaPrincipal" ColumnName="IdLineaPrincipal" />
+                <ScalarProperty Name="Modulo" ColumnName="Modulo" />
+                <ScalarProperty Name="Linea1" ColumnName="Linea" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
