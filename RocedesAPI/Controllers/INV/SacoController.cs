@@ -70,7 +70,55 @@ namespace RocedesAPI.Controllers.INV
             return json;
         }
 
-      
+
+        [Route("api/Inventario/Saco/VerificarSacoAbierto")]
+        [HttpGet]
+        public string VerificarSacoAbierto(string user, string corte)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Cnx = new AuditoriaEntities())
+                {
+                    Usuario _Usuario = _Cnx.Usuario.FirstOrDefault(f => f.Login.Equals(user));
+
+                    if (_Usuario == null)
+                    {
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, string.Empty, 0);
+                        return json;
+                    }
+
+
+                    var _Saco = (from sc in _Cnx.BundleBoxing_Saco
+                                 where sc.Corte == corte && sc.IdUsuarioAbre == _Usuario.IdUsuario && sc.Abierto
+                                 select sc.Saco
+                                     ).ToList();
+
+                    if (_Saco.Count == 0)
+                    {
+                        json = Cls.Cls_Mensaje.Tojson(null, 0, string.Empty, string.Empty, 0);
+                        return json;
+                    }
+
+                    BundleBoxing_SacoCustom RegistoCustom = new BundleBoxing_SacoCustom();
+                    RegistoCustom.Saco = _Saco[0];
+
+                    json = Cls.Cls_Mensaje.Tojson(RegistoCustom, 1, string.Empty, string.Empty, 0);
+                    return json;
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
         [Route("api/Inventario/Saco")]
         [HttpPost]
         public IHttpActionResult Saco(string d)
@@ -110,8 +158,8 @@ namespace RocedesAPI.Controllers.INV
                         if (Datos.Saco == 0 && Datos.Estado != "Cerrar")
                         {
                             var _Saco = (from sc in _Conexion.BundleBoxing_Saco
-                                         where sc.CorteCompleto == Datos.CorteCompleto && sc.NoMesa == Datos.Mesa && sc.Seccion == Datos.Seccion && sc.IdUsuarioAbre == IdUsuario && sc.Abierto
-                                         select sc.Saco
+                                         where sc.Corte == Datos.Corte && sc.NoMesa == Datos.Mesa && sc.Seccion == Datos.Seccion && sc.IdUsuarioAbre == IdUsuario && sc.Abierto
+                                         select new { saco = sc.Saco, corte = sc.Corte}
                                      ).ToList();
 
 
@@ -120,8 +168,8 @@ namespace RocedesAPI.Controllers.INV
                             {
 
                                 _Saco = (from sc in _Conexion.BundleBoxing_Saco
-                                         where !_Conexion.BundleBoxing.Any(b => b.IdSaco == sc.IdSaco) && sc.NoMesa == Datos.Mesa && sc.Seccion == Datos.Seccion
-                                         select sc.Saco).ToList();
+                                         where !_Conexion.BundleBoxing.Any(b => b.IdSaco == sc.IdSaco) && sc.NoMesa == Datos.Mesa && sc.Seccion == Datos.Seccion && sc.Corte == Datos.Corte
+                                         select new { saco = sc.Saco, corte = sc.Corte }).ToList();
 
 
                                 if (_Saco.Count > 0)
@@ -181,7 +229,7 @@ namespace RocedesAPI.Controllers.INV
                             }
                             else
                             {
-                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # {_Saco[0]} se encuentra abierto, Primero cierre el saco para crear uno nuevo.", 1);
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{_Saco[0].saco}</b> en el corte <b>{_Saco[0].corte}</b> se encuentra abierto, Primero cierre el saco para crear uno nuevo.", 1);
                                 return json;
 
                             }
@@ -190,7 +238,7 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
-                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.CorteCompleto == Datos.CorteCompleto && b.Saco == Datos.Saco);
+                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.Corte == Datos.Corte && b.Saco == Datos.Saco);
 
                             if (Registro != null)
                             {
@@ -301,7 +349,7 @@ namespace RocedesAPI.Controllers.INV
             if (ModelState.IsValid)
             {
 
-                return Ok(Eliminaraco(serial, login));
+                return Ok(Eliminarsaco(serial, login));
 
             }
             else
@@ -311,7 +359,7 @@ namespace RocedesAPI.Controllers.INV
 
         }
 
-        private string Eliminaraco(string serial, string login)
+        private string Eliminarsaco(string serial, string login)
         {
             string json = string.Empty;
 
@@ -333,7 +381,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-                        json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, "Registro Guardado.", 0);
+                        json = Cls.Cls_Mensaje.Tojson(null, 1, string.Empty, "Registro Guardado.", 0);
 
                         _Conexion.SaveChanges();
                         scope.Complete();
