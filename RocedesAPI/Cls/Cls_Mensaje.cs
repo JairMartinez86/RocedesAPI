@@ -20,7 +20,7 @@ namespace RocedesAPI.Cls
                 json = string.Concat("{ \"d\": ", json, ",  \"msj\": ", "{\"Codigo\":\"", CodError, "\",\"Mensaje\":\"<p>", Mensaje, "</p>\"}", ", \"count\":" , Length, ", \"esError\":", 0, "}");
             }
             else
-                json = string.Concat("{ \"d\":  [{ }],  \"msj\": ", "{\"Codigo\":\"", CodError, "\",\"Mensaje\":\"<p align='center'>", Mensaje, "</p>\"}", ", \"count\":", Length, ", \"esError\":", esError,  "}");
+                json = string.Concat("{ \"d\":  [{ }],  \"msj\": ", "{\"Codigo\":\"", CodError, "\",\"Mensaje\":\"<div align='center'>", Mensaje, "</div>\"}", ", \"count\":", Length, ", \"esError\":", esError,  "}");
 
 
 

@@ -238,7 +238,7 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
-                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.Corte == Datos.Corte && b.Saco == Datos.Saco);
+                            Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(b => b.Corte == Datos.Corte && b.Saco == Datos.Saco && b.Activo);
 
                             if (Registro != null)
                             {
@@ -254,7 +254,7 @@ namespace RocedesAPI.Controllers.INV
                                             return json;
                                         }
 
-                                        if (_Conexion.BundleBoxingEnvio.FirstOrDefault(f => f.Serial == Registro.Serial) != null)
+                                        if (_Conexion.BundleBoxingEnvio.FirstOrDefault(f => f.Serial == Registro.Serial && Datos.Estado == "Abrir") != null)
                                         {
                                             json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{ Datos.Saco}</b> se encuentra en proceso de envio.", 1);
                                             return json;
@@ -295,7 +295,7 @@ namespace RocedesAPI.Controllers.INV
                             {
                                 if (Datos.Estado != "Cerrar")
                                 {
-                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # {Datos.Saco} no se encuentra registrado", 1);
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # {Datos.Saco} no se encuentra registrado o esta inactivo.!", 1);
                                 }
                                 else
                                 {
@@ -378,7 +378,7 @@ namespace RocedesAPI.Controllers.INV
 
                         if(_Conexion.BundleBoxingEnvio.FirstOrDefault(f => f.IdSaco == Registro.IdSaco) != null)
                         {
-                            json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Registro.Saco}</b> se encuentra en estado de envio<br>Elimine el envio para poder contunuar con la operación.", 1);
+                            json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"<p>El saco # <b>{Registro.Saco}</b> se encuentra en estado de envio</p><p class='color-red'>Elimine el envio para poder continular con la operación.</p>", 1);
                             return json;
                         }
 
