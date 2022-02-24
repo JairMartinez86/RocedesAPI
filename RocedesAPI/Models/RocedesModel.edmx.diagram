@@ -11,7 +11,7 @@
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Style" />
         <EntityTypeShape EntityType="AuditoriaModel.Bundle" Width="1.5" PointX="8" PointY="11.75" />
         <AssociationConnector Association="AuditoriaModel.FK_Bundle_POrder" />
-        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.5" PointX="3.375" PointY="16.625" />
+        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing_Saco" Width="1.75" PointX="3.375" PointY="16.625" />
         <EntityTypeShape EntityType="AuditoriaModel.Material" Width="1.5" PointX="8" PointY="6.875" />
         <EntityTypeShape EntityType="AuditoriaModel.PresentacionSerial" Width="1.5" PointX="5.75" PointY="6.875" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" />
@@ -19,8 +19,6 @@
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxingEnvio" Width="1.5" PointX="3" PointY="21.375" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" />
         <EntityTypeShape EntityType="AuditoriaModel.UsuarioPerfil" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3" PointY="26.625" />
-        <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Usuario" />
         <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Cliente" Width="1.5" PointX="3.375" PointY="12.875" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Cliente" />
@@ -50,6 +48,8 @@
         <EntityTypeShape EntityType="AuditoriaModel.Linea" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="AuditoriaModel.PlanningSwing" Width="1.5" PointX="5.625" PointY="12.75" />
         <AssociationConnector Association="AuditoriaModel.FK_PlaningSwing_Cliente" />
+        <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3" PointY="26.875" />
+        <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

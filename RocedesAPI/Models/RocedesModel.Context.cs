@@ -34,7 +34,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<PresentacionSerial> PresentacionSerial { get; set; }
         public virtual DbSet<BundleBoxingEnvio> BundleBoxingEnvio { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
-        public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
         public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Product> Product { get; set; }
@@ -56,5 +55,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
         public virtual DbSet<Linea> Linea { get; set; }
         public virtual DbSet<PlanningSwing> PlanningSwing { get; set; }
+        public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace RocedesAPI.Controllers.INV
        
                     var lst = (from b in _Cnx.BundleBoxing
                                join s in _Cnx.BundleBoxing_Saco on b.IdSaco equals s.IdSaco
-                                           where b.Corte == corte && b.Activo
+                                           where b.Corte == corte && b.Escaneado
                                            select new
                                            {
                                                Serial = b.Serial,
@@ -71,11 +71,11 @@ namespace RocedesAPI.Controllers.INV
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
 
-                    List<BundleBoxing> lstBundleBoxing = _Cnx.BundleBoxing.Where(w => w.CorteCompleto == corte && w.Activo).ToList();
+                    List<BundleBoxing> lstBundleBoxing = _Cnx.BundleBoxing.Where(w => w.CorteCompleto == corte && w.Escaneado).ToList();
 
 
                     List<BundleBoxingCustom> lst = (from b in lstBundleBoxing
-                                                    where b.CorteCompleto == corte && b.Activo
+                                                    where b.CorteCompleto == corte && b.Escaneado
                                                     join u in _Cnx.Usuario on b.IdUsuario equals u.IdUsuario
                                                     join sc in _Cnx.BundleBoxing_Saco on b.IdSaco equals sc.IdSaco into LeftSaco
                                                     from lf in LeftSaco.DefaultIfEmpty()
@@ -133,7 +133,7 @@ namespace RocedesAPI.Controllers.INV
                                                         orderby grupo.Key.Grupo, grupo.Key.Mesa
                                                                                    select new BundleBoxingCustom()
                                                                                     {
-                                                                                        Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos/Rollos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje, g.Nombre }).Count()),
+                                                                                        Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos/Rollos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Escaneado).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje, g.Nombre }).Count()),
                                                                                        //Grupo = string.Concat(grupo.Key.Grupo, "ㅤㅤㅤBultos/Rollos : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje }).Count(), "ㅤㅤㅤCapaje : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).GroupBy(g => new { g.Bulto, g.Talla, g.Capaje }).Sum(s => s.Key.Capaje), "ㅤㅤㅤYarda : ㅤ", lstBundleBoxing.Where(w => w.Corte == grupo.Key.Corte && w.NoMesa == grupo.Key.Mesa && w.Seccion == grupo.Key.Seccion && w.Activo).Sum(s => s.Yarda)),
                                                                                        //Grupo = grupo.Key.Grupo,
                                                                                        Mesa = grupo.Key.Mesa,
@@ -241,7 +241,7 @@ namespace RocedesAPI.Controllers.INV
                             return json;
                         }
 
-                        if (Boxing.Activo)
+                        if (Boxing.Escaneado)
                         {
 
                             json = Cls.Cls_Mensaje.Tojson(Boxing, 0, string.Empty, $"Serial # <b>{Datos.Serial}</b> ya escaneado.", 0);
@@ -252,9 +252,9 @@ namespace RocedesAPI.Controllers.INV
 
                         if(Datos.Oper != string.Empty)
                         {
-                            foreach (BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.Oper.Equals(Datos.Oper) && w.Bulto == Datos.Bulto && w.Serial != Datos.Serial && !w.Activo))
+                            foreach (BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.Oper.Equals(Datos.Oper) && w.Bulto == Datos.Bulto && w.Serial != Datos.Serial && !w.Escaneado))
                             {
-                                b.Activo = true;
+                                b.Escaneado = true;
                                 b.Seccion = Datos.Seccion;
                                 b.IdSaco = IdSaco;
                                 b.NoMesa = Datos.Mesa;
@@ -274,7 +274,7 @@ namespace RocedesAPI.Controllers.INV
                         
 
 
-                        Boxing.Activo = true;
+                        Boxing.Escaneado = true;
                         Boxing.Seccion = Datos.Seccion;
                         Boxing.IdSaco = IdSaco;
                         Boxing.NoMesa = (Boxing.NoMesa == 0) ? Datos.Mesa : Boxing.NoMesa;
@@ -396,7 +396,7 @@ namespace RocedesAPI.Controllers.INV
                             Oper = string.Empty,
                             IdUsuario = _Conexion.Usuario.FirstOrDefault(u => u.Login == Datos.Login).IdUsuario,
                             FechaRegistro = DateTime.Now,
-                            Activo = true
+                            Escaneado = true
                         };
 
                         _Conexion.BundleBoxing.Add(Boxing);
@@ -545,7 +545,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro.IdSaco = _Saco.IdSaco;
                             Registro.Saco = _Saco.Saco;
                             Registro.Bulto = 0;
-                            Registro.Bulto = lst.Where(w => w.Corte == Registro.Corte  && w.Activo).GroupBy(g =>  g.Bulto).Count();
+                            Registro.Bulto = lst.Where(w => w.Corte == Registro.Corte  && w.Escaneado).GroupBy(g =>  g.Bulto).Count();
                         }
                         else
                         {
@@ -557,7 +557,7 @@ namespace RocedesAPI.Controllers.INV
                                 return json;
                             }
 
-                            if(!_Boxin.Activo)
+                            if(!_Boxin.Escaneado)
                             {
                                 Registro.Activo = false;
                                 json = Cls.Cls_Mensaje.Tojson(Registro, 1, string.Empty, $"El Serial # <b>{Datos.Serial}</b> debe de pasar por un proceso de escaneo.", 0);

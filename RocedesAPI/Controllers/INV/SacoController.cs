@@ -375,6 +375,23 @@ namespace RocedesAPI.Controllers.INV
 
                         BundleBoxing_Saco Registro = _Conexion.BundleBoxing_Saco.FirstOrDefault(f => f.Serial.Equals(serial));
 
+
+                        if(_Conexion.BundleBoxingEnvio.FirstOrDefault(f => f.IdSaco == Registro.IdSaco) != null)
+                        {
+                            json = Cls.Cls_Mensaje.Tojson(null, 0, "1", $"El saco # <b>{Registro.Saco}</b> se encuentra en estado de envio<br>Elimine el envio para poder contunuar con la operación.", 1);
+                            return json;
+                        }
+
+                        foreach( BundleBoxing b in _Conexion.BundleBoxing.Where(w => w.IdSaco == Registro.IdSaco))
+                        {
+                            b.IdUsuario = null;
+                            b.FechaRegistro = null;
+                            b.IdSaco = null;
+                            b.Escaneado = false;
+                        }
+
+                        Registro.IdUsuarioAbre = null;
+                        Registro.Abierto = false;
                         Registro.IdUsuarioInactiva = IdUsuario;
                         Registro.FechaInactivo = DateTime.Now;
                         Registro.Activo = false;

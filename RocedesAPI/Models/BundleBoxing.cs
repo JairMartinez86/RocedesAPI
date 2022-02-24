@@ -33,9 +33,7 @@ namespace RocedesAPI.Models
         public Nullable<System.DateTime> FechaRegistro { get; set; }
         public Nullable<int> IdUsuarioTermina { get; set; }
         public Nullable<System.DateTime> FechaTermina { get; set; }
-        public bool Activo { get; set; }
-        public Nullable<int> IdUsuarioInactiva { get; set; }
-        public Nullable<System.DateTime> FechaInactivo { get; set; }
+        public bool Escaneado { get; set; }
         public System.Guid ID { get; set; }
     
         public virtual Usuario Usuario { get; set; }

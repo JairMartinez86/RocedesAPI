@@ -162,7 +162,7 @@ namespace RocedesAPI.Controllers
                             {
                                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                                 {
-                                    List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && b.FechaInactivo == null && b.EnSaco == !esComplemento).ToList();
+                                    List<BundleBoxing> lstBundleBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte)  && b.EnSaco == !esComplemento).ToList();
                                     List<BundleBoxingCustom> ltsBoxingCustom = null;
 
                                     if (lstBundleBoxing.FindAll(w => w.Oper != string.Empty &&  w.Corte == corte && OperMaster.Any(f => f.operno != w.Oper) ).Count == 0)
@@ -191,7 +191,7 @@ namespace RocedesAPI.Controllers
                                                                CorteCompleto = p.POrderClient.TrimStart().TrimEnd(),
                                                                Estilo = (sb != null) ? SerialesUnion.First(x => x.Corte == s.Field<string>("prodno").TrimStart().TrimEnd()).Estilo : estilo,
                                                                Oper = OperMaster.FindLast(f => f.seqno < s.Field<Int16>("seqno")).operno,//s.Field<string>("operno").TrimStart().TrimEnd(),
-                                                               Escaneado = (sb == null) ? false : sb.Activo
+                                                               Escaneado = (sb == null) ? false : sb.Escaneado
                                                            }).Union(from com in _Conexion.SerialComplemento
                                                                     join presen in _Conexion.PresentacionSerial on com.IdPresentacionSerial equals presen.IdPresentacionSerial
                                                                     where com.Corte.Equals(corte) &&  com.Activo && com.EnSaco
@@ -246,7 +246,7 @@ namespace RocedesAPI.Controllers
                                                 Oper = b.Oper,
                                                 IdUsuario = null,
                                                 FechaRegistro = null,
-                                                Activo = false
+                                                Escaneado = false
                                             });
 
 
@@ -277,7 +277,7 @@ namespace RocedesAPI.Controllers
                                                                CorteCompleto = s.CorteCompleto,
                                                                Estilo = s.Estilo,
                                                                Oper = s.Oper,
-                                                               Escaneado = s.Activo
+                                                               Escaneado = s.Escaneado
                                                            }).ToList();
 
                                     }
@@ -310,7 +310,7 @@ namespace RocedesAPI.Controllers
 
                         using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                         {
-                            List<BundleBoxing> lstBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && !b.EnSaco && b.Activo).ToList();
+                            List<BundleBoxing> lstBoxing = _Conexion.BundleBoxing.ToList().FindAll(b => b.Corte.Equals(corte) && !b.EnSaco && b.Escaneado).ToList();
 
 
 
@@ -367,7 +367,7 @@ namespace RocedesAPI.Controllers
                                     Oper = b.Oper,
                                     IdUsuario = null,
                                     FechaRegistro = null,
-                                    Activo = true
+                                    Escaneado = true
                                 });
 
                             }
