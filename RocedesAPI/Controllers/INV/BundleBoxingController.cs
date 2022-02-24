@@ -289,6 +289,7 @@ namespace RocedesAPI.Controllers.INV
                                     Saco = Datos.Saco,
                                     Mesa = Datos.Mesa
                                 });
+                                _Conexion.SaveChanges();
                             }
 
                         }
