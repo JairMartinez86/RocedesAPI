@@ -71,7 +71,7 @@ namespace RocedesAPI.Controllers.INV
                 using (AuditoriaEntities _Cnx = new AuditoriaEntities())
                 {
 
-                    List<BundleBoxing> lstBundleBoxing = _Cnx.BundleBoxing.Where(w => w.CorteCompleto == corte && w.Escaneado).ToList();
+                    List<BundleBoxing> lstBundleBoxing = _Cnx.BundleBoxing.Where(w => w.CorteCompleto == corte).ToList();
 
 
                     List<BundleBoxingCustom> lst = (from b in lstBundleBoxing
@@ -82,7 +82,7 @@ namespace RocedesAPI.Controllers.INV
                                                     orderby b.Seccion
                                                     select new BundleBoxingCustom()
                                                     {
-                                                        Grupo = (!b.EnSaco) ? "Complementos" : string.Concat("Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo),
+                                                        Grupo = (!b.EnSaco) ? "ESCANEADOㅤㅤㅤㅤㅤComplementos" : string.Concat("ESCANEADOㅤㅤㅤㅤㅤSeccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo),
                                                         Mesa = b.NoMesa,
                                                         Serial = b.Serial,
                                                         Nombre = b.Nombre,
@@ -98,6 +98,27 @@ namespace RocedesAPI.Controllers.INV
                                                         Fecha = b.FechaRegistro
 
                                                     }).ToList();
+                    lst.AddRange(
+                        (from b in lstBundleBoxing
+                        where b.CorteCompleto == corte && !b.Escaneado
+                        select new BundleBoxingCustom()
+                        {
+                            Grupo =  string.Concat("FALTANTEㅤㅤㅤㅤㅤ Seccion# ㅤ", b.Seccion, "ㅤㅤㅤㅤㅤEstilo# ㅤ" + b.Estilo),
+                            Mesa = b.NoMesa,
+                            Serial = b.Serial,
+                            Nombre = b.Nombre,
+                            Talla = b.Talla,
+                            Bulto = b.Bulto,
+                            Capaje = b.Capaje,
+                            Seccion = b.Seccion,
+                            Saco = (int?)null,
+                            Yarda = b.Yarda,
+                            Corte = b.Corte,
+                            Estilo = b.Estilo,
+                            Login = string.Empty,
+                            Fecha = null
+                        }).ToList()
+                        );
 
                     //List<BundleBoxingCustom> lst = (from b in lstBundleBoxing
                     //                                join p in _Cnx.POrder on b.Corte equals p.POrder1
