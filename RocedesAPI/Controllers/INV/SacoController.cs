@@ -388,8 +388,8 @@ namespace RocedesAPI.Controllers.INV
                             b.FechaRegistro = null;
                             b.IdSaco = null;
                             b.Escaneado = false;
-                            _Conexion.SaveChanges();
                         }
+                        _Conexion.SaveChanges();
 
                         Registro.IdUsuarioAbre = null;
                         Registro.Abierto = false;
