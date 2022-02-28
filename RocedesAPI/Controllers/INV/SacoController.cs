@@ -92,7 +92,7 @@ namespace RocedesAPI.Controllers.INV
 
                     var _Saco = (from sc in _Cnx.BundleBoxing_Saco
                                  where sc.Corte == corte && sc.IdUsuarioAbre == _Usuario.IdUsuario && sc.Abierto
-                                 select sc.Saco
+                                 select new { Saco = sc.Saco, Serial = sc.Serial}
                                      ).ToList();
 
                     if (_Saco.Count == 0)
@@ -102,7 +102,8 @@ namespace RocedesAPI.Controllers.INV
                     }
 
                     BundleBoxing_SacoCustom RegistoCustom = new BundleBoxing_SacoCustom();
-                    RegistoCustom.Saco = _Saco[0];
+                    RegistoCustom.Saco = _Saco[0].Saco;
+                    RegistoCustom.Serial = _Saco[0].Serial;
 
                     json = Cls.Cls_Mensaje.Tojson(RegistoCustom, 1, string.Empty, string.Empty, 0);
                     return json;
@@ -312,6 +313,9 @@ namespace RocedesAPI.Controllers.INV
 
                         BundleBoxing_SacoCustom RegistoCustom = new BundleBoxing_SacoCustom();
                         RegistoCustom.Saco = Registro.Saco;
+                        RegistoCustom.Serial = Registro.Serial;
+                        RegistoCustom.Corte = Registro.Corte;
+                        RegistoCustom.NoMesa = Registro.NoMesa;
 
 
 

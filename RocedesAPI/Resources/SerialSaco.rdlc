@@ -12,38 +12,7 @@
                 <Value>=  "Saco #: " &amp; First(Fields!Saco.Value, "DataSet1")</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>9pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.47055cm</Top>
-        <Left>0.27489cm</Left>
-        <Height>1.02945cm</Height>
-        <Width>6.64729cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <VerticalAlign>Middle</VerticalAlign>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox4">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!Corte.Value, "DataSet1")</Value>
-                <Style>
-                  <FontFamily>Consolas</FontFamily>
-                  <FontSize>7pt</FontSize>
+                  <FontSize>15pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -54,9 +23,39 @@
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
         <Top>0.01222cm</Top>
-        <Left>1.32554cm</Left>
-        <Height>0.32944cm</Height>
-        <Width>1.95122cm</Width>
+        <Left>4.07051cm</Left>
+        <Height>1.48778cm</Height>
+        <Width>2.85167cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox4">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!Corte.Value, "DataSet1")</Value>
+                <Style>
+                  <FontFamily>Consolas</FontFamily>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.01222cm</Top>
+        <Left>1.78415cm</Left>
+        <Height>0.63472cm</Height>
+        <Width>2.28636cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -66,7 +65,6 @@
         </Style>
       </Textbox>
       <Textbox Name="Textbox9">
-        <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
@@ -75,19 +73,20 @@
                 <Value>=Sum(Fields!NoMesa.Value, "DataSet1")</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>7pt</FontSize>
+                  <FontSize>12pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Center</TextAlign>
+              <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Left>4.97096cm</Left>
-        <Height>0.32944cm</Height>
-        <Width>1.95122cm</Width>
+        <Top>0.65576cm</Top>
+        <Left>1.76624cm</Left>
+        <Height>0.70313cm</Height>
+        <Width>2.30427cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -103,22 +102,23 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Mesa #:</Value>
+                <Value>Mesa#:</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>7pt</FontSize>
+                  <FontSize>12pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Right</TextAlign>
+              <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Left>3.52371cm</Left>
-        <Height>0.32944cm</Height>
-        <Width>1.44725cm</Width>
+        <Top>0.71195cm</Top>
+        <Left>0.27489cm</Left>
+        <Height>0.64694cm</Height>
+        <Width>1.49135cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -137,7 +137,7 @@
                 <Value>Corte:</Value>
                 <Style>
                   <FontFamily>Consolas</FontFamily>
-                  <FontSize>7pt</FontSize>
+                  <FontSize>12pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -148,8 +148,8 @@
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
         <Left>0.28222cm</Left>
-        <Height>0.32944cm</Height>
-        <Width>1.04332cm</Width>
+        <Height>0.64694cm</Height>
+        <Width>1.50193cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>

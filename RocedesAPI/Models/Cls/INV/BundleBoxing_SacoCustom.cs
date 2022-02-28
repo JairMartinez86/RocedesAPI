@@ -8,7 +8,9 @@ namespace RocedesAPI.Models.Cls.INV
     public class BundleBoxing_SacoCustom
     {
         public int IdSaco = 0;
+        public string Serial = string.Empty;
         public int Saco = 0;
+        public int NoMesa = 0;
         public string Corte = string.Empty;
         public int Seccion = 0;
         public int IdUsuarioCrea = 0;
