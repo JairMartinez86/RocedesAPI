@@ -756,11 +756,13 @@
     </Compile>
     <Compile Include="Models\Cls\PLN\PlanningCustom.cs" />
     <Compile Include="Models\Cls\PRM\ClassOunceCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FamilyCustom.cs" />
     <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
     <Compile Include="Models\Cls\PRM\MethodAnalysisCustom.cs" />
     <Compile Include="Models\Cls\PRM\MethodAnalysisData.cs" />
     <Compile Include="Models\Cls\PRM\MethosAnalisysDetCustom.cs" />
+    <Compile Include="Models\Cls\PRM\SecuenceCustom.cs" />
     <Compile Include="Models\Cls\PRM\SewingCustom.cs" />
     <Compile Include="Controllers\Reporte\ReportViewerController.cs" />
     <Compile Include="Controllers\SIS\UsuarioController.cs" />
@@ -822,6 +824,9 @@
     <Compile Include="Models\FactorTendido.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Family.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FoleoDatos.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
@@ -878,6 +883,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RocedesModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Secuence.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SerialComplemento.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>

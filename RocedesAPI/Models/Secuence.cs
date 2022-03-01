@@ -12,10 +12,10 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Secuence
     {
-        public int IdProducto { get; set; }
-        public string Nombre { get; set; }
+        public int IdSecuence { get; set; }
+        public int Secuence1 { get; set; }
         public string Code { get; set; }
     }
 }

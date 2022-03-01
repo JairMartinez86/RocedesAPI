@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RocedesAPI.Models.Cls.INV
+namespace RocedesAPI.Models.Cls.PRM
 {
-    public class ProductoCustom
+    public class SecuenceCustom
     {
-        public int IdProducto = 0;
-        public string Nombre = string.Empty;
+        public int IdSecuence = 0;
+        public int Secuence = 0;
         public string Code = string.Empty;
         public string Evento = string.Empty;
     }

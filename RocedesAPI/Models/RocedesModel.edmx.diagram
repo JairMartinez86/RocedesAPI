@@ -22,7 +22,6 @@
         <EntityTypeShape EntityType="AuditoriaModel.SerialComplemento" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Cliente" Width="1.5" PointX="3.375" PointY="12.875" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Cliente" />
-        <EntityTypeShape EntityType="AuditoriaModel.Product" Width="1.5" PointX="10.375" PointY="13.75" />
         <EntityTypeShape EntityType="AuditoriaModel.ClassOunce" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="AuditoriaModel.CodigoGSD" Width="1.5" PointX="2.75" PointY="5.75" />
         <EntityTypeShape EntityType="AuditoriaModel.FactorCorte" Width="1.5" PointX="10.75" PointY="4.5" />
@@ -50,6 +49,9 @@
         <AssociationConnector Association="AuditoriaModel.FK_PlaningSwing_Cliente" />
         <EntityTypeShape EntityType="AuditoriaModel.BundleBoxing" Width="1.5" PointX="3" PointY="26.875" />
         <AssociationConnector Association="AuditoriaModel.FK_BundleBoxing_Usuario" />
+        <EntityTypeShape EntityType="AuditoriaModel.Product" Width="1.5" PointX="15.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.Family" Width="1.5" PointX="8.375" PointY="15.75" />
+        <EntityTypeShape EntityType="AuditoriaModel.Secuence" Width="1.5" PointX="10.375" PointY="15.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

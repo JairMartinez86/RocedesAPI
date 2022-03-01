@@ -148,7 +148,7 @@
           </Key>
           <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LevelOfComplexity" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="3" Nullable="false" />
         </EntityType>
         <EntityType Name="SerialComplemento">
           <Key>
@@ -280,6 +280,15 @@
           <Property Name="NoFactor" Type="int" Nullable="false" />
           <Property Name="ValorFactor" Type="decimal" Precision="18" Scale="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="IdFamily" />
+          </Key>
+          <Property Name="IdFamily" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Components" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Product" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
         <EntityType Name="FoleoDatos">
           <Key>
             <PropertyRef Name="IdFoleoDato" />
@@ -403,6 +412,14 @@
           <Property Name="Orden" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NoFactor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Secuence">
+          <Key>
+            <PropertyRef Name="IdSecuence" />
+          </Key>
+          <Property Name="IdSecuence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Secuence" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="3" Nullable="false" />
         </EntityType>
         <EntityType Name="Sewing">
           <Key>
@@ -639,6 +656,7 @@
           <EntitySet Name="FactorCorte" EntityType="Self.FactorCorte" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FactorDetalleCorte" EntityType="Self.FactorDetalleCorte" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FactorTendido" EntityType="Self.FactorTendido" Schema="PRM" store:Type="Tables" />
+          <EntitySet Name="Family" EntityType="Self.Family" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FoleoDatos" EntityType="Self.FoleoDatos" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FoleoFactor" EntityType="Self.FoleoFactor" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="FoleoProceso" EntityType="Self.FoleoProceso" Schema="PRM" store:Type="Tables" />
@@ -647,6 +665,7 @@
           <EntitySet Name="MethodAnalysisDetalle" EntityType="Self.MethodAnalysisDetalle" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="Partes" EntityType="Self.Partes" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="ProcesosTendido" EntityType="Self.ProcesosTendido" Schema="PRM" store:Type="Tables" />
+          <EntitySet Name="Secuence" EntityType="Self.Secuence" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="Sewing" EntityType="Self.Sewing" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="SewingAccuracy" EntityType="Self.SewingAccuracy" Schema="PRM" store:Type="Tables" />
           <EntitySet Name="TipoTela" EntityType="Self.TipoTela" Schema="PRM" store:Type="Tables" />
@@ -775,7 +794,6 @@
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="POrder" EntitySet="POrder" />
           </AssociationSet>
-          <EntitySet Name="Product" EntityType="AuditoriaModel.Product" />
           <EntitySet Name="ClassOunce" EntityType="AuditoriaModel.ClassOunce" />
           <EntitySet Name="CodigoGSD" EntityType="AuditoriaModel.CodigoGSD" />
           <EntitySet Name="FactorCorte" EntityType="AuditoriaModel.FactorCorte" />
@@ -827,6 +845,9 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="BundleBoxing" EntitySet="BundleBoxing" />
           </AssociationSet>
+          <EntitySet Name="Product" EntityType="AuditoriaModel.Product" />
+          <EntitySet Name="Family" EntityType="AuditoriaModel.Family" />
+          <EntitySet Name="Secuence" EntityType="AuditoriaModel.Secuence" />
           </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -1045,14 +1066,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LevelOfComplexity" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="ClassOunce">
           <Key>
             <PropertyRef Name="IdOunce" />
@@ -1445,6 +1458,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="IdFamily" />
+          </Key>
+          <Property Name="IdFamily" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Components" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Secuence">
+          <Key>
+            <PropertyRef Name="IdSecuence" />
+          </Key>
+          <Property Name="IdSecuence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Secuence1" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1616,15 +1654,6 @@
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Cliente1" ColumnName="Cliente" />
                 <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="AuditoriaModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="LevelOfComplexity" ColumnName="LevelOfComplexity" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1926,6 +1955,34 @@
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
                 <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="AuditoriaModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Family">
+            <EntityTypeMapping TypeName="AuditoriaModel.Family">
+              <MappingFragment StoreEntitySet="Family">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="Components" ColumnName="Components" />
+                <ScalarProperty Name="IdFamily" ColumnName="IdFamily" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Secuence">
+            <EntityTypeMapping TypeName="AuditoriaModel.Secuence">
+              <MappingFragment StoreEntitySet="Secuence">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Secuence1" ColumnName="Secuence" />
+                <ScalarProperty Name="IdSecuence" ColumnName="IdSecuence" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

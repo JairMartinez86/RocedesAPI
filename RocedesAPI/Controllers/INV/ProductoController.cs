@@ -29,11 +29,12 @@ namespace RocedesAPI.Controllers.INV
                 {
 
                     List<ProductoCustom> lst = (from q in _Conexion.Product
+                                                orderby q.Code
                                                  select new ProductoCustom()
                                                  {
                                                      IdProducto = q.IdProducto,
                                                      Nombre = q.Nombre,
-                                                     LevelOfComplexity = q.LevelOfComplexity
+                                                     Code = q.Code
                                                  }).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
@@ -70,7 +71,8 @@ namespace RocedesAPI.Controllers.INV
                                                  select new ProductoCustom()
                                                  {
                                                      IdProducto = q.IdProducto,
-                                                     Nombre = q.Nombre
+                                                     Nombre = q.Nombre,
+                                                     Code = q.Code
                                                  }).Take(20).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
@@ -133,7 +135,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro = new Product
                             {
                                 Nombre = Datos.Nombre.ToUpper(),
-                                LevelOfComplexity = Datos.LevelOfComplexity
+                                Code = Datos.Code
                             };
                             _Conexion.Product.Add(Registro);
                             _Conexion.SaveChanges();
@@ -155,7 +157,7 @@ namespace RocedesAPI.Controllers.INV
                             else
                             {
                                 Registro.Nombre = Datos.Nombre.ToUpper();
-                                Registro.LevelOfComplexity = Datos.LevelOfComplexity;
+                                Registro.Code = Datos.Code;
 
                                 json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
                             }

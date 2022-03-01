@@ -36,7 +36,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
         public virtual DbSet<SerialComplemento> SerialComplemento { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ClassOunce> ClassOunce { get; set; }
         public virtual DbSet<CodigoGSD> CodigoGSD { get; set; }
         public virtual DbSet<FactorCorte> FactorCorte { get; set; }
@@ -56,5 +55,8 @@ namespace RocedesAPI.Models
         public virtual DbSet<Linea> Linea { get; set; }
         public virtual DbSet<PlanningSwing> PlanningSwing { get; set; }
         public virtual DbSet<BundleBoxing> BundleBoxing { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Family> Family { get; set; }
+        public virtual DbSet<Secuence> Secuence { get; set; }
     }
 }

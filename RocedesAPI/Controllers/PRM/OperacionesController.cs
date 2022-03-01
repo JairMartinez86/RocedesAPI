@@ -155,6 +155,274 @@ namespace RocedesAPI.Controllers.INV
         }
         #endregion
 
+        #region "FAMILY"
+
+        [Route("api/Premium/Operaciones/GetFamily")]
+        [HttpGet]
+        public string GetFamily(string Components)
+        {
+            string json = string.Empty;
+            if (Components == null) Components = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<FamilyCustom> lst = (from q in _Conexion.Family
+                                                 where q.Components == ((Components == string.Empty) ? q.Components : Components)
+                                                 select new FamilyCustom()
+                                                 {
+                                                     IdFamily = q.IdFamily,
+                                                     Components = q.Components,
+                                                     Product = q.Product,
+                                                     Code = q.Code
+                                                 }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarFamily")]
+        [HttpPost]
+        public IHttpActionResult GuardarFamily(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarFamily(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarFamily(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                FamilyCustom Datos = JsonConvert.DeserializeObject<FamilyCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        Family Registro = null;
+
+                        if (Datos.IdFamily == -1)
+                        {
+                            if (_Conexion.Family.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code) && f.IdFamily != Datos.IdFamily) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+                            Registro = new Family
+                            {
+                                Components = Datos.Components.ToUpper(),
+                                Product = Datos.Product.ToUpper(),
+                                Code = Datos.Code
+                            };
+                            _Conexion.Family.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdFamily = Registro.IdFamily;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.Family.Find(Datos.IdFamily);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.Family.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Components = Datos.Components.ToUpper();
+                                Registro.Product = Datos.Product.ToUpper();
+                                Registro.Code = Datos.Code;
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "SECUENCE"
+
+        [Route("api/Premium/Operaciones/GetSecuence")]
+        [HttpGet]
+        public string GetSecuence(int Secuence)
+        {
+            string json = string.Empty;
+    
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<SecuenceCustom> lst = (from q in _Conexion.Secuence
+                                              where q.Secuence1 == ((Secuence <= -1) ? q.Secuence1 : Secuence)
+                                              select new SecuenceCustom()
+                                              {
+                                                   IdSecuence = q.IdSecuence,
+                                                  Secuence = q.Secuence1,
+                                                  Code = q.Code
+                                              }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarSecuence")]
+        [HttpPost]
+        public IHttpActionResult GuardarSecuence(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarSecuence(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarSecuence(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                SecuenceCustom Datos = JsonConvert.DeserializeObject<SecuenceCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        Secuence Registro = null;
+
+                        if (Datos.IdSecuence == -1)
+                        {
+                            if (_Conexion.Secuence.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code) && f.IdSecuence != Datos.IdSecuence) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+                            Registro = new Secuence
+                            {
+                                Secuence1 = Datos.Secuence,
+                                Code = Datos.Code
+                            };
+                            _Conexion.Secuence.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdSecuence = Registro.IdSecuence;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.Secuence.Find(Datos.IdSecuence);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.Secuence.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Secuence1 = Datos.Secuence;
+                                Registro.Code = Datos.Code;
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
 
 
         #region "PARTES"
@@ -918,7 +1186,7 @@ namespace RocedesAPI.Controllers.INV
                                                    select new MachineDataCustom()
                                                    {
                                                        IdDataMachine = q.IdDataMachine,
-                                                       Name = q.Name,
+                                                       Name =  string.Concat(q.Name, " ", q.Machine, " ", q.Description) ,
                                                        Stitch = q.Stitch,
                                                        Rpm = q.Rpm,
                                                        Delay = q.Delay,
