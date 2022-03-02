@@ -22,15 +22,13 @@ namespace RocedesAPI.Models
     
         public int IdDataMachine { get; set; }
         public string Name { get; set; }
-        public string Stitch { get; set; }
-        public decimal Rpm { get; set; }
         public decimal Delay { get; set; }
         public decimal Personal { get; set; }
         public decimal Fatigue { get; set; }
         public string Nomenclature { get; set; }
         public string Machine { get; set; }
         public string Description { get; set; }
-        public string Needle { get; set; }
+        public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MethodAnalysis> MethodAnalysis { get; set; }

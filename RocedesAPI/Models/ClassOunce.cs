@@ -17,7 +17,6 @@ namespace RocedesAPI.Models
         public int IdOunce { get; set; }
         public int Ounce { get; set; }
         public string Category { get; set; }
-        public string FeedDog { get; set; }
-        public string Caliber { get; set; }
+        public string Code { get; set; }
     }
 }

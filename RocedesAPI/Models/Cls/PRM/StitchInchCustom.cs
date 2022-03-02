@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RocedesAPI.Models.Cls.INV
+namespace RocedesAPI.Models.Cls.PRM
 {
-    public class TiposTelaCustom
+    public class StitchInchCustom
     {
-        public int IdTela = 0;
-        public string Nombre = string.Empty;
+        public int IdStitchInch = 0;
+        public int StitchInch = 0;
+        public int Categorie = 0;
         public string Code = string.Empty;
         public string Evento = string.Empty;
     }

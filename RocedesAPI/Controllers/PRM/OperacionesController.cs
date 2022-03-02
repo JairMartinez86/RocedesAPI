@@ -231,7 +231,7 @@ namespace RocedesAPI.Controllers.INV
 
                         if (Datos.IdFamily == -1)
                         {
-                            if (_Conexion.Family.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code) && f.IdFamily != Datos.IdFamily) != null)
+                            if (_Conexion.Family.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
                             {
                                 json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
                                 return json;
@@ -240,7 +240,7 @@ namespace RocedesAPI.Controllers.INV
                             {
                                 Components = Datos.Components.ToUpper(),
                                 Product = Datos.Product.ToUpper(),
-                                Code = Datos.Code
+                                Code = Datos.Code.ToUpper()
                             };
                             _Conexion.Family.Add(Registro);
                             _Conexion.SaveChanges();
@@ -251,6 +251,8 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
+
+                           
                             Registro = _Conexion.Family.Find(Datos.IdFamily);
 
                             if (Datos.Evento == "Eliminar")
@@ -261,9 +263,14 @@ namespace RocedesAPI.Controllers.INV
                             }
                             else
                             {
+                                if (_Conexion.Family.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdFamily != Datos.IdFamily) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
                                 Registro.Components = Datos.Components.ToUpper();
                                 Registro.Product = Datos.Product.ToUpper();
-                                Registro.Code = Datos.Code;
+                                Registro.Code = Datos.Code.ToUpper();
 
                                 json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
                             }
@@ -366,7 +373,7 @@ namespace RocedesAPI.Controllers.INV
 
                         if (Datos.IdSecuence == -1)
                         {
-                            if (_Conexion.Secuence.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code) && f.IdSecuence != Datos.IdSecuence) != null)
+                            if (_Conexion.Secuence.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
                             {
                                 json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
                                 return json;
@@ -374,7 +381,7 @@ namespace RocedesAPI.Controllers.INV
                             Registro = new Secuence
                             {
                                 Secuence1 = Datos.Secuence,
-                                Code = Datos.Code
+                                Code = Datos.Code.ToUpper()
                             };
                             _Conexion.Secuence.Add(Registro);
                             _Conexion.SaveChanges();
@@ -385,6 +392,8 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
+
+                           
                             Registro = _Conexion.Secuence.Find(Datos.IdSecuence);
 
                             if (Datos.Evento == "Eliminar")
@@ -395,8 +404,1693 @@ namespace RocedesAPI.Controllers.INV
                             }
                             else
                             {
+                                if (_Conexion.Secuence.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdSecuence != Datos.IdSecuence) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
                                 Registro.Secuence1 = Datos.Secuence;
-                                Registro.Code = Datos.Code;
+                                Registro.Code = Datos.Code.ToUpper();
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+
+        #region "DATA MACHINE"
+
+        [Route("api/Premium/Operaciones/GetDataMachine")]
+        [HttpGet]
+        public string GetDataMachine()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
+                                                   select new MachineDataCustom()
+                                                   {
+                                                       IdDataMachine = q.IdDataMachine,
+                                                       Name = q.Name,
+                                                       Delay = q.Delay,
+                                                       Personal = q.Personal,
+                                                       Fatigue = q.Fatigue,
+                                                       Nomenclature = q.Nomenclature,
+                                                       Machine = q.Machine,
+                                                       Description = q.Description,
+                                                       Code = q.Code
+                                                   }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GetDataMachineAuto")]
+        [HttpGet]
+        public string GetDataMachineAuto(string nombre)
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
+                                                   where q.Name.ToLower().StartsWith(nombre.TrimEnd().ToLower())
+                                                   orderby q.Name, q.Name.Length
+                                                   select new MachineDataCustom()
+                                                   {
+                                                       IdDataMachine = q.IdDataMachine,
+                                                       Name = string.Concat(q.Name, " ", q.Machine, q.Description),
+                                                       Delay = q.Delay,
+                                                       Personal = q.Personal,
+                                                       Fatigue = q.Fatigue,
+                                                       Nomenclature = q.Nomenclature,
+                                                       Machine = q.Machine,
+                                                       Description = q.Description,
+                                                       Code = q.Code
+                                                   }).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarDataMachine")]
+        [HttpPost]
+        public IHttpActionResult GuardarDataMachine(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarDataMachine(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+
+
+        private string _GuardarDataMachine(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                MachineDataCustom Datos = JsonConvert.DeserializeObject<MachineDataCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        MachineData Registro = null;
+
+                        if (Datos.IdDataMachine == -1)
+                        {
+                            if (_Conexion.MachineData.FirstOrDefault(f => f.Name.ToLower().Equals(Datos.Name.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+                            Registro = new MachineData
+                            {
+                                Name = Datos.Name.ToUpper(),
+                                Delay = Datos.Delay,
+                                Personal = Datos.Personal,
+                                Fatigue = Datos.Fatigue,
+                                Nomenclature = Datos.Nomenclature.ToUpper(),
+                                Machine = Datos.Machine.ToUpper(),
+                                Description = Datos.Description.ToUpper(),
+                                Code = Datos.Code.ToUpper()
+                            };
+                            _Conexion.MachineData.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdDataMachine = Registro.IdDataMachine;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.MachineData.Find(Datos.IdDataMachine);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.MachineData.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.MachineData.FirstOrDefault(f => f.Name.ToLower().Equals(Datos.Name.ToLower()) && f.IdDataMachine != Datos.IdDataMachine) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                if (_Conexion.MachineData.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdDataMachine != Datos.IdDataMachine) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.Name = Datos.Name.ToUpper();
+                                Registro.Delay = Datos.Delay;
+                                Registro.Personal = Datos.Personal;
+                                Registro.Fatigue = Datos.Fatigue;
+                                Registro.Nomenclature = Datos.Nomenclature.ToUpper();
+                                Registro.Machine = Datos.Machine.ToUpper();
+                                Registro.Description = Datos.Description.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "STITCH TYPE"
+
+        [Route("api/Premium/Operaciones/GetStitchType")]
+        [HttpGet]
+        public string GetStitchType(string TypeStitch)
+        {
+            string json = string.Empty;
+            if (TypeStitch == null) TypeStitch = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<StitchTypeCustom> lst = (from q in _Conexion.StichTypeCatalogue
+                                                where q.TypeStitch == ((TypeStitch == string.Empty) ? q.TypeStitch : TypeStitch)
+                                                select new StitchTypeCustom()
+                                                {
+                                                    IdStitchType = q.IdStitchType,
+                                                    TypeStitch = q.TypeStitch,
+                                                    Code = q.Code
+                                                }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarStitchType")]
+        [HttpPost]
+        public IHttpActionResult GuardarStitchType(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarStitchType(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarStitchType(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                StitchTypeCustom Datos = JsonConvert.DeserializeObject<StitchTypeCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        StichTypeCatalogue Registro = null;
+
+                        if (Datos.IdStitchType == -1)
+                        {
+                            if (_Conexion.StichTypeCatalogue.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new StichTypeCatalogue
+                            {
+                                TypeStitch = Datos.TypeStitch.ToUpper(),
+                                Code = Datos.Code.ToUpper()
+                            };
+                            _Conexion.StichTypeCatalogue.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdStitchType = Registro.IdStitchType;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                           
+
+                            Registro = _Conexion.StichTypeCatalogue.Find(Datos.IdStitchType);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.StichTypeCatalogue.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.StichTypeCatalogue.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdStitchType != Datos.IdStitchType) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.TypeStitch = Datos.TypeStitch.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "NEEDLE TYPE"
+
+        [Route("api/Premium/Operaciones/GetNeedleType")]
+        [HttpGet]
+        public string GetNeedleType(string NeedleType)
+        {
+            string json = string.Empty;
+            if (NeedleType == null) NeedleType = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<NeedleTypeCustom> lst = (from q in _Conexion.NeedleType
+                                                  where q.NeedleType1 == ((NeedleType == string.Empty) ? q.NeedleType1 : NeedleType)
+                                                  select new NeedleTypeCustom()
+                                                  {
+                                                      IdNeedle = q.IdNeedle,
+                                                      NeedleType = q.NeedleType1,
+                                                      Code = q.Code
+                                                  }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarNeedleType")]
+        [HttpPost]
+        public IHttpActionResult GuardarNeedleType(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarNeedleType(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarNeedleType(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                NeedleTypeCustom Datos = JsonConvert.DeserializeObject<NeedleTypeCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        NeedleType Registro = null;
+
+                        if (Datos.IdNeedle == -1)
+                        {
+                            if (_Conexion.NeedleType.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new NeedleType
+                            {
+                                NeedleType1 = Datos.NeedleType.ToUpper(),
+                                Code = Datos.Code.ToUpper()
+                            };
+                            _Conexion.NeedleType.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdNeedle = Registro.IdNeedle;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                          
+
+                            Registro = _Conexion.NeedleType.Find(Datos.IdNeedle);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.NeedleType.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.NeedleType.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdNeedle != Datos.IdNeedle) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.NeedleType1 = Datos.NeedleType.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "RPM CATALOGUE"
+
+        [Route("api/Premium/Operaciones/GetRpm")]
+        [HttpGet]
+        public string GetRpm(decimal Rpm)
+        {
+            string json = string.Empty;
+      
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<RpmCatalogueCustom> lst = (from q in _Conexion.RpmCatalogue
+                                                  where q.Rpm == ((Rpm <= -1) ? q.Rpm : Rpm)
+                                                  select new RpmCatalogueCustom()
+                                                  {
+                                                      IdRpm = q.IdRpm,
+                                                      Rpm = q.Rpm,
+                                                      Code = q.Code
+                                                  }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarRpm")]
+        [HttpPost]
+        public IHttpActionResult GuardarRpm(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarRpm(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarRpm(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                RpmCatalogueCustom Datos = JsonConvert.DeserializeObject<RpmCatalogueCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        RpmCatalogue Registro = null;
+
+                        if (Datos.IdRpm == -1)
+                        {
+                            if (_Conexion.RpmCatalogue.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new RpmCatalogue
+                            {
+                                Rpm = Datos.Rpm,
+                                Code = Datos.Code.ToUpper()
+                            };
+                            _Conexion.RpmCatalogue.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdRpm = Registro.IdRpm;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+
+
+                            Registro = _Conexion.RpmCatalogue.Find(Datos.IdRpm);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.RpmCatalogue.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.RpmCatalogue.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdRpm != Datos.IdRpm) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.Rpm = Datos.Rpm;
+                                Registro.Code = Datos.Code.ToUpper();
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "STITCH INCH"
+
+        [Route("api/Premium/Operaciones/GetStitchInch")]
+        [HttpGet]
+        public string GetStitchInch(int StitchInch)
+        {
+            string json = string.Empty;
+  
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<StitchInchCustom> lst = (from q in _Conexion.StichIncCatalogue
+                                                  where q.StitchInch == ((StitchInch == -1) ? q.StitchInch : StitchInch)
+                                                  select new StitchInchCustom()
+                                                  {
+                                                      IdStitchInch = q.IdStitchInch,
+                                                      StitchInch = q.StitchInch,
+                                                      Categorie = q.Categorie,
+                                                      Code = q.Code
+                                                  }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarStitchInch")]
+        [HttpPost]
+        public IHttpActionResult GuardarStitchInch(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarStitchInch(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarStitchInch(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                StitchInchCustom Datos = JsonConvert.DeserializeObject<StitchInchCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        StichIncCatalogue Registro = null;
+
+                        if (Datos.IdStitchInch == -1)
+                        {
+                            if (_Conexion.StichIncCatalogue.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new StichIncCatalogue
+                            {
+                                StitchInch = Datos.StitchInch,
+                                Categorie = Datos.Categorie,
+                                Code = Datos.Code.ToUpper()
+                            };
+                            _Conexion.StichIncCatalogue.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdStitchInch = Registro.IdStitchInch;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+
+
+                            Registro = _Conexion.StichIncCatalogue.Find(Datos.IdStitchInch);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.StichIncCatalogue.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.StichIncCatalogue.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdStitchInch != Datos.IdStitchInch) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.StitchInch = Datos.StitchInch;
+                                Registro.Categorie = Datos.Categorie;
+                                Registro.Code = Datos.Code.ToUpper();
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "TIPOS TELA"
+
+        [Route("api/Premium/Operaciones/GetTela")]
+        [HttpGet]
+        public string GetTela()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<TiposTelaCustom> lst = (from q in _Conexion.TipoTela
+                                                 select new TiposTelaCustom()
+                                                 {
+                                                     IdTela = q.IdTela,
+                                                     Nombre = q.Nombre,
+                                                     Code = q.Code
+                                                 }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GetTelaAuto")]
+        [HttpGet]
+        public string GetTelaAuto(string nombre)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<TiposTelaCustom> lst = (from q in _Conexion.TipoTela
+                                                 where q.Nombre.ToLower().StartsWith(nombre.TrimEnd().ToLower())
+                                                 orderby q.Nombre, q.Nombre.Length
+                                                 select new TiposTelaCustom()
+                                                 {
+                                                     IdTela = q.IdTela,
+                                                     Nombre = q.Nombre,
+                                                     Code = q.Code
+                                                 }).Take(20).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+        [Route("api/Premium/Operaciones/GuardarTela")]
+        [HttpPost]
+        public IHttpActionResult GuardarTela(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarTela(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarTela(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                TiposTelaCustom Datos = JsonConvert.DeserializeObject<TiposTelaCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        TipoTela Registro = null;
+
+                        if (Datos.IdTela == -1)
+                        {
+                            if (_Conexion.TipoTela.FirstOrDefault(f => f.Nombre.ToLower().Equals(Datos.Nombre.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre de la tela ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            if (_Conexion.TipoTela.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo de la tela ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+                            Registro = new TipoTela
+                            {
+                                Nombre = Datos.Nombre.ToUpper(),
+                                Code = Datos.Code.ToUpper()
+                            };
+                            _Conexion.TipoTela.Add(Registro);
+                            _Conexion.SaveChanges();
+
+                            Datos.IdTela = Registro.IdTela;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.TipoTela.Find(Datos.IdTela);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.TipoTela.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.TipoTela.FirstOrDefault(f => f.Nombre.ToLower().Equals(Datos.Nombre.ToLower()) && f.IdTela != Datos.IdTela) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre de la tela ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                if (_Conexion.TipoTela.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdTela != Datos.IdTela) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo de la tela ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+          
+
+                                Registro.Nombre = Datos.Nombre.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "OUNCE"
+
+        [Route("api/Premium/Operaciones/GetOunce")]
+        [HttpGet]
+        public string GetOunce()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<ClassOunceCustom> lst = (from q in _Conexion.ClassOunce
+                                                  select new ClassOunceCustom()
+                                                  {
+                                                      IdOunce = q.IdOunce,
+                                                      Ounce = q.Ounce,
+                                                      Category = q.Category,
+                                                      Code = q.Code,
+                                                  }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarOunce")]
+        [HttpPost]
+        public IHttpActionResult GuardarOunce(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarOunce(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarOunce(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                ClassOunceCustom Datos = JsonConvert.DeserializeObject<ClassOunceCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        ClassOunce Registro = null;
+
+                        if (Datos.IdOunce == -1)
+                        {
+                            Registro = new ClassOunce
+                            {
+                                Ounce = Datos.Ounce,
+                                Category = Datos.Category.ToUpper(),
+                                Code = Datos.Code.ToUpper(),
+                            };
+                            _Conexion.ClassOunce.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdOunce = Registro.IdOunce;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.ClassOunce.Find(Datos.IdOunce);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.ClassOunce.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Ounce = Datos.Ounce;
+                                Registro.Category = Datos.Category.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "CALIBER"
+
+        [Route("api/Premium/Operaciones/GetCaliber")]
+        [HttpGet]
+        public string GetCaliber()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<CaliberCustom> lst = (from q in _Conexion.Caliber
+                                                  select new CaliberCustom()
+                                                  {
+                                                      IdCaliber = q.IdCaliber,
+                                                      Caliber = q.Caliber1,
+                                                      Category = q.Category,
+                                                      Code = q.Code,
+                                                  }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarCaliber")]
+        [HttpPost]
+        public IHttpActionResult GuardarCaliber(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarCaliber(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarCaliber(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                CaliberCustom Datos = JsonConvert.DeserializeObject<CaliberCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        Caliber Registro = null;
+
+                        if (Datos.IdCaliber == -1)
+                        {
+                            Registro = new Caliber
+                            {
+                                Caliber1 = Datos.Caliber.ToUpper(),
+                                Category = Datos.Category.ToUpper(),
+                                Code = Datos.Code.ToUpper(),
+                            };
+                            _Conexion.Caliber.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdCaliber = Registro.IdCaliber;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.Caliber.Find(Datos.IdCaliber);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.Caliber.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                Registro.Caliber1 = Datos.Caliber;
+                                Registro.Category = Datos.Category.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "FEEDOG"
+
+        [Route("api/Premium/Operaciones/GetFeedDog")]
+        [HttpGet]
+        public string GetFeedDog()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<FeedDogCustom> lst = (from q in _Conexion.FeedDog
+                                               select new FeedDogCustom()
+                                               {
+                                                   IdFeedDog = q.IdFeedDog,
+                                                   Part = q.Part,
+                                                   MachineType = q.MachineType,
+                                                   ReferenceBrand = q.ReferenceBrand,
+                                                   ReferenceModel = q.ReferenceModel,
+                                                   Position = q.Position,
+                                                   Category = q.Category,
+                                                   Code = q.Code,
+                                               }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarFeedDog")]
+        [HttpPost]
+        public IHttpActionResult GuardarFeedDog(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarFeedDog(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarFeedDog(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                FeedDogCustom Datos = JsonConvert.DeserializeObject<FeedDogCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        FeedDog Registro = null;
+
+                        if (Datos.IdFeedDog == -1)
+                        {
+                            if (_Conexion.FeedDog.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new FeedDog
+                            {
+                                Part = Datos.Part.ToUpper(),
+                                MachineType = Datos.MachineType.ToUpper(),
+                                ReferenceBrand = Datos.ReferenceBrand.ToUpper(),
+                                ReferenceModel = Datos.ReferenceModel.ToUpper(),
+                                Position = Datos.Position.ToUpper(),
+                                Category = Datos.Category.ToUpper(),
+                                Code = Datos.Code.ToUpper(),
+                            };
+                            _Conexion.FeedDog.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdFeedDog = Registro.IdFeedDog;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.FeedDog.Find(Datos.IdFeedDog);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.FeedDog.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+
+                                if (_Conexion.FeedDog.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdFeedDog != Datos.IdFeedDog) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo  ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.Part = Datos.Part;
+                                Registro.MachineType = Datos.MachineType.ToUpper();
+                                Registro.ReferenceBrand = Datos.ReferenceBrand.ToUpper();
+                                Registro.ReferenceModel = Datos.ReferenceModel.ToUpper();
+                                Registro.Position = Datos.Position.ToUpper();
+                                Registro.Category = Datos.Category.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "PRESSER FOOT"
+
+        [Route("api/Premium/Operaciones/GetPresserFoot")]
+        [HttpGet]
+        public string GetPresserFoot()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<PresserFootCustom> lst = (from q in _Conexion.PresserFoot
+                                                   select new PresserFootCustom()
+                                               {
+                                                   IdPresserFoot = q.IdPresserFoot,
+                                                   Part = q.Part,
+                                                   MachineType = q.MachineType,
+                                                   ReferenceBrand = q.ReferenceBrand,
+                                                   ReferenceModel = q.ReferenceModel,
+                                                   Code = q.Code,
+                                               }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarPresserFoot")]
+        [HttpPost]
+        public IHttpActionResult GuardarPresserFoot(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarPresserFoot(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarPresserFoot(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                PresserFootCustom Datos = JsonConvert.DeserializeObject<PresserFootCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        PresserFoot Registro = null;
+
+                        if (Datos.IdPresserFoot == -1)
+                        {
+                            if (_Conexion.PresserFoot.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new PresserFoot
+                            {
+                                Part = Datos.Part.ToUpper(),
+                                MachineType = Datos.MachineType.ToUpper(),
+                                ReferenceBrand = Datos.ReferenceBrand.ToUpper(),
+                                ReferenceModel = Datos.ReferenceModel.ToUpper(),
+                                Code = Datos.Code.ToUpper(),
+                            };
+                            _Conexion.PresserFoot.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdPresserFoot = Registro.IdPresserFoot;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.PresserFoot.Find(Datos.IdPresserFoot);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.PresserFoot.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+
+                                if (_Conexion.PresserFoot.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdPresserFoot != Datos.IdPresserFoot) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.Part = Datos.Part;
+                                Registro.MachineType = Datos.MachineType.ToUpper();
+                                Registro.ReferenceBrand = Datos.ReferenceBrand.ToUpper();
+                                Registro.ReferenceModel = Datos.ReferenceModel.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "FOLDER"
+
+        [Route("api/Premium/Operaciones/GetFolder")]
+        [HttpGet]
+        public string GetFolder()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<FolderCustom> lst = (from q in _Conexion.Folder
+                                                   select new FolderCustom()
+                                                   {
+                                                       IdFolder = q.IdFolder,
+                                                       Part = q.Part,
+                                                       Operation = q.Operation,
+                                                       Code = q.Code,
+                                                   }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarFolder")]
+        [HttpPost]
+        public IHttpActionResult GuardarFolder(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarFolder(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarFolder(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                FolderCustom Datos = JsonConvert.DeserializeObject<FolderCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        Folder Registro = null;
+
+                        if (Datos.IdFolder == -1)
+                        {
+                            if (_Conexion.Folder.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new Folder
+                            {
+                                Part = Datos.Part.ToUpper(),
+                                Operation = Datos.Operation.ToUpper(),
+                                Code = Datos.Code.ToUpper(),
+                            };
+                            _Conexion.Folder.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdFolder = Registro.IdFolder;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.Folder.Find(Datos.IdFolder);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.Folder.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+
+                                if (_Conexion.Folder.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdFolder != Datos.IdFolder) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.Part = Datos.Part;
+                                Registro.Operation = Datos.Operation.ToUpper();
+                                Registro.Code = Datos.Code.ToUpper();
+
 
                                 json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
                             }
@@ -555,170 +2249,7 @@ namespace RocedesAPI.Controllers.INV
 
 
 
-        #region "TIPOS TELA"
-
-        [Route("api/Premium/Operaciones/GetTela")]
-        [HttpGet]
-        public string GetTela()
-        {
-            string json = string.Empty;
-
-            try
-            {
-                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                {
-
-                    List<TiposTelaCustom> lst = (from q in _Conexion.TipoTela
-                                              select new TiposTelaCustom()
-                                              {
-                                                  IdTela = q.IdTela,
-                                                  Nombre = q.Nombre
-                                              }).ToList();
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-
-
-
-            return json;
-        }
-
-
-        [Route("api/Premium/Operaciones/GetTelaAuto")]
-        [HttpGet]
-        public string GetTelaAuto(string nombre)
-        {
-            string json = string.Empty;
-            
-
-            try
-            {
-                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                {
-
-                    List<TiposTelaCustom> lst = (from q in _Conexion.TipoTela
-                                                   where q.Nombre.ToLower().StartsWith(nombre.TrimEnd().ToLower())
-                                                   orderby q.Nombre, q.Nombre.Length
-                                                   select new TiposTelaCustom()
-                                                   {
-                                                       IdTela = q.IdTela,
-                                                       Nombre = q.Nombre
-                                                   }).Take(20).ToList();
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-
-
-
-            return json;
-        }
-
-        [Route("api/Premium/Operaciones/GuardarTela")]
-        [HttpPost]
-        public IHttpActionResult GuardarTela(string d)
-        {
-            if (ModelState.IsValid)
-            {
-
-                return Ok(_GuardarTela(d));
-
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        private string _GuardarTela(string d)
-        {
-            string json = string.Empty;
-
-
-            try
-            {
-                TiposTelaCustom Datos = JsonConvert.DeserializeObject<TiposTelaCustom>(d);
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
-                {
-                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                    {
-
-                        TipoTela Registro = null;
-
-                        if (Datos.IdTela == -1)
-                        {
-                            if (_Conexion.TipoTela.FirstOrDefault(f => f.Nombre.ToLower().Equals(Datos.Nombre.ToLower()) && f.IdTela != Datos.IdTela) != null)
-                            {
-                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre de la tela ya se ecnuentra registrado.", 1);
-                                return json;
-                            }
-                            Registro = new TipoTela
-                            {
-                                Nombre = Datos.Nombre.ToUpper()
-                            };
-                            _Conexion.TipoTela.Add(Registro);
-                            _Conexion.SaveChanges();
-
-                            Datos.IdTela = Registro.IdTela;
-
-                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
-                        }
-                        else
-                        {
-                            Registro = _Conexion.TipoTela.Find(Datos.IdTela);
-
-                            if (Datos.Evento == "Eliminar")
-                            {
-                                _Conexion.TipoTela.Remove(Registro);
-                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
-
-                            }
-                            else
-                            {
-                                Registro.Nombre = Datos.Nombre.ToUpper();
-
-                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
-                            }
-
-                        }
-
-
-                        _Conexion.SaveChanges();
-                        scope.Complete();
-                        scope.Dispose();
-
-
-
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-            return json;
-
-        }
-        #endregion
+   
 
 
         #region "SEWING"
@@ -988,345 +2519,8 @@ namespace RocedesAPI.Controllers.INV
         }
         #endregion
 
-        #region "OUNCE"
 
-        [Route("api/Premium/Operaciones/GetOunce")]
-        [HttpGet]
-        public string GetOunce()
-        {
-            string json = string.Empty;
 
-            try
-            {
-                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                {
-
-                    List<ClassOunceCustom> lst = (from q in _Conexion.ClassOunce
-                                              select new ClassOunceCustom()
-                                              {
-                                                  IdOunce = q.IdOunce,
-                                                  Ounce = q.Ounce,
-                                                  Category = q.Category,
-                                                  FeedDog = q.FeedDog,
-                                                  Caliber = q.Caliber
-                                              }).ToList();
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-
-
-
-            return json;
-        }
-
-
-        [Route("api/Premium/Operaciones/GuardarOunce")]
-        [HttpPost]
-        public IHttpActionResult GuardarOunce(string d)
-        {
-            if (ModelState.IsValid)
-            {
-
-                return Ok(_GuardarOunce(d));
-
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        private string _GuardarOunce(string d)
-        {
-            string json = string.Empty;
-
-
-            try
-            {
-                ClassOunceCustom Datos = JsonConvert.DeserializeObject<ClassOunceCustom>(d);
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
-                {
-                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                    {
-
-                        ClassOunce Registro = null;
-
-                        if (Datos.IdOunce == -1)
-                        {
-                            Registro = new ClassOunce
-                            {
-                                Ounce = Datos.Ounce,
-                                Category = Datos.Category.ToUpper(),
-                                FeedDog = Datos.FeedDog.ToUpper(),
-                                Caliber = Datos.Caliber
-                            };
-                            _Conexion.ClassOunce.Add(Registro);
-                            _Conexion.SaveChanges();
-
-
-                            Datos.IdOunce = Registro.IdOunce;
-
-                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
-                        }
-                        else
-                        {
-                            Registro = _Conexion.ClassOunce.Find(Datos.IdOunce);
-
-                            if (Datos.Evento == "Eliminar")
-                            {
-                                _Conexion.ClassOunce.Remove(Registro);
-                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
-
-                            }
-                            else
-                            {
-                                Registro.Ounce = Datos.Ounce;
-                                Registro.Category = Datos.Category.ToUpper();
-                                Registro.FeedDog = Datos.FeedDog.ToUpper();
-                                Registro.Caliber = Datos.Caliber;
-       
-
-                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
-                            }
-
-                        }
-
-
-                        _Conexion.SaveChanges();
-                        scope.Complete();
-                        scope.Dispose();
-
-
-
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-            return json;
-
-        }
-        #endregion
-
-
-        #region "DATA MACHINE"
-
-        [Route("api/Premium/Operaciones/GetDataMachine")]
-        [HttpGet]
-        public string GetDataMachine()
-        {
-            string json = string.Empty;
-
-            try
-            {
-                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                {
-
-                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
-                                                  select new MachineDataCustom()
-                                                  {
-                                                      IdDataMachine = q.IdDataMachine,
-                                                      Name = q.Name,
-                                                      Stitch = q.Stitch,
-                                                      Rpm = q.Rpm,
-                                                      Delay = q.Delay,
-                                                      Personal = q.Personal,
-                                                      Fatigue = q.Fatigue,
-                                                      Nomenclature = q.Nomenclature,
-                                                      Machine = q.Machine,
-                                                      Description = q.Description,
-                                                      Needle = q.Needle
-                                                  }).ToList();
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-
-
-
-            return json;
-        }
-
-
-        [Route("api/Premium/Operaciones/GetDataMachineAuto")]
-        [HttpGet]
-        public string GetDataMachineAuto(string nombre)
-        {
-            string json = string.Empty;
-   
-            try
-            {
-                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                {
-
-                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
-                                                   where q.Name.ToLower().StartsWith(nombre.TrimEnd().ToLower())
-                                                   orderby q.Name, q.Name.Length
-                                                   select new MachineDataCustom()
-                                                   {
-                                                       IdDataMachine = q.IdDataMachine,
-                                                       Name =  string.Concat(q.Name, " ", q.Machine, " ", q.Description) ,
-                                                       Stitch = q.Stitch,
-                                                       Rpm = q.Rpm,
-                                                       Delay = q.Delay,
-                                                       Personal = q.Personal,
-                                                       Fatigue = q.Fatigue,
-                                                       Nomenclature = q.Nomenclature,
-                                                       Machine = q.Machine,
-                                                       Description = q.Description,
-                                                       Needle = q.Needle
-                                                   }).Take(20).ToList();
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-
-
-
-            return json;
-        }
-
-
-        [Route("api/Premium/Operaciones/GuardarDataMachine")]
-        [HttpPost]
-        public IHttpActionResult GuardarDataMachine(string d)
-        {
-            if (ModelState.IsValid)
-            {
-
-                return Ok(_GuardarDataMachine(d));
-
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-
-
-
-        private string _GuardarDataMachine(string d)
-        {
-            string json = string.Empty;
-
-
-            try
-            {
-                MachineDataCustom Datos = JsonConvert.DeserializeObject<MachineDataCustom>(d);
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
-                {
-                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                    {
-
-                        MachineData Registro = null;
-
-                        if (Datos.IdDataMachine == -1)
-                        {
-                            if (_Conexion.MachineData.FirstOrDefault(f => f.Stitch.ToLower().Equals(Datos.Stitch.ToLower()) && f.IdDataMachine != Datos.IdDataMachine) != null)
-                            {
-                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El Stitch ya se ecnuentra registrado.", 1);
-                                return json;
-                            }
-                            Registro = new MachineData
-                            {
-                                Name = Datos.Name.ToUpper(),
-                                Stitch = Datos.Stitch.ToUpper(),
-                                Rpm = Datos.Rpm,
-                                Delay = Datos.Delay,
-                                Personal = Datos.Personal,
-                                Fatigue = Datos.Fatigue,
-                                Nomenclature = Datos.Nomenclature.ToUpper(),
-                                Machine = Datos.Machine.ToUpper(),
-                                Description = Datos.Description.ToUpper(),
-                                Needle = Datos.Needle.ToUpper()
-                            };
-                            _Conexion.MachineData.Add(Registro);
-                            _Conexion.SaveChanges();
-
-                            Datos.IdDataMachine = Registro.IdDataMachine;
-
-                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
-                        }
-                        else
-                        {
-                            Registro = _Conexion.MachineData.Find(Datos.IdDataMachine);
-
-                            if (Datos.Evento == "Eliminar")
-                            {
-                                _Conexion.MachineData.Remove(Registro);
-                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
-
-                            }
-                            else
-                            {
-                                Registro.Name = Datos.Name.ToUpper();
-                                Registro.Stitch = Datos.Stitch.ToUpper();
-                                Registro.Rpm = Datos.Rpm;
-                                Registro.Delay = Datos.Delay;
-                                Registro.Personal = Datos.Personal;
-                                Registro.Fatigue = Datos.Fatigue;
-                                Registro.Nomenclature = Datos.Nomenclature.ToUpper();
-                                Registro.Machine = Datos.Machine.ToUpper();
-                                Registro.Description = Datos.Description.ToUpper();
-                                Registro.Needle = Datos.Needle.ToUpper();
-
-
-                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
-                            }
-
-                        }
-
-
-                        _Conexion.SaveChanges();
-                        scope.Complete();
-                        scope.Dispose();
-
-
-
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-            return json;
-
-        }
-        #endregion
 
 
 
@@ -1407,9 +2601,9 @@ namespace RocedesAPI.Controllers.INV
                                    FechaModifica = q.FechaModifica,
                                    UbicacionSecuencia = string.Empty,
                                    Machine = m.Machine,
-                                   Needle = m.Needle,
-                                   Caliber = (u_o == null) ? string.Empty : u_o.Caliber,
-                                   FeedDog = (u_o == null) ? string.Empty : u_o.FeedDog,
+                                   Needle = "",//m.Needle,
+                                   Caliber = "",//(u_o == null) ? string.Empty : u_o.Caliber,
+                                   FeedDog = "",//(u_o == null) ? string.Empty : u_o.FeedDog,
                                    CodPrensatela = string.Empty,
                                    TipoFolder = string.Empty
 

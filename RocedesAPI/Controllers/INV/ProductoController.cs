@@ -127,15 +127,21 @@ namespace RocedesAPI.Controllers.INV
 
                         if (Datos.IdProducto == -1)
                         {
-                            if (_Conexion.Product.FirstOrDefault(f => f.Nombre.ToLower().Equals(Datos.Nombre.ToLower()) && f.IdProducto != Datos.IdProducto) != null)
+                            if (_Conexion.Product.FirstOrDefault(f => f.Nombre.ToLower().Equals(Datos.Nombre.ToLower())) != null)
                             {
                                 json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre del producto ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            if (_Conexion.Product.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo ya se ecnuentra registrado.", 1);
                                 return json;
                             }
                             Registro = new Product
                             {
                                 Nombre = Datos.Nombre.ToUpper(),
-                                Code = Datos.Code
+                                Code = Datos.Code.ToUpper()
                             };
                             _Conexion.Product.Add(Registro);
                             _Conexion.SaveChanges();
@@ -146,6 +152,8 @@ namespace RocedesAPI.Controllers.INV
                         }
                         else
                         {
+
+                           
                             Registro = _Conexion.Product.Find(Datos.IdProducto);
 
                             if (Datos.Evento == "Eliminar")
@@ -156,8 +164,19 @@ namespace RocedesAPI.Controllers.INV
                             }
                             else
                             {
+                                if (_Conexion.Product.FirstOrDefault(f => f.Nombre.ToLower().Equals(Datos.Nombre.ToLower()) && f.IdProducto != Datos.IdProducto) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre del producto ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                if (_Conexion.Product.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdProducto != Datos.IdProducto) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El codigo ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
                                 Registro.Nombre = Datos.Nombre.ToUpper();
-                                Registro.Code = Datos.Code;
+                                Registro.Code = Datos.Code.ToUpper();
 
                                 json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
                             }

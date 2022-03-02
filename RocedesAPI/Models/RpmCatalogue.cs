@@ -12,19 +12,10 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoTela
+    public partial class RpmCatalogue
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoTela()
-        {
-            this.MethodAnalysis = new HashSet<MethodAnalysis>();
-        }
-    
-        public int IdTela { get; set; }
-        public string Nombre { get; set; }
+        public int IdRpm { get; set; }
+        public decimal Rpm { get; set; }
         public string Code { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MethodAnalysis> MethodAnalysis { get; set; }
     }
 }

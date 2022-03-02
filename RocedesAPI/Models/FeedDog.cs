@@ -12,19 +12,15 @@ namespace RocedesAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoTela
+    public partial class FeedDog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoTela()
-        {
-            this.MethodAnalysis = new HashSet<MethodAnalysis>();
-        }
-    
-        public int IdTela { get; set; }
-        public string Nombre { get; set; }
+        public int IdFeedDog { get; set; }
+        public string Part { get; set; }
+        public string MachineType { get; set; }
+        public string ReferenceBrand { get; set; }
+        public string ReferenceModel { get; set; }
+        public string Position { get; set; }
+        public string Category { get; set; }
         public string Code { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MethodAnalysis> MethodAnalysis { get; set; }
     }
 }

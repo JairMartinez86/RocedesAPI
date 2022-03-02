@@ -751,17 +751,26 @@
     <Compile Include="Controllers\INV\ReportViewerBoxinSerialController.cs" />
     <Compile Include="Controllers\INV\SacoController.cs" />
     <Compile Include="Controllers\INV\SerialComponenteController.cs" />
+    <Compile Include="Models\Caliber.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClassOunce.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cls\PLN\PlanningCustom.cs" />
+    <Compile Include="Models\Cls\PRM\CaliberCustom.cs" />
     <Compile Include="Models\Cls\PRM\ClassOunceCustom.cs" />
     <Compile Include="Models\Cls\PRM\FamilyCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FeedDogCustom.cs" />
+    <Compile Include="Models\Cls\PRM\FolderCustom.cs" />
     <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
     <Compile Include="Models\Cls\PRM\MethodAnalysisCustom.cs" />
     <Compile Include="Models\Cls\PRM\MethodAnalysisData.cs" />
     <Compile Include="Models\Cls\PRM\MethosAnalisysDetCustom.cs" />
+    <Compile Include="Models\Cls\PRM\NeedleTypeCustom.cs" />
+    <Compile Include="Models\Cls\PRM\PresserFootCustom.cs" />
+    <Compile Include="Models\Cls\PRM\RpmCatalogueCustom.cs" />
     <Compile Include="Models\Cls\PRM\SecuenceCustom.cs" />
     <Compile Include="Models\Cls\PRM\SewingCustom.cs" />
     <Compile Include="Controllers\Reporte\ReportViewerController.cs" />
@@ -804,6 +813,8 @@
     <Compile Include="Models\Cls\INV\SerialBoxing.cs" />
     <Compile Include="Models\Cls\INV\SerialComponenteCustom.cs" />
     <Compile Include="Models\Cls\PRM\SewingAccuracyCustom.cs" />
+    <Compile Include="Models\Cls\PRM\StitchInchCustom.cs" />
+    <Compile Include="Models\Cls\PRM\StitchTypeCustom.cs" />
     <Compile Include="Models\Cls\PRM\TiposTelaCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioCustom.cs" />
     <Compile Include="Models\Cls\SIS\UsuarioPerfilCustom.cs" />
@@ -825,6 +836,12 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Family.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeedDog.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Folder.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FoleoDatos.cs">
@@ -851,6 +868,9 @@
     <Compile Include="Models\MethodAnalysisDetalle.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NeedleType.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Partes.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
@@ -861,6 +881,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PresentacionSerial.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PresserFoot.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProcesosTendido.cs">
@@ -884,6 +907,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RocedesModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RpmCatalogue.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Secuence.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
@@ -894,6 +920,12 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SewingAccuracy.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StichIncCatalogue.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StichTypeCatalogue.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Style.cs">
