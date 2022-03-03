@@ -21,6 +21,337 @@ namespace RocedesAPI.Controllers.INV
     {
 
 
+        #region "AUTO"
+        [Route("api/Premium/Operaciones/GetAutoComplete")]
+        [HttpGet]
+        public string GetAutoComplete(string valor, string evento)
+        {
+            string json = string.Empty;
+
+            try
+            {
+
+
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+
+                    switch(evento)
+                    {
+                        case "Manufacturing":
+
+                            var lst_lvl_1 = (from q in _Conexion.Manufacturing
+                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                                           orderby q.Name, q.Name.Length
+                                                           select new
+                                                           {
+                                                               Id = q.IdManufacturing,
+                                                               Valor = q.Name,
+                                                               Otros = string.Empty,
+                                                               Code = q.Code
+                                                           }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_1, lst_lvl_1.Count, string.Empty, string.Empty, 0);
+
+                            break;
+
+
+                        case "Product":
+
+                            var lst_lvl_2 = (from q in _Conexion.Product
+                                                        where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                                        orderby q.Nombre, q.Nombre.Length
+                                                        select new
+                                                        {
+                                                            Id = q.IdProducto,
+                                                            Valor = q.Nombre,
+                                                            Otros = string.Empty,
+                                                            Code = q.Code
+                                                        }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_2, lst_lvl_2.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+                        case "Family":
+
+                            var lst_lvl_3 = (from q in _Conexion.Family
+                                             where q.Components.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.Components, q.Components.Length
+                                             select new
+                                             {
+                                                 Id = q.IdFamily,
+                                                 Valor = q.Components,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_3, lst_lvl_3.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+                        case "Secuence":
+
+                            var lst_lvl_4 = (from q in _Conexion.Secuence
+                                             where q.Secuence1.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.Secuence1.ToString(), q.Secuence1.ToString().Length
+                                             select new
+                                             {
+                                                 Id = q.IdSecuence,
+                                                 Valor = q.Secuence1,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_4, lst_lvl_4.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+
+                        case "MachineData":
+
+                            var lst_lvl_5 = (from q in _Conexion.MachineData
+                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                                           orderby q.Name, q.Name.Length
+                                                           select new
+                                                           {
+                                                               Id = q.IdDataMachine,
+                                                               Valor = string.Concat(q.Name, " ", q.Machine, " ", q.Description),
+                                                               Otros = string.Concat(q.Delay, ";", q.Personal, ";", q.Fatigue),
+                                                               Code = q.Code
+                                                           }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_5, lst_lvl_5.Count, string.Empty, string.Empty, 0);
+
+                            break;
+
+
+
+                        case "StitchType":
+
+                            var lst_lvl_6 = (from q in _Conexion.StichTypeCatalogue
+                                             where q.TypeStitch.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.TypeStitch, q.TypeStitch.Length
+                                             select new
+                                             {
+                                                 Id = q.IdStitchType,
+                                                 Valor = q.TypeStitch,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_6, lst_lvl_6.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+
+
+                        case "Needle":
+
+                            var lst_lvl_7 = (from q in _Conexion.NeedleType
+                                             where q.NeedleType1.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.NeedleType1, q.NeedleType1.Length
+                                             select new
+                                             {
+                                                 Id = q.IdNeedle,
+                                                 Valor = q.NeedleType1,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_7, lst_lvl_7.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+                        case "Rpm":
+
+                            var lst_lvl_8 = (from q in _Conexion.RpmCatalogue
+                                             where q.Rpm.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.Rpm.ToString(), q.Rpm.ToString().Length
+                                             select new
+                                             {
+                                                 Id = q.IdRpm,
+                                                 Valor = q.Rpm,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_8, lst_lvl_8.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+                        case "StitchInch":
+
+                            var lst_lvl_9 = (from q in _Conexion.StichIncCatalogue
+                                             where q.StitchInch.ToString().ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.StitchInch.ToString(), q.StitchInch.ToString().Length
+                                             select new
+                                             {
+                                                 Id = q.IdStitchInch,
+                                                 Valor = q.StitchInch,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_9, lst_lvl_9.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+
+
+
+                        case "FabricType":
+
+                            var lst_lvl_10 = (from q in _Conexion.TipoTela
+                                             where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             orderby q.Nombre, q.Nombre.Length
+                                             select new
+                                             {
+                                                 Id = q.IdTela,
+                                                 Valor = q.Nombre,
+                                                 Otros = string.Empty,
+                                                 Code = q.Code
+                                             }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_10, lst_lvl_10.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+                        case "FabricWeight":
+
+                            var lst_lvl_11 = (from q in _Conexion.ClassOunce
+                                              where q.Ounce.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              orderby q.Ounce.ToString(), q.Ounce.ToString().Length
+                                              select new
+                                              {
+                                                  Id = q.IdOunce,
+                                                  Valor = q.Ounce,
+                                                  Otros = string.Empty,
+                                                  Code = q.Code
+                                              }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_11, lst_lvl_11.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+
+                        case "Caliber":
+
+                            var lst_lvl_12 = (from q in _Conexion.Caliber
+                                              where q.Caliber1.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              orderby q.Caliber1, q.Caliber1.Length
+                                              select new
+                                              {
+                                                  Id = q.IdCaliber,
+                                                  Valor = q.Caliber1,
+                                                  Otros = string.Empty,
+                                                  Code = q.Code
+                                              }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_12, lst_lvl_12.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+
+
+                        case "FeedDog":
+
+                            var lst_lvl_13 = (from q in _Conexion.FeedDog
+                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              orderby q.Part, q.Part.Length
+                                              select new
+                                              {
+                                                  Id = q.Part,
+                                                  Valor = q.Part,
+                                                  Otros = string.Empty,
+                                                  Code = q.Code
+                                              }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_13, lst_lvl_13.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+                        case "PresserFoot":
+
+                            var lst_lvl_14 = (from q in _Conexion.PresserFoot
+                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              orderby q.Part, q.Part.Length
+                                              select new
+                                              {
+                                                  Id = q.Part,
+                                                  Valor = q.Part,
+                                                  Otros = string.Empty,
+                                                  Code = q.Code
+                                              }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_14, lst_lvl_14.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+
+
+                        case "Folder":
+
+                            var lst_lvl_15 = (from q in _Conexion.Folder
+                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              orderby q.Part, q.Part.Length
+                                              select new
+                                              {
+                                                  Id = q.Part,
+                                                  Valor = q.Part,
+                                                  Otros = string.Empty,
+                                                  Code = q.Code
+                                              }).Take(20).ToList();
+
+                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_15, lst_lvl_15.Count, string.Empty, string.Empty, 0);
+
+
+
+                            break;
+                    }
+
+                  
+
+
+                }
+
+                return json;
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+        #endregion
 
         #region "CODIGO GSD"
 
@@ -128,6 +459,158 @@ namespace RocedesAPI.Controllers.INV
                             {
                                 Registro.CodigoGSD1 = Datos.CodigoGSD.ToUpper();
                                 Registro.Tmus = Datos.Tmus;
+
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                            }
+
+                        }
+
+
+                        _Conexion.SaveChanges();
+                        scope.Complete();
+                        scope.Dispose();
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+            return json;
+
+        }
+        #endregion
+
+        #region "MANUFACTURING"
+
+        [Route("api/Premium/Operaciones/GetManufacturing")]
+        [HttpGet]
+        public string GetManufacturing()
+        {
+            string json = string.Empty;
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+
+                    List<ManufacturingCustom> lst = (from q in _Conexion.Manufacturing
+                                               select new ManufacturingCustom()
+                                               {
+                                                   IdManufacturing = q.IdManufacturing,
+                                                   Name = q.Name,
+                                                   Code = q.Code,
+                                               }).ToList();
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
+
+
+        [Route("api/Premium/Operaciones/GuardarManufacturing")]
+        [HttpPost]
+        public IHttpActionResult GuardarManufacturing(string d)
+        {
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_GuardarManufacturing(d));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private string _GuardarManufacturing(string d)
+        {
+            string json = string.Empty;
+
+
+            try
+            {
+                ManufacturingCustom Datos = JsonConvert.DeserializeObject<ManufacturingCustom>(d);
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                {
+                    using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                    {
+
+                        Manufacturing Registro = null;
+
+                        if (Datos.IdManufacturing == -1)
+                        {
+                            if (_Conexion.Manufacturing.FirstOrDefault(f => f.Name.ToLower().Equals(Datos.Name.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            if (_Conexion.Manufacturing.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower())) != null)
+                            {
+                                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                return json;
+                            }
+
+                            Registro = new Manufacturing
+                            {
+                                Name = Datos.Name.ToUpper(),
+                                Code = Datos.Code.ToUpper(),
+                            };
+                            _Conexion.Manufacturing.Add(Registro);
+                            _Conexion.SaveChanges();
+
+
+                            Datos.IdManufacturing = Registro.IdManufacturing;
+
+                            json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
+                        }
+                        else
+                        {
+                            Registro = _Conexion.Manufacturing.Find(Datos.IdManufacturing);
+
+                            if (Datos.Evento == "Eliminar")
+                            {
+                                _Conexion.Manufacturing.Remove(Registro);
+                                json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Eliminado.", 0);
+
+                            }
+                            else
+                            {
+                                if (_Conexion.Manufacturing.FirstOrDefault(f => f.Name.ToLower().Equals(Datos.Name.ToLower()) && f.IdManufacturing != Datos.IdManufacturing) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El nombre ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                if (_Conexion.Manufacturing.FirstOrDefault(f => f.Code.ToLower().Equals(Datos.Code.ToLower()) && f.IdManufacturing != Datos.IdManufacturing) != null)
+                                {
+                                    json = Cls.Cls_Mensaje.Tojson(null, 0, "1", "El código ya se ecnuentra registrado.", 1);
+                                    return json;
+                                }
+
+                                Registro.Name = Datos.Name;
+                                Registro.Code = Datos.Code.ToUpper();
+
 
                                 json = Cls.Cls_Mensaje.Tojson(Datos, 1, string.Empty, "Registro Guardado.", 0);
                             }
@@ -465,50 +948,6 @@ namespace RocedesAPI.Controllers.INV
                                                        Description = q.Description,
                                                        Code = q.Code
                                                    }).ToList();
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
-            }
-
-
-
-
-            return json;
-        }
-
-
-        [Route("api/Premium/Operaciones/GetDataMachineAuto")]
-        [HttpGet]
-        public string GetDataMachineAuto(string nombre)
-        {
-            string json = string.Empty;
-
-            try
-            {
-                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
-                {
-
-                    List<MachineDataCustom> lst = (from q in _Conexion.MachineData
-                                                   where q.Name.ToLower().StartsWith(nombre.TrimEnd().ToLower())
-                                                   orderby q.Name, q.Name.Length
-                                                   select new MachineDataCustom()
-                                                   {
-                                                       IdDataMachine = q.IdDataMachine,
-                                                       Name = string.Concat(q.Name, " ", q.Machine, q.Description),
-                                                       Delay = q.Delay,
-                                                       Personal = q.Personal,
-                                                       Fatigue = q.Fatigue,
-                                                       Nomenclature = q.Nomenclature,
-                                                       Machine = q.Machine,
-                                                       Description = q.Description,
-                                                       Code = q.Code
-                                                   }).Take(20).ToList();
 
                     json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
 
@@ -2546,7 +2985,7 @@ namespace RocedesAPI.Controllers.INV
                     List<MethodAnalysis> lstMethod = _Conexion.MethodAnalysis.Where(w => DbFunctions.TruncateTime(w.FechaRegistro) >= Inicio.Date && DbFunctions.TruncateTime(w.FechaRegistro) <= Fin.Date).ToList();
                
 
-                    var lst = (from q in lstMethod
+                  /*  var lst = (from q in lstMethod
                                join t in _Conexion.TipoTela on q.IdTela equals t.IdTela
                                join m in _Conexion.MachineData on q.IdDataMachine equals m.IdDataMachine
                                join o in _Conexion.ClassOunce on q.Onza equals o.Ounce into unionO
@@ -2608,9 +3047,9 @@ namespace RocedesAPI.Controllers.INV
                                    TipoFolder = string.Empty
 
                                }).ToList();
+                  */
 
-
-                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+                   // json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
 
 
                 }
@@ -2715,36 +3154,51 @@ namespace RocedesAPI.Controllers.INV
 
                             Registro = new MethodAnalysis
                             {
-                                Codigo = string.Empty,
-                                ProcesoManufact = Datos1.ProcesoManufact.ToUpper().TrimEnd(),
-                                IdProducto = Datos1.IdProducto,
-                                TipoProducto = Datos1.TipoProducto.ToUpper().TrimEnd(),
+                                Codigo = Datos1.Codigo,
                                 Operacion = Datos1.Operacion.ToUpper().TrimEnd(),
+                                Rate = Datos1.Rate,
+                                JornadaLaboral = Datos1.JornadaLaboral,
+                                IdManufacturing = Datos1.IdManufacturing,
+                                Manufacturing = Datos1.Manufacturing.ToUpper().TrimEnd(),
+                                IdProducto = Datos1.IdProducto,
+                                Producto = Datos1.Producto.ToUpper().TrimEnd(),
+                                IdFamily = Datos1.IdFamily,
+                                Family = Datos1.Family.ToUpper().TrimEnd(),
+                                IdSecuence = Datos1.IdSecuence,
+                                Secuence = Datos1.Secuence,
                                 IdDataMachine = Datos1.IdDataMachine,
                                 DataMachine = Datos1.DataMachine.ToUpper().TrimEnd(),
-                                Stitch = Datos1.Stitch,
                                 Delay = Datos1.Delay,
                                 Personal = Datos1.Personal,
                                 Fatigue = Datos1.Fatigue,
+                                IdStitchType = Datos1.IdStitchType,
+                                TypeStitch = Datos1.TypeStitch.ToUpper().TrimEnd(),
+                                IdNeedle = Datos1.IdNeedle,
+                                NeedleType = Datos1.NeedleType.ToUpper().TrimEnd(),
+                                IdRpm = Datos1.IdRpm,
                                 Rpm = Datos1.Rpm,
-                                Sewing = Datos1.Sewing,
-                                Puntadas = Datos1.Puntadas,
-                                ManejoPaquete = Datos1.ManejoPaquete.ToUpper().TrimEnd(),
-                                Rate = Datos1.Rate,
-                                JornadaLaboral = Datos1.JornadaLaboral,
+                                IdStitchInch = Datos1.IdStitchInch,
+                                StitchInch = Datos1.StitchInch,
                                 IdTela = Datos1.IdTela,
-                                Onza = Datos1.Onza,
+                                Tela = Datos1.Tela.ToUpper().TrimEnd(),
+                                IdOunce = Datos1.IdOunce,
+                                Ounce = Datos1.Ounce,
+                                IdCaliber = Datos1.IdCaliber,
+                                Caliber = Datos1.Caliber.ToUpper().TrimEnd(),
+                                IdFeedDog = Datos1.IdFeedDog,
+                                FeedDog = Datos1.FeedDog.ToUpper().TrimEnd(),
+                                IdPresserFoot = Datos1.IdPresserFoot,
+                                PresserFoot = Datos1.PresserFoot.ToUpper().TrimEnd(),
+                                IdFolder = Datos1.IdFolder,
+                                Folder = Datos1.Folder.ToUpper().TrimEnd(),
                                 MateriaPrima_1 = Datos1.MateriaPrima_1.ToUpper().TrimEnd(),
                                 MateriaPrima_2 = Datos1.MateriaPrima_2.ToUpper().TrimEnd(),
                                 MateriaPrima_3 = Datos1.MateriaPrima_3.ToUpper().TrimEnd(),
-                                MateriaPrima_4 = Datos1.MateriaPrima_4.ToUpper().TrimEnd(),
-                                MateriaPrima_5 = Datos1.MateriaPrima_5.ToUpper().TrimEnd(),
-                                MateriaPrima_6 = Datos1.MateriaPrima_6.ToUpper().TrimEnd(),
-                                MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd(),
-                                Familia = Datos1.Familia.ToUpper(),
-                                TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd(),
                                 FechaRegistro = Fecha,
                                 IdUsuario = _Conexion.Usuario.First(u => u.Login == Datos1.Usuario).IdUsuario,
+                                FactorSewing = Datos1.FactorSewing,
+                                FactorSewingAccuracy = Datos1.FactorSewingAccuracy,
+                                Sewing = Datos1.Sewing,
                                 Tmus_Mac = Datos1.Tmus_Mac,
                                 Tmus_MinL = Datos1.Tmus_MinL,
                                 Min_Mac = Datos1.Min_Mac,
@@ -2759,51 +3213,53 @@ namespace RocedesAPI.Controllers.INV
 
                             _Conexion.SaveChanges();
 
-                            Codigo = _Conexion.MethodAnalysis.Where(w => w.Codigo != string.Empty).Max(m => m.Codigo);
-                            if (Codigo != null)
-                                Codigo = (Convert.ToInt32(Codigo) + 1).ToString();
-                            else
-                                Codigo = "1";
-
-                            Codigo = Codigo.PadLeft(10, '0');
-                            Registro.Codigo = Codigo;
-
-                            Datos1.IdMethodAnalysis = Registro.IdMethodAnalysis;
-                            Datos1.Codigo = Codigo;
-
-
-                            _Conexion.SaveChanges();
+                         
                         }
                         else
                         {
                             Registro.Codigo = Datos1.Codigo;
-                            Registro.ProcesoManufact = Datos1.ProcesoManufact.ToUpper().TrimEnd();
-                            Registro.IdProducto = Datos1.IdProducto;
-                            Registro.TipoProducto = Datos1.TipoProducto.ToUpper().TrimEnd();
                             Registro.Operacion = Datos1.Operacion.ToUpper().TrimEnd();
+                            Registro.Rate = Datos1.Rate;
+                            Registro.JornadaLaboral = Datos1.JornadaLaboral;
+                            Registro.IdManufacturing = Datos1.IdManufacturing;
+                            Registro.Manufacturing = Datos1.Manufacturing.ToUpper().TrimEnd();
+                            Registro.IdProducto = Datos1.IdProducto;
+                            Registro.Producto = Datos1.Producto.ToUpper().TrimEnd();
+                            Registro.IdFamily = Datos1.IdFamily;
+                            Registro.Family = Datos1.Family.ToUpper().TrimEnd();
+                            Registro.IdSecuence = Datos1.IdSecuence;
+                            Registro.Secuence = Datos1.Secuence;
                             Registro.IdDataMachine = Datos1.IdDataMachine;
                             Registro.DataMachine = Datos1.DataMachine.ToUpper().TrimEnd();
-                            Registro.Stitch = Datos1.Stitch;
                             Registro.Delay = Datos1.Delay;
                             Registro.Personal = Datos1.Personal;  
                             Registro.Fatigue = Datos1.Fatigue;
+                            Registro.IdStitchType = Datos1.IdStitchType;
+                            Registro.TypeStitch = Datos1.TypeStitch.ToUpper().TrimEnd();
+                            Registro.IdNeedle = Datos1.IdNeedle;
+                            Registro.NeedleType = Datos1.NeedleType.ToUpper().TrimEnd();
+                            Registro.IdRpm = Datos1.IdRpm;
                             Registro.Rpm = Datos1.Rpm;
-                            Registro.Sewing = Datos1.Sewing;
-                            Registro.Puntadas = Datos1.Puntadas;
-                            Registro.ManejoPaquete = Datos1.ManejoPaquete.ToUpper().TrimEnd();
-                            Registro.Rate = Datos1.Rate;
-                            Registro.JornadaLaboral = Datos1.JornadaLaboral;
+                            Registro.IdStitchInch = Datos1.IdStitchInch;
+                            Registro.StitchInch = Datos1.StitchInch;
                             Registro.IdTela = Datos1.IdTela;
-                            Registro.Onza = Datos1.Onza;
+                            Registro.Tela = Datos1.Tela.ToUpper().TrimEnd();
+                            Registro.IdOunce = Datos1.IdOunce;
+                            Registro.Ounce = Datos1.Ounce;
+                            Registro.IdCaliber = Datos1.IdCaliber;
+                            Registro.Caliber = Datos1.Caliber.ToUpper().TrimEnd();
+                            Registro.IdFeedDog = Datos1.IdFeedDog;
+                            Registro.FeedDog = Datos1.FeedDog.ToUpper().TrimEnd();
+                            Registro.IdPresserFoot = Datos1.IdPresserFoot;
+                            Registro.PresserFoot = Datos1.PresserFoot.ToUpper().TrimEnd();
+                            Registro.IdFolder = Datos1.IdFolder;
+                            Registro.Folder = Datos1.Folder.ToUpper().TrimEnd();
                             Registro.MateriaPrima_1 = Datos1.MateriaPrima_1.ToUpper().TrimEnd();
                             Registro.MateriaPrima_2 = Datos1.MateriaPrima_2.ToUpper().TrimEnd();
                             Registro.MateriaPrima_3 = Datos1.MateriaPrima_3.ToUpper().TrimEnd();
-                            Registro.MateriaPrima_4 = Datos1.MateriaPrima_4.ToUpper().TrimEnd();
-                            Registro.MateriaPrima_5 = Datos1.MateriaPrima_5.ToUpper().TrimEnd();
-                            Registro.MateriaPrima_6 = Datos1.MateriaPrima_6.ToUpper().TrimEnd();
-                            Registro.MateriaPrima_7 = Datos1.MateriaPrima_7.ToUpper().TrimEnd();
-                            Registro.Familia = Datos1.Familia.ToUpper();
-                            Registro.TipoConstruccion = Datos1.TipoConstruccion.ToUpper().TrimEnd();
+                            Registro.FactorSewingAccuracy = Datos1.FactorSewingAccuracy;
+                            Registro.FactorSewingAccuracy = Datos1.FactorSewingAccuracy;
+                            Registro.Sewing = Datos1.Sewing;
                             Registro.Tmus_Mac = Datos1.Tmus_Mac;
                             Registro.Tmus_MinL = Datos1.Tmus_MinL;
                             Registro.Min_Mac = Datos1.Min_Mac;

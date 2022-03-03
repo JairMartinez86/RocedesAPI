@@ -47,7 +47,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<Sewing> Sewing { get; set; }
         public virtual DbSet<SewingAccuracy> SewingAccuracy { get; set; }
         public virtual DbSet<ProcesosTendido> ProcesosTendido { get; set; }
-        public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
         public virtual DbSet<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
         public virtual DbSet<Linea> Linea { get; set; }
         public virtual DbSet<PlanningSwing> PlanningSwing { get; set; }
@@ -57,7 +56,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<Secuence> Secuence { get; set; }
         public virtual DbSet<StichTypeCatalogue> StichTypeCatalogue { get; set; }
         public virtual DbSet<NeedleType> NeedleType { get; set; }
-        public virtual DbSet<RpmCatalogue> RpmCatalogue { get; set; }
         public virtual DbSet<StichIncCatalogue> StichIncCatalogue { get; set; }
         public virtual DbSet<TipoTela> TipoTela { get; set; }
         public virtual DbSet<ClassOunce> ClassOunce { get; set; }
@@ -66,5 +64,8 @@ namespace RocedesAPI.Models
         public virtual DbSet<FeedDog> FeedDog { get; set; }
         public virtual DbSet<PresserFoot> PresserFoot { get; set; }
         public virtual DbSet<Folder> Folder { get; set; }
+        public virtual DbSet<Manufacturing> Manufacturing { get; set; }
+        public virtual DbSet<RpmCatalogue> RpmCatalogue { get; set; }
+        public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
     }
 }

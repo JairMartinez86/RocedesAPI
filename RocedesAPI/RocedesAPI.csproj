@@ -765,6 +765,7 @@
     <Compile Include="Models\Cls\PRM\FolderCustom.cs" />
     <Compile Include="Models\Cls\PRM\MachineDataCustom.cs" />
     <Compile Include="Models\Cls\INV\ProductoCustom.cs" />
+    <Compile Include="Models\Cls\PRM\ManufacturingCustom.cs" />
     <Compile Include="Models\Cls\PRM\MethodAnalysisCustom.cs" />
     <Compile Include="Models\Cls\PRM\MethodAnalysisData.cs" />
     <Compile Include="Models\Cls\PRM\MethosAnalisysDetCustom.cs" />
@@ -857,6 +858,9 @@
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MachineData.cs">
+      <DependentUpon>RocedesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Manufacturing.cs">
       <DependentUpon>RocedesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Material.cs">
