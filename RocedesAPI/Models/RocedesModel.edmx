@@ -837,119 +837,73 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AuditoriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="POrder">
-          <Key>
-            <PropertyRef Name="Id_Order" />
-          </Key>
-          <Property Name="Id_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Cliente" Type="Int32" />
-          <Property Name="Id_Style" Type="Int32" />
-          <Property Name="POrder1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Bundles" Type="Int32" />
-          <Property Name="Id_Planta" Type="Int32" />
-          <Property Name="Id_Linea" Type="Int32" />
-          <Property Name="Semana" Type="Int32" />
-          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Id_Linea2" Type="Int32" />
-          <Property Name="Describir" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="AfterIntex" Type="Int32" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="POrderClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="washed" Type="Boolean" />
-          <NavigationProperty Name="Style" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="POrder" ToRole="Style" />
-          <NavigationProperty Name="Bundle" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="POrder" ToRole="Bundle" />
-          <NavigationProperty Name="Cliente" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="POrder" ToRole="Cliente" />
-        </EntityType>
         <EntityContainer Name="AuditoriaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="POrder" EntityType="Self.POrder" />
-          <EntitySet Name="Usuario" EntityType="AuditoriaModel.Usuario" />
-          <EntitySet Name="Style" EntityType="AuditoriaModel.Style" />
-          <AssociationSet Name="FK_POrder_Style" Association="AuditoriaModel.FK_POrder_Style">
-            <End Role="Style" EntitySet="Style" />
-            <End Role="POrder" EntitySet="POrder" />
-          </AssociationSet>
-          <EntitySet Name="Bundle" EntityType="AuditoriaModel.Bundle" />
-          <AssociationSet Name="FK_Bundle_POrder" Association="AuditoriaModel.FK_Bundle_POrder">
-            <End Role="POrder" EntitySet="POrder" />
-            <End Role="Bundle" EntitySet="Bundle" />
-          </AssociationSet>
+          <EntitySet Name="BundleBoxing" EntityType="AuditoriaModel.BundleBoxing" />
           <EntitySet Name="BundleBoxing_Saco" EntityType="AuditoriaModel.BundleBoxing_Saco" />
+          <EntitySet Name="BundleBoxingEnvio" EntityType="AuditoriaModel.BundleBoxingEnvio" />
           <EntitySet Name="Material" EntityType="AuditoriaModel.Material" />
           <EntitySet Name="PresentacionSerial" EntityType="AuditoriaModel.PresentacionSerial" />
+          <EntitySet Name="Product" EntityType="AuditoriaModel.Product" />
+          <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
+          <EntitySet Name="Linea" EntityType="AuditoriaModel.Linea" />
+          <EntitySet Name="PlanningSwing" EntityType="AuditoriaModel.PlanningSwing" />
+          <EntitySet Name="Caliber" EntityType="AuditoriaModel.Caliber" />
+          <EntitySet Name="ClassOunce" EntityType="AuditoriaModel.ClassOunce" />
+          <EntitySet Name="CodigoGSD" EntityType="AuditoriaModel.CodigoGSD" />
+          <EntitySet Name="FactorCorte" EntityType="AuditoriaModel.FactorCorte" />
+          <EntitySet Name="FactorDetalleCorte" EntityType="AuditoriaModel.FactorDetalleCorte" />
+          <EntitySet Name="FactorTendido" EntityType="AuditoriaModel.FactorTendido" />
+          <EntitySet Name="Family" EntityType="AuditoriaModel.Family" />
+          <EntitySet Name="FeedDog" EntityType="AuditoriaModel.FeedDog" />
+          <EntitySet Name="Folder" EntityType="AuditoriaModel.Folder" />
+          <EntitySet Name="FoleoDatos" EntityType="AuditoriaModel.FoleoDatos" />
+          <EntitySet Name="FoleoFactor" EntityType="AuditoriaModel.FoleoFactor" />
+          <EntitySet Name="FoleoProceso" EntityType="AuditoriaModel.FoleoProceso" />
+          <EntitySet Name="MachineData" EntityType="AuditoriaModel.MachineData" />
+          <EntitySet Name="Manufacturing" EntityType="AuditoriaModel.Manufacturing" />
+          <EntitySet Name="MethodAnalysis" EntityType="AuditoriaModel.MethodAnalysis" />
+          <EntitySet Name="MethodAnalysisDetalle" EntityType="AuditoriaModel.MethodAnalysisDetalle" />
+          <EntitySet Name="NeedleType" EntityType="AuditoriaModel.NeedleType" />
+          <EntitySet Name="Partes" EntityType="AuditoriaModel.Partes" />
+          <EntitySet Name="PresserFoot" EntityType="AuditoriaModel.PresserFoot" />
+          <EntitySet Name="ProcesosTendido" EntityType="AuditoriaModel.ProcesosTendido" />
+          <EntitySet Name="RpmCatalogue" EntityType="AuditoriaModel.RpmCatalogue" />
+          <EntitySet Name="Secuence" EntityType="AuditoriaModel.Secuence" />
+          <EntitySet Name="Sewing" EntityType="AuditoriaModel.Sewing" />
+          <EntitySet Name="SewingAccuracy" EntityType="AuditoriaModel.SewingAccuracy" />
+          <EntitySet Name="StichIncCatalogue" EntityType="AuditoriaModel.StichIncCatalogue" />
+          <EntitySet Name="StichTypeCatalogue" EntityType="AuditoriaModel.StichTypeCatalogue" />
+          <EntitySet Name="TipoTela" EntityType="AuditoriaModel.TipoTela" />
+          <EntitySet Name="Usuario" EntityType="AuditoriaModel.Usuario" />
+          <EntitySet Name="UsuarioPerfil" EntityType="AuditoriaModel.UsuarioPerfil" />
+          <AssociationSet Name="FK_BundleBoxing_Usuario" Association="AuditoriaModel.FK_BundleBoxing_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
+          </AssociationSet>
           <AssociationSet Name="FK_BundleBoxing_Saco_Usuario" Association="AuditoriaModel.FK_BundleBoxing_Saco_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="BundleBoxing_Saco" EntitySet="BundleBoxing_Saco" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BundleBoxingEnvio_Usuario" Association="AuditoriaModel.FK_BundleBoxingEnvio_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="BundleBoxingEnvio" EntitySet="BundleBoxingEnvio" />
           </AssociationSet>
           <AssociationSet Name="FK_Material_PresentacionSerial" Association="AuditoriaModel.FK_Material_PresentacionSerial">
             <End Role="PresentacionSerial" EntitySet="PresentacionSerial" />
             <End Role="Material" EntitySet="Material" />
           </AssociationSet>
-          <EntitySet Name="BundleBoxingEnvio" EntityType="AuditoriaModel.BundleBoxingEnvio" />
-          <AssociationSet Name="FK_BundleBoxingEnvio_Usuario" Association="AuditoriaModel.FK_BundleBoxingEnvio_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="BundleBoxingEnvio" EntitySet="BundleBoxingEnvio" />
-          </AssociationSet>
-          <EntitySet Name="UsuarioPerfil" EntityType="AuditoriaModel.UsuarioPerfil" />
-          <EntitySet Name="SerialComplemento" EntityType="AuditoriaModel.SerialComplemento" />
-          <EntitySet Name="Cliente" EntityType="AuditoriaModel.Cliente" />
-          <AssociationSet Name="FK_POrder_Cliente" Association="AuditoriaModel.FK_POrder_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="POrder" EntitySet="POrder" />
-          </AssociationSet>
-          <EntitySet Name="CodigoGSD" EntityType="AuditoriaModel.CodigoGSD" />
-          <EntitySet Name="FactorCorte" EntityType="AuditoriaModel.FactorCorte" />
-          <EntitySet Name="FactorDetalleCorte" EntityType="AuditoriaModel.FactorDetalleCorte" />
-          <EntitySet Name="FactorTendido" EntityType="AuditoriaModel.FactorTendido" />
-          <EntitySet Name="FoleoDatos" EntityType="AuditoriaModel.FoleoDatos" />
-          <EntitySet Name="FoleoFactor" EntityType="AuditoriaModel.FoleoFactor" />
-          <EntitySet Name="FoleoProceso" EntityType="AuditoriaModel.FoleoProceso" />
-          <EntitySet Name="Partes" EntityType="AuditoriaModel.Partes" />
-          <EntitySet Name="Sewing" EntityType="AuditoriaModel.Sewing" />
-          <EntitySet Name="SewingAccuracy" EntityType="AuditoriaModel.SewingAccuracy" />
           <AssociationSet Name="FK_FactorDetalleCorte_FactorCorte" Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte">
             <End Role="FactorCorte" EntitySet="FactorCorte" />
             <End Role="FactorDetalleCorte" EntitySet="FactorDetalleCorte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido">
+            <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
+            <End Role="FactorTendido" EntitySet="FactorTendido" />
           </AssociationSet>
           <AssociationSet Name="FK_FoleoFactor_FoleoProceso" Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso">
             <End Role="FoleoProceso" EntitySet="FoleoProceso" />
             <End Role="FoleoFactor" EntitySet="FoleoFactor" />
           </AssociationSet>
-          <EntitySet Name="ProcesosTendido" EntityType="AuditoriaModel.ProcesosTendido" />
-          <AssociationSet Name="FK_FactorTendido_ProcesosTendido" Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido">
-            <End Role="ProcesosTendido" EntitySet="ProcesosTendido" />
-            <End Role="FactorTendido" EntitySet="FactorTendido" />
-          </AssociationSet>
-          <EntitySet Name="MethodAnalysisDetalle" EntityType="AuditoriaModel.MethodAnalysisDetalle" />
-          <EntitySet Name="Linea" EntityType="AuditoriaModel.Linea" />
-          <EntitySet Name="PlanningSwing" EntityType="AuditoriaModel.PlanningSwing" />
-          <AssociationSet Name="FK_PlaningSwing_Cliente" Association="AuditoriaModel.FK_PlaningSwing_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="PlanningSwing" EntitySet="PlanningSwing" />
-          </AssociationSet>
-          <EntitySet Name="BundleBoxing" EntityType="AuditoriaModel.BundleBoxing" />
-          <AssociationSet Name="FK_BundleBoxing_Usuario" Association="AuditoriaModel.FK_BundleBoxing_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="BundleBoxing" EntitySet="BundleBoxing" />
-          </AssociationSet>
-          <EntitySet Name="Product" EntityType="AuditoriaModel.Product" />
-          <EntitySet Name="Family" EntityType="AuditoriaModel.Family" />
-          <EntitySet Name="Secuence" EntityType="AuditoriaModel.Secuence" />
-          <EntitySet Name="StichTypeCatalogue" EntityType="AuditoriaModel.StichTypeCatalogue" />
-          <EntitySet Name="NeedleType" EntityType="AuditoriaModel.NeedleType" />
-          <EntitySet Name="StichIncCatalogue" EntityType="AuditoriaModel.StichIncCatalogue" />
-          <EntitySet Name="TipoTela" EntityType="AuditoriaModel.TipoTela" />
-          <EntitySet Name="ClassOunce" EntityType="AuditoriaModel.ClassOunce" />
-          <EntitySet Name="Caliber" EntityType="AuditoriaModel.Caliber" />
-          <EntitySet Name="MachineData" EntityType="AuditoriaModel.MachineData" />
-          <EntitySet Name="FeedDog" EntityType="AuditoriaModel.FeedDog" />
-          <EntitySet Name="PresserFoot" EntityType="AuditoriaModel.PresserFoot" />
-          <EntitySet Name="Folder" EntityType="AuditoriaModel.Folder" />
-          <EntitySet Name="Manufacturing" EntityType="AuditoriaModel.Manufacturing" />
-          <EntitySet Name="RpmCatalogue" EntityType="AuditoriaModel.RpmCatalogue" />
-          <EntitySet Name="MethodAnalysis" EntityType="AuditoriaModel.MethodAnalysis" />
           <AssociationSet Name="FK_MethodAnalysis_MachineData" Association="AuditoriaModel.FK_MethodAnalysis_MachineData">
             <End Role="MachineData" EntitySet="MachineData" />
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
@@ -962,72 +916,54 @@
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
             <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
           </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="Usuario">
+          <EntitySet Name="POrder" EntityType="AuditoriaModel.POrder" />
+          <EntitySet Name="Style" EntityType="AuditoriaModel.Style" />
+          <AssociationSet Name="FK_POrder_Style" Association="AuditoriaModel.FK_POrder_Style">
+            <End Role="Style" EntitySet="Style" />
+            <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
+          <EntitySet Name="Bundle" EntityType="AuditoriaModel.Bundle" />
+          <AssociationSet Name="FK_Bundle_POrder" Association="AuditoriaModel.FK_Bundle_POrder">
+            <End Role="POrder" EntitySet="POrder" />
+            <End Role="Bundle" EntitySet="Bundle" />
+          </AssociationSet>
+          <EntitySet Name="Cliente" EntityType="AuditoriaModel.Cliente" />
+          <AssociationSet Name="FK_PlaningSwing_Cliente" Association="AuditoriaModel.FK_PlaningSwing_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="PlanningSwing" EntitySet="PlanningSwing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POrder_Cliente" Association="AuditoriaModel.FK_POrder_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BundleBoxing">
           <Key>
-            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdBundleBoxing" />
           </Key>
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Pass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CodBar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="BundleBoxing_Saco" Relationship="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" FromRole="Usuario" ToRole="BundleBoxing_Saco" />
-          <NavigationProperty Name="BundleBoxingEnvio" Relationship="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" FromRole="Usuario" ToRole="BundleBoxingEnvio" />
-          <NavigationProperty Name="BundleBoxing" Relationship="AuditoriaModel.FK_BundleBoxing_Usuario" FromRole="Usuario" ToRole="BundleBoxing" />
+          <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoMesa" Type="Int32" Nullable="false" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Talla" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Seccion" Type="Int32" Nullable="false" />
+          <Property Name="Bulto" Type="Int32" Nullable="false" />
+          <Property Name="Capaje" Type="Int32" Nullable="false" />
+          <Property Name="Yarda" Type="Int32" Nullable="false" />
+          <Property Name="IdSaco" Type="Int32" />
+          <Property Name="EnSaco" Type="Boolean" Nullable="false" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Oper" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="7" />
+          <Property Name="IdUsuarioTermina" Type="Int32" />
+          <Property Name="FechaTermina" Type="DateTime" Precision="7" />
+          <Property Name="Escaneado" Type="Boolean" Nullable="false" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxing_Usuario" FromRole="BundleBoxing" ToRole="Usuario" />
         </EntityType>
-        <EntityType Name="Style">
-          <Key>
-            <PropertyRef Name="Id_Style" />
-          </Key>
-          <Property Name="Id_Style" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Style1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="washed" Type="Boolean" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Id_Cliente" Type="Int32" />
-          <Property Name="idtipoTendido" Type="Int32" />
-          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="Style" ToRole="POrder" />
-        </EntityType>
-        <Association Name="FK_POrder_Style">
-          <End Type="AuditoriaModel.Style" Role="Style" Multiplicity="0..1" />
-          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Style">
-              <PropertyRef Name="Id_Style" />
-            </Principal>
-            <Dependent Role="POrder">
-              <PropertyRef Name="Id_Style" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Bundle">
-          <Key>
-            <PropertyRef Name="Id_Bundle" />
-          </Key>
-          <Property Name="Id_Bundle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Order" Type="Int32" />
-          <Property Name="NSeq" Type="Int32" />
-          <Property Name="Bld" Type="Int32" />
-          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Controlconcurrencia" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="Bundle" ToRole="POrder" />
-        </EntityType>
-        <Association Name="FK_Bundle_POrder">
-          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="0..1" />
-          <End Type="AuditoriaModel.Bundle" Role="Bundle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="POrder">
-              <PropertyRef Name="Id_Order" />
-            </Principal>
-            <Dependent Role="Bundle">
-              <PropertyRef Name="Id_Order" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="BundleBoxing_Saco">
           <Key>
             <PropertyRef Name="IdSaco" />
@@ -1047,6 +983,26 @@
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" FromRole="BundleBoxing_Saco" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="BundleBoxingEnvio">
+          <Key>
+            <PropertyRef Name="IdEnvio" />
+          </Key>
+          <Property Name="IdEnvio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="IdSaco" Type="Int32" />
+          <Property Name="Saco" Type="Int32" Nullable="false" />
+          <Property Name="Bulto" Type="Int32" Nullable="false" />
+          <Property Name="Yarda" Type="Int32" Nullable="false" />
+          <Property Name="Polin" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioInactiva" Type="Int32" />
+          <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" FromRole="BundleBoxingEnvio" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Material">
           <Key>
@@ -1068,73 +1024,13 @@
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Material" Relationship="AuditoriaModel.FK_Material_PresentacionSerial" FromRole="PresentacionSerial" ToRole="Material" />
         </EntityType>
-        <Association Name="FK_BundleBoxing_Saco_Usuario">
-          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="AuditoriaModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="BundleBoxing_Saco">
-              <PropertyRef Name="IdUsuarioCrea" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Material_PresentacionSerial">
-          <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
-          <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PresentacionSerial">
-              <PropertyRef Name="IdPresentacionSerial" />
-            </Principal>
-            <Dependent Role="Material">
-              <PropertyRef Name="IdPresentacionSerial" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="BundleBoxingEnvio">
+        <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="IdEnvio" />
+            <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="IdEnvio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="IdSaco" Type="Int32" />
-          <Property Name="Saco" Type="Int32" Nullable="false" />
-          <Property Name="Bulto" Type="Int32" Nullable="false" />
-          <Property Name="Yarda" Type="Int32" Nullable="false" />
-          <Property Name="Polin" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="IdUsuarioInactiva" Type="Int32" />
-          <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" FromRole="BundleBoxingEnvio" ToRole="Usuario" />
-        </EntityType>
-        <Association Name="FK_BundleBoxingEnvio_Usuario">
-          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="AuditoriaModel.BundleBoxingEnvio" Role="BundleBoxingEnvio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="BundleBoxingEnvio">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="UsuarioPerfil">
-          <Key>
-            <PropertyRef Name="IdUsuarioPerfil" />
-          </Key>
-          <Property Name="IdUsuarioPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="Esquema" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="NombreEsquema" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Link" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NombreLink" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SerialComplemento">
           <Key>
@@ -1157,195 +1053,6 @@
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="IdUsuarioInactiva" Type="Int32" />
           <Property Name="FechaInactivo" Type="DateTime" Precision="7" />
-        </EntityType>
-        <EntityType Name="Cliente">
-          <Key>
-            <PropertyRef Name="Id_Cliente" />
-          </Key>
-          <Property Name="Id_Cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Cliente1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Estado" Type="Boolean" />
-          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="Cliente" ToRole="POrder" />
-          <NavigationProperty Name="PlanningSwing" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="Cliente" ToRole="PlanningSwing" />
-        </EntityType>
-        <Association Name="FK_POrder_Cliente">
-          <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="0..1" />
-          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="Id_Cliente" />
-            </Principal>
-            <Dependent Role="POrder">
-              <PropertyRef Name="Id_Cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CodigoGSD">
-          <Key>
-            <PropertyRef Name="IdCodGSD" />
-          </Key>
-          <Property Name="IdCodGSD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CodigoGSD1" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-        </EntityType>
-        <EntityType Name="FactorCorte">
-          <Key>
-            <PropertyRef Name="IdFactorCorte" />
-          </Key>
-          <Property Name="IdFactorCorte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Linearecta" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <Property Name="Curva" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <Property Name="Esquinas" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <Property Name="Piquetes" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <Property Name="HacerOrificio" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <Property Name="PonerTape" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <NavigationProperty Name="FactorDetalleCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorCorte" ToRole="FactorDetalleCorte" />
-        </EntityType>
-        <EntityType Name="FactorDetalleCorte">
-          <Key>
-            <PropertyRef Name="IdFactorDetalleCorte" />
-          </Key>
-          <Property Name="IdFactorDetalleCorte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdFactorCorte" Type="Int32" Nullable="false" />
-          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Componente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LayLimits" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TotalPieces" Type="Int32" Nullable="false" />
-          <Property Name="StraightPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="CurvedPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="TotalPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="TotalNotches" Type="Int32" Nullable="false" />
-          <Property Name="TotalCorners" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="FactorCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorDetalleCorte" ToRole="FactorCorte" />
-        </EntityType>
-        <EntityType Name="FactorTendido">
-          <Key>
-            <PropertyRef Name="IdFactor" />
-          </Key>
-          <Property Name="IdFactor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" />
-          <Property Name="NoFactor" Type="Int32" Nullable="false" />
-          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <NavigationProperty Name="ProcesosTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="FactorTendido" ToRole="ProcesosTendido" />
-        </EntityType>
-        <EntityType Name="FoleoDatos">
-          <Key>
-            <PropertyRef Name="IdFoleoDato" />
-          </Key>
-          <Property Name="IdFoleoDato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Pieza_grande" Type="Int32" Nullable="false" />
-          <Property Name="Pieza_pequena" Type="Int32" Nullable="false" />
-          <Property Name="Shell" Type="Int32" Nullable="false" />
-          <Property Name="Pieza_doble" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FoleoFactor">
-          <Key>
-            <PropertyRef Name="IdProcesoFoleoDet" />
-          </Key>
-          <Property Name="IdProcesoFoleoDet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProcesoFoleo" Type="Int32" Nullable="false" />
-          <Property Name="NoFactor" Type="Int32" Nullable="false" />
-          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
-          <NavigationProperty Name="FoleoProceso" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoFactor" ToRole="FoleoProceso" />
-        </EntityType>
-        <EntityType Name="FoleoProceso">
-          <Key>
-            <PropertyRef Name="IdProcesoFoleo" />
-          </Key>
-          <Property Name="IdProcesoFoleo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="Proceso" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NoFactor" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="FoleoFactor" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoProceso" ToRole="FoleoFactor" />
-        </EntityType>
-        <EntityType Name="Partes">
-          <Key>
-            <PropertyRef Name="IdParte" />
-          </Key>
-          <Property Name="IdParte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Sewing">
-          <Key>
-            <PropertyRef Name="IdSewing" />
-          </Key>
-          <Property Name="IdSewing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Level" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
-        </EntityType>
-        <EntityType Name="SewingAccuracy">
-          <Key>
-            <PropertyRef Name="IdSewingAccuracy" />
-          </Key>
-          <Property Name="IdSewingAccuracy" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Level" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
-        </EntityType>
-        <Association Name="FK_FactorDetalleCorte_FactorCorte">
-          <End Type="AuditoriaModel.FactorCorte" Role="FactorCorte" Multiplicity="1" />
-          <End Type="AuditoriaModel.FactorDetalleCorte" Role="FactorDetalleCorte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FactorCorte">
-              <PropertyRef Name="IdFactorCorte" />
-            </Principal>
-            <Dependent Role="FactorDetalleCorte">
-              <PropertyRef Name="IdFactorCorte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FoleoFactor_FoleoProceso">
-          <End Type="AuditoriaModel.FoleoProceso" Role="FoleoProceso" Multiplicity="1" />
-          <End Type="AuditoriaModel.FoleoFactor" Role="FoleoFactor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FoleoProceso">
-              <PropertyRef Name="IdProcesoFoleo" />
-            </Principal>
-            <Dependent Role="FoleoFactor">
-              <PropertyRef Name="IdProcesoFoleo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ProcesosTendido">
-          <Key>
-            <PropertyRef Name="IdProcesoTendido" />
-          </Key>
-          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NoFactor" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="FactorTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="ProcesosTendido" ToRole="FactorTendido" />
-        </EntityType>
-        <Association Name="FK_FactorTendido_ProcesosTendido">
-          <End Type="AuditoriaModel.ProcesosTendido" Role="ProcesosTendido" Multiplicity="1" />
-          <End Type="AuditoriaModel.FactorTendido" Role="FactorTendido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcesosTendido">
-              <PropertyRef Name="IdProcesoTendido" />
-            </Principal>
-            <Dependent Role="FactorTendido">
-              <PropertyRef Name="IdProcesoTendido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="MethodAnalysisDetalle">
-          <Key>
-            <PropertyRef Name="IdDetMethodAnalysis" />
-          </Key>
-          <Property Name="IdDetMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" />
-          <Property Name="Codigo1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Codigo2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Codigo3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Codigo4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Freq" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="Sec" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysisDetalle" ToRole="MethodAnalysis" />
         </EntityType>
         <EntityType Name="Linea">
           <Key>
@@ -1400,115 +1107,14 @@
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Cliente" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="PlanningSwing" ToRole="Cliente" />
         </EntityType>
-        <Association Name="FK_PlaningSwing_Cliente">
-          <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="AuditoriaModel.PlanningSwing" Role="PlanningSwing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="Id_Cliente" />
-            </Principal>
-            <Dependent Role="PlanningSwing">
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="BundleBoxing">
+        <EntityType Name="Caliber">
           <Key>
-            <PropertyRef Name="IdBundleBoxing" />
+            <PropertyRef Name="IdCaliber" />
           </Key>
-          <Property Name="IdBundleBoxing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NoMesa" Type="Int32" Nullable="false" />
-          <Property Name="Serial" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Talla" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Seccion" Type="Int32" Nullable="false" />
-          <Property Name="Bulto" Type="Int32" Nullable="false" />
-          <Property Name="Capaje" Type="Int32" Nullable="false" />
-          <Property Name="Yarda" Type="Int32" Nullable="false" />
-          <Property Name="IdSaco" Type="Int32" />
-          <Property Name="EnSaco" Type="Boolean" Nullable="false" />
-          <Property Name="Corte" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CorteCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Oper" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdUsuario" Type="Int32" />
-          <Property Name="FechaRegistro" Type="DateTime" Precision="7" />
-          <Property Name="IdUsuarioTermina" Type="Int32" />
-          <Property Name="FechaTermina" Type="DateTime" Precision="7" />
-          <Property Name="Escaneado" Type="Boolean" Nullable="false" />
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Usuario" Relationship="AuditoriaModel.FK_BundleBoxing_Usuario" FromRole="BundleBoxing" ToRole="Usuario" />
-        </EntityType>
-        <Association Name="FK_BundleBoxing_Usuario">
-          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="0..1" />
-          <End Type="AuditoriaModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="BundleBoxing">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdCaliber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Caliber1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Family">
-          <Key>
-            <PropertyRef Name="IdFamily" />
-          </Key>
-          <Property Name="IdFamily" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Components" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Product" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Secuence">
-          <Key>
-            <PropertyRef Name="IdSecuence" />
-          </Key>
-          <Property Name="IdSecuence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Secuence1" Type="Int32" Nullable="false" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="StichTypeCatalogue">
-          <Key>
-            <PropertyRef Name="IdStitchType" />
-          </Key>
-          <Property Name="IdStitchType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeStitch" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="NeedleType">
-          <Key>
-            <PropertyRef Name="IdNeedle" />
-          </Key>
-          <Property Name="IdNeedle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NeedleType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="StichIncCatalogue">
-          <Key>
-            <PropertyRef Name="IdStitchInch" />
-          </Key>
-          <Property Name="IdStitchInch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StitchInch" Type="Int32" Nullable="false" />
-          <Property Name="Categorie" Type="Int32" Nullable="false" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TipoTela">
-          <Key>
-            <PropertyRef Name="IdTela" />
-          </Key>
-          <Property Name="IdTela" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="TipoTela" ToRole="MethodAnalysis" />
         </EntityType>
         <EntityType Name="ClassOunce">
           <Key>
@@ -1519,14 +1125,116 @@
           <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Caliber">
+        <EntityType Name="CodigoGSD">
           <Key>
-            <PropertyRef Name="IdCaliber" />
+            <PropertyRef Name="IdCodGSD" />
           </Key>
-          <Property Name="IdCaliber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Caliber1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdCodGSD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoGSD1" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+        </EntityType>
+        <EntityType Name="FactorCorte">
+          <Key>
+            <PropertyRef Name="IdFactorCorte" />
+          </Key>
+          <Property Name="IdFactorCorte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Linearecta" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Curva" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Esquinas" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="Piquetes" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="HacerOrificio" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <Property Name="PonerTape" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="FactorDetalleCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorCorte" ToRole="FactorDetalleCorte" />
+        </EntityType>
+        <EntityType Name="FactorDetalleCorte">
+          <Key>
+            <PropertyRef Name="IdFactorDetalleCorte" />
+          </Key>
+          <Property Name="IdFactorDetalleCorte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFactorCorte" Type="Int32" Nullable="false" />
+          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Componente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LayLimits" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPieces" Type="Int32" Nullable="false" />
+          <Property Name="StraightPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CurvedPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TotalPerimeter" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TotalNotches" Type="Int32" Nullable="false" />
+          <Property Name="TotalCorners" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FactorCorte" Relationship="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" FromRole="FactorDetalleCorte" ToRole="FactorCorte" />
+        </EntityType>
+        <EntityType Name="FactorTendido">
+          <Key>
+            <PropertyRef Name="IdFactor" />
+          </Key>
+          <Property Name="IdFactor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="ProcesosTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="FactorTendido" ToRole="ProcesosTendido" />
+        </EntityType>
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="IdFamily" />
+          </Key>
+          <Property Name="IdFamily" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Components" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FeedDog">
+          <Key>
+            <PropertyRef Name="IdFeedDog" />
+          </Key>
+          <Property Name="IdFeedDog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Part" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MachineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceBrand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceModel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Folder">
+          <Key>
+            <PropertyRef Name="IdFolder" />
+          </Key>
+          <Property Name="IdFolder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Part" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Operation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FoleoDatos">
+          <Key>
+            <PropertyRef Name="IdFoleoDato" />
+          </Key>
+          <Property Name="IdFoleoDato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estilo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pieza_grande" Type="Int32" Nullable="false" />
+          <Property Name="Pieza_pequena" Type="Int32" Nullable="false" />
+          <Property Name="Shell" Type="Int32" Nullable="false" />
+          <Property Name="Pieza_doble" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoleoFactor">
+          <Key>
+            <PropertyRef Name="IdProcesoFoleoDet" />
+          </Key>
+          <Property Name="IdProcesoFoleoDet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesoFoleo" Type="Int32" Nullable="false" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <Property Name="ValorFactor" Type="Decimal" Nullable="false" Precision="18" Scale="10" />
+          <NavigationProperty Name="FoleoProceso" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoFactor" ToRole="FoleoProceso" />
+        </EntityType>
+        <EntityType Name="FoleoProceso">
+          <Key>
+            <PropertyRef Name="IdProcesoFoleo" />
+          </Key>
+          <Property Name="IdProcesoFoleo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Proceso" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FoleoFactor" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoProceso" ToRole="FoleoFactor" />
         </EntityType>
         <EntityType Name="MachineData">
           <Key>
@@ -1543,39 +1251,6 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MachineData" ToRole="MethodAnalysis" />
         </EntityType>
-        <EntityType Name="FeedDog">
-          <Key>
-            <PropertyRef Name="IdFeedDog" />
-          </Key>
-          <Property Name="IdFeedDog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Part" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="MachineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceBrand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceModel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="PresserFoot">
-          <Key>
-            <PropertyRef Name="IdPresserFoot" />
-          </Key>
-          <Property Name="IdPresserFoot" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Part" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="MachineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceBrand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceModel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Folder">
-          <Key>
-            <PropertyRef Name="IdFolder" />
-          </Key>
-          <Property Name="IdFolder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Part" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Operation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Manufacturing">
           <Key>
             <PropertyRef Name="IdManufacturing" />
@@ -1583,14 +1258,6 @@
           <Property Name="IdManufacturing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="RpmCatalogue">
-          <Key>
-            <PropertyRef Name="IdRpm" />
-          </Key>
-          <Property Name="IdRpm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rpm" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MethodAnalysis">
           <Key>
@@ -1657,6 +1324,229 @@
           <NavigationProperty Name="TipoTela" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="MethodAnalysis" ToRole="TipoTela" />
           <NavigationProperty Name="MethodAnalysisDetalle" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysis" ToRole="MethodAnalysisDetalle" />
         </EntityType>
+        <EntityType Name="MethodAnalysisDetalle">
+          <Key>
+            <PropertyRef Name="IdDetMethodAnalysis" />
+          </Key>
+          <Property Name="IdDetMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" />
+          <Property Name="Codigo1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Freq" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="Tmus" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="Sec" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysisDetalle" ToRole="MethodAnalysis" />
+        </EntityType>
+        <EntityType Name="NeedleType">
+          <Key>
+            <PropertyRef Name="IdNeedle" />
+          </Key>
+          <Property Name="IdNeedle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NeedleType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Partes">
+          <Key>
+            <PropertyRef Name="IdParte" />
+          </Key>
+          <Property Name="IdParte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PresserFoot">
+          <Key>
+            <PropertyRef Name="IdPresserFoot" />
+          </Key>
+          <Property Name="IdPresserFoot" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Part" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MachineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceBrand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceModel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProcesosTendido">
+          <Key>
+            <PropertyRef Name="IdProcesoTendido" />
+          </Key>
+          <Property Name="IdProcesoTendido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoFactor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FactorTendido" Relationship="AuditoriaModel.FK_FactorTendido_ProcesosTendido" FromRole="ProcesosTendido" ToRole="FactorTendido" />
+        </EntityType>
+        <EntityType Name="RpmCatalogue">
+          <Key>
+            <PropertyRef Name="IdRpm" />
+          </Key>
+          <Property Name="IdRpm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rpm" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Secuence">
+          <Key>
+            <PropertyRef Name="IdSecuence" />
+          </Key>
+          <Property Name="IdSecuence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Secuence1" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Sewing">
+          <Key>
+            <PropertyRef Name="IdSewing" />
+          </Key>
+          <Property Name="IdSewing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
+        </EntityType>
+        <EntityType Name="SewingAccuracy">
+          <Key>
+            <PropertyRef Name="IdSewingAccuracy" />
+          </Key>
+          <Property Name="IdSewingAccuracy" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Factor" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
+        </EntityType>
+        <EntityType Name="StichIncCatalogue">
+          <Key>
+            <PropertyRef Name="IdStitchInch" />
+          </Key>
+          <Property Name="IdStitchInch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StitchInch" Type="Int32" Nullable="false" />
+          <Property Name="Categorie" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StichTypeCatalogue">
+          <Key>
+            <PropertyRef Name="IdStitchType" />
+          </Key>
+          <Property Name="IdStitchType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeStitch" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TipoTela">
+          <Key>
+            <PropertyRef Name="IdTela" />
+          </Key>
+          <Property Name="IdTela" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="TipoTela" ToRole="MethodAnalysis" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CodBar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BundleBoxing" Relationship="AuditoriaModel.FK_BundleBoxing_Usuario" FromRole="Usuario" ToRole="BundleBoxing" />
+          <NavigationProperty Name="BundleBoxing_Saco" Relationship="AuditoriaModel.FK_BundleBoxing_Saco_Usuario" FromRole="Usuario" ToRole="BundleBoxing_Saco" />
+          <NavigationProperty Name="BundleBoxingEnvio" Relationship="AuditoriaModel.FK_BundleBoxingEnvio_Usuario" FromRole="Usuario" ToRole="BundleBoxingEnvio" />
+        </EntityType>
+        <EntityType Name="UsuarioPerfil">
+          <Key>
+            <PropertyRef Name="IdUsuarioPerfil" />
+          </Key>
+          <Property Name="IdUsuarioPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Esquema" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NombreEsquema" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NombreLink" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BundleBoxing_Usuario">
+          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.BundleBoxing" Role="BundleBoxing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxing">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BundleBoxing_Saco_Usuario">
+          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AuditoriaModel.BundleBoxing_Saco" Role="BundleBoxing_Saco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxing_Saco">
+              <PropertyRef Name="IdUsuarioCrea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BundleBoxingEnvio_Usuario">
+          <End Type="AuditoriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AuditoriaModel.BundleBoxingEnvio" Role="BundleBoxingEnvio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="BundleBoxingEnvio">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_PresentacionSerial">
+          <End Type="AuditoriaModel.PresentacionSerial" Role="PresentacionSerial" Multiplicity="1" />
+          <End Type="AuditoriaModel.Material" Role="Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PresentacionSerial">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="IdPresentacionSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorDetalleCorte_FactorCorte">
+          <End Type="AuditoriaModel.FactorCorte" Role="FactorCorte" Multiplicity="1" />
+          <End Type="AuditoriaModel.FactorDetalleCorte" Role="FactorDetalleCorte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FactorCorte">
+              <PropertyRef Name="IdFactorCorte" />
+            </Principal>
+            <Dependent Role="FactorDetalleCorte">
+              <PropertyRef Name="IdFactorCorte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorTendido_ProcesosTendido">
+          <End Type="AuditoriaModel.ProcesosTendido" Role="ProcesosTendido" Multiplicity="1" />
+          <End Type="AuditoriaModel.FactorTendido" Role="FactorTendido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcesosTendido">
+              <PropertyRef Name="IdProcesoTendido" />
+            </Principal>
+            <Dependent Role="FactorTendido">
+              <PropertyRef Name="IdProcesoTendido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoleoFactor_FoleoProceso">
+          <End Type="AuditoriaModel.FoleoProceso" Role="FoleoProceso" Multiplicity="1" />
+          <End Type="AuditoriaModel.FoleoFactor" Role="FoleoFactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoleoProceso">
+              <PropertyRef Name="IdProcesoFoleo" />
+            </Principal>
+            <Dependent Role="FoleoFactor">
+              <PropertyRef Name="IdProcesoFoleo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MethodAnalysis_MachineData">
           <End Type="AuditoriaModel.MachineData" Role="MachineData" Multiplicity="1" />
           <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
@@ -1693,72 +1583,146 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="POrder">
+          <Key>
+            <PropertyRef Name="Id_Order" />
+          </Key>
+          <Property Name="Id_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Cliente" Type="Int32" />
+          <Property Name="Id_Style" Type="Int32" />
+          <Property Name="POrder1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Bundles" Type="Int32" />
+          <Property Name="Id_Planta" Type="Int32" />
+          <Property Name="Id_Linea" Type="Int32" />
+          <Property Name="Semana" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Linea2" Type="Int32" />
+          <Property Name="Describir" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AfterIntex" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="POrderClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="washed" Type="Boolean" />
+          <NavigationProperty Name="Style" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="POrder" ToRole="Style" />
+          <NavigationProperty Name="Bundle" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="POrder" ToRole="Bundle" />
+          <NavigationProperty Name="Cliente" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="POrder" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Style">
+          <Key>
+            <PropertyRef Name="Id_Style" />
+          </Key>
+          <Property Name="Id_Style" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Style1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="washed" Type="Boolean" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Id_Cliente" Type="Int32" />
+          <Property Name="idtipoTendido" Type="Int32" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Style" FromRole="Style" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_POrder_Style">
+          <End Type="AuditoriaModel.Style" Role="Style" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Style">
+              <PropertyRef Name="Id_Style" />
+            </Principal>
+            <Dependent Role="POrder">
+              <PropertyRef Name="Id_Style" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Bundle">
+          <Key>
+            <PropertyRef Name="Id_Bundle" />
+          </Key>
+          <Property Name="Id_Bundle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Order" Type="Int32" />
+          <Property Name="NSeq" Type="Int32" />
+          <Property Name="Bld" Type="Int32" />
+          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Controlconcurrencia" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_Bundle_POrder" FromRole="Bundle" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_Bundle_POrder">
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.Bundle" Role="Bundle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POrder">
+              <PropertyRef Name="Id_Order" />
+            </Principal>
+            <Dependent Role="Bundle">
+              <PropertyRef Name="Id_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id_Cliente" />
+          </Key>
+          <Property Name="Id_Cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="PlanningSwing" Relationship="AuditoriaModel.FK_PlaningSwing_Cliente" FromRole="Cliente" ToRole="PlanningSwing" />
+          <NavigationProperty Name="POrder" Relationship="AuditoriaModel.FK_POrder_Cliente" FromRole="Cliente" ToRole="POrder" />
+        </EntityType>
+        <Association Name="FK_PlaningSwing_Cliente">
+          <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="AuditoriaModel.PlanningSwing" Role="PlanningSwing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id_Cliente" />
+            </Principal>
+            <Dependent Role="PlanningSwing">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POrder_Cliente">
+          <End Type="AuditoriaModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AuditoriaModel.POrder" Role="POrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id_Cliente" />
+            </Principal>
+            <Dependent Role="POrder">
+              <PropertyRef Name="Id_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AuditoriaModelStoreContainer" CdmEntityContainer="AuditoriaEntities">
-          <EntitySetMapping Name="POrder">
-            <EntityTypeMapping TypeName="AuditoriaModel.POrder">
-              <MappingFragment StoreEntitySet="POrder">
-                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
-                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
-                <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
-                <ScalarProperty Name="POrder1" ColumnName="POrder" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Bundles" ColumnName="Bundles" />
-                <ScalarProperty Name="Id_Planta" ColumnName="Id_Planta" />
-                <ScalarProperty Name="Id_Linea" ColumnName="Id_Linea" />
-                <ScalarProperty Name="Semana" ColumnName="Semana" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Id_Linea2" ColumnName="Id_Linea2" />
-                <ScalarProperty Name="Describir" ColumnName="Describir" />
-                <ScalarProperty Name="AfterIntex" ColumnName="AfterIntex" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="POrderClient" ColumnName="POrderClient" />
-                <ScalarProperty Name="washed" ColumnName="washed" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="AuditoriaModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="CodBar" ColumnName="CodBar" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Pass" ColumnName="Pass" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
+          <EntitySetMapping Name="BundleBoxing">
+            <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing">
+              <MappingFragment StoreEntitySet="BundleBoxing">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Escaneado" ColumnName="Escaneado" />
+                <ScalarProperty Name="FechaTermina" ColumnName="FechaTermina" />
+                <ScalarProperty Name="IdUsuarioTermina" ColumnName="IdUsuarioTermina" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Style">
-            <EntityTypeMapping TypeName="AuditoriaModel.Style">
-              <MappingFragment StoreEntitySet="Style">
-                <ScalarProperty Name="idtipoTendido" ColumnName="idtipoTendido" />
-                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="washed" ColumnName="washed" />
-                <ScalarProperty Name="Style1" ColumnName="Style" />
-                <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Bundle">
-            <EntityTypeMapping TypeName="AuditoriaModel.Bundle">
-              <MappingFragment StoreEntitySet="Bundle">
-                <ScalarProperty Name="Controlconcurrencia" ColumnName="Controlconcurrencia" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="Bld" ColumnName="Bld" />
-                <ScalarProperty Name="NSeq" ColumnName="NSeq" />
-                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
-                <ScalarProperty Name="Id_Bundle" ColumnName="Id_Bundle" />
+                <ScalarProperty Name="Oper" ColumnName="Oper" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
+                <ScalarProperty Name="Corte" ColumnName="Corte" />
+                <ScalarProperty Name="EnSaco" ColumnName="EnSaco" />
+                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
+                <ScalarProperty Name="Yarda" ColumnName="Yarda" />
+                <ScalarProperty Name="Capaje" ColumnName="Capaje" />
+                <ScalarProperty Name="Bulto" ColumnName="Bulto" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="Talla" ColumnName="Talla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
+                <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1782,26 +1746,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Material">
-            <EntityTypeMapping TypeName="AuditoriaModel.Material">
-              <MappingFragment StoreEntitySet="Material">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
-                <ScalarProperty Name="Material1" ColumnName="Material" />
-                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PresentacionSerial">
-            <EntityTypeMapping TypeName="AuditoriaModel.PresentacionSerial">
-              <MappingFragment StoreEntitySet="PresentacionSerial">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="EsUnidad" ColumnName="EsUnidad" />
-                <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
-                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BundleBoxingEnvio">
             <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxingEnvio">
               <MappingFragment StoreEntitySet="BundleBoxingEnvio">
@@ -1822,16 +1766,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioPerfil">
-            <EntityTypeMapping TypeName="AuditoriaModel.UsuarioPerfil">
-              <MappingFragment StoreEntitySet="UsuarioPerfil">
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="AuditoriaModel.Material">
+              <MappingFragment StoreEntitySet="Material">
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="NombreLink" ColumnName="NombreLink" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="NombreEsquema" ColumnName="NombreEsquema" />
-                <ScalarProperty Name="Esquema" ColumnName="Esquema" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdUsuarioPerfil" ColumnName="IdUsuarioPerfil" />
+                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
+                <ScalarProperty Name="Material1" ColumnName="Material" />
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PresentacionSerial">
+            <EntityTypeMapping TypeName="AuditoriaModel.PresentacionSerial">
+              <MappingFragment StoreEntitySet="PresentacionSerial">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="EsUnidad" ColumnName="EsUnidad" />
+                <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
+                <ScalarProperty Name="IdPresentacionSerial" ColumnName="IdPresentacionSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="AuditoriaModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1855,151 +1815,6 @@
                 <ScalarProperty Name="Pieza" ColumnName="Pieza" />
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
                 <ScalarProperty Name="IdSerialComplemento" ColumnName="IdSerialComplemento" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cliente">
-            <EntityTypeMapping TypeName="AuditoriaModel.Cliente">
-              <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Cliente1" ColumnName="Cliente" />
-                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CodigoGSD">
-            <EntityTypeMapping TypeName="AuditoriaModel.CodigoGSD">
-              <MappingFragment StoreEntitySet="CodigoGSD">
-                <ScalarProperty Name="Tmus" ColumnName="Tmus" />
-                <ScalarProperty Name="CodigoGSD1" ColumnName="CodigoGSD" />
-                <ScalarProperty Name="IdCodGSD" ColumnName="IdCodGSD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FactorCorte">
-            <EntityTypeMapping TypeName="AuditoriaModel.FactorCorte">
-              <MappingFragment StoreEntitySet="FactorCorte">
-                <ScalarProperty Name="PonerTape" ColumnName="PonerTape" />
-                <ScalarProperty Name="HacerOrificio" ColumnName="HacerOrificio" />
-                <ScalarProperty Name="Piquetes" ColumnName="Piquetes" />
-                <ScalarProperty Name="Esquinas" ColumnName="Esquinas" />
-                <ScalarProperty Name="Curva" ColumnName="Curva" />
-                <ScalarProperty Name="Linearecta" ColumnName="Linearecta" />
-                <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FactorDetalleCorte">
-            <EntityTypeMapping TypeName="AuditoriaModel.FactorDetalleCorte">
-              <MappingFragment StoreEntitySet="FactorDetalleCorte">
-                <ScalarProperty Name="TotalCorners" ColumnName="TotalCorners" />
-                <ScalarProperty Name="TotalNotches" ColumnName="TotalNotches" />
-                <ScalarProperty Name="TotalPerimeter" ColumnName="TotalPerimeter" />
-                <ScalarProperty Name="CurvedPerimeter" ColumnName="CurvedPerimeter" />
-                <ScalarProperty Name="StraightPerimeter" ColumnName="StraightPerimeter" />
-                <ScalarProperty Name="TotalPieces" ColumnName="TotalPieces" />
-                <ScalarProperty Name="LayLimits" ColumnName="LayLimits" />
-                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
-                <ScalarProperty Name="Componente" ColumnName="Componente" />
-                <ScalarProperty Name="Item" ColumnName="Item" />
-                <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
-                <ScalarProperty Name="IdFactorDetalleCorte" ColumnName="IdFactorDetalleCorte" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FactorTendido">
-            <EntityTypeMapping TypeName="AuditoriaModel.FactorTendido">
-              <MappingFragment StoreEntitySet="FactorTendido">
-                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
-                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
-                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
-                <ScalarProperty Name="IdFactor" ColumnName="IdFactor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FoleoDatos">
-            <EntityTypeMapping TypeName="AuditoriaModel.FoleoDatos">
-              <MappingFragment StoreEntitySet="FoleoDatos">
-                <ScalarProperty Name="Pieza_doble" ColumnName="Pieza_doble" />
-                <ScalarProperty Name="Shell" ColumnName="Shell" />
-                <ScalarProperty Name="Pieza_pequena" ColumnName="Pieza_pequena" />
-                <ScalarProperty Name="Pieza_grande" ColumnName="Pieza_grande" />
-                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
-                <ScalarProperty Name="IdFoleoDato" ColumnName="IdFoleoDato" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FoleoFactor">
-            <EntityTypeMapping TypeName="AuditoriaModel.FoleoFactor">
-              <MappingFragment StoreEntitySet="FoleoFactor">
-                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
-                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
-                <ScalarProperty Name="IdProcesoFoleo" ColumnName="IdProcesoFoleo" />
-                <ScalarProperty Name="IdProcesoFoleoDet" ColumnName="IdProcesoFoleoDet" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FoleoProceso">
-            <EntityTypeMapping TypeName="AuditoriaModel.FoleoProceso">
-              <MappingFragment StoreEntitySet="FoleoProceso">
-                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
-                <ScalarProperty Name="Proceso" ColumnName="Proceso" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="IdProcesoFoleo" ColumnName="IdProcesoFoleo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Partes">
-            <EntityTypeMapping TypeName="AuditoriaModel.Partes">
-              <MappingFragment StoreEntitySet="Partes">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdParte" ColumnName="IdParte" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sewing">
-            <EntityTypeMapping TypeName="AuditoriaModel.Sewing">
-              <MappingFragment StoreEntitySet="Sewing">
-                <ScalarProperty Name="Factor" ColumnName="Factor" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="IdSewing" ColumnName="IdSewing" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SewingAccuracy">
-            <EntityTypeMapping TypeName="AuditoriaModel.SewingAccuracy">
-              <MappingFragment StoreEntitySet="SewingAccuracy">
-                <ScalarProperty Name="Factor" ColumnName="Factor" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="IdSewingAccuracy" ColumnName="IdSewingAccuracy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcesosTendido">
-            <EntityTypeMapping TypeName="AuditoriaModel.ProcesosTendido">
-              <MappingFragment StoreEntitySet="ProcesosTendido">
-                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MethodAnalysisDetalle">
-            <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysisDetalle">
-              <MappingFragment StoreEntitySet="MethodAnalysisDetalle">
-                <ScalarProperty Name="Sam" ColumnName="Sam" />
-                <ScalarProperty Name="Sec" ColumnName="Sec" />
-                <ScalarProperty Name="Tmus" ColumnName="Tmus" />
-                <ScalarProperty Name="Freq" ColumnName="Freq" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Codigo4" ColumnName="Codigo4" />
-                <ScalarProperty Name="Codigo3" ColumnName="Codigo3" />
-                <ScalarProperty Name="Codigo2" ColumnName="Codigo2" />
-                <ScalarProperty Name="Codigo1" ColumnName="Codigo1" />
-                <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
-                <ScalarProperty Name="IdDetMethodAnalysis" ColumnName="IdDetMethodAnalysis" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2057,95 +1872,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BundleBoxing">
-            <EntityTypeMapping TypeName="AuditoriaModel.BundleBoxing">
-              <MappingFragment StoreEntitySet="BundleBoxing">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Escaneado" ColumnName="Escaneado" />
-                <ScalarProperty Name="FechaTermina" ColumnName="FechaTermina" />
-                <ScalarProperty Name="IdUsuarioTermina" ColumnName="IdUsuarioTermina" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Oper" ColumnName="Oper" />
-                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
-                <ScalarProperty Name="CorteCompleto" ColumnName="CorteCompleto" />
-                <ScalarProperty Name="Corte" ColumnName="Corte" />
-                <ScalarProperty Name="EnSaco" ColumnName="EnSaco" />
-                <ScalarProperty Name="IdSaco" ColumnName="IdSaco" />
-                <ScalarProperty Name="Yarda" ColumnName="Yarda" />
-                <ScalarProperty Name="Capaje" ColumnName="Capaje" />
-                <ScalarProperty Name="Bulto" ColumnName="Bulto" />
-                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
-                <ScalarProperty Name="Talla" ColumnName="Talla" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Serial" ColumnName="Serial" />
-                <ScalarProperty Name="NoMesa" ColumnName="NoMesa" />
-                <ScalarProperty Name="IdBundleBoxing" ColumnName="IdBundleBoxing" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="AuditoriaModel.Product">
-              <MappingFragment StoreEntitySet="Product">
+          <EntitySetMapping Name="Caliber">
+            <EntityTypeMapping TypeName="AuditoriaModel.Caliber">
+              <MappingFragment StoreEntitySet="Caliber">
                 <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Family">
-            <EntityTypeMapping TypeName="AuditoriaModel.Family">
-              <MappingFragment StoreEntitySet="Family">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Product" ColumnName="Product" />
-                <ScalarProperty Name="Components" ColumnName="Components" />
-                <ScalarProperty Name="IdFamily" ColumnName="IdFamily" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Secuence">
-            <EntityTypeMapping TypeName="AuditoriaModel.Secuence">
-              <MappingFragment StoreEntitySet="Secuence">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Secuence1" ColumnName="Secuence" />
-                <ScalarProperty Name="IdSecuence" ColumnName="IdSecuence" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StichTypeCatalogue">
-            <EntityTypeMapping TypeName="AuditoriaModel.StichTypeCatalogue">
-              <MappingFragment StoreEntitySet="StichTypeCatalogue">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="TypeStitch" ColumnName="TypeStitch" />
-                <ScalarProperty Name="IdStitchType" ColumnName="IdStitchType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NeedleType">
-            <EntityTypeMapping TypeName="AuditoriaModel.NeedleType">
-              <MappingFragment StoreEntitySet="NeedleType">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="NeedleType1" ColumnName="NeedleType" />
-                <ScalarProperty Name="IdNeedle" ColumnName="IdNeedle" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StichIncCatalogue">
-            <EntityTypeMapping TypeName="AuditoriaModel.StichIncCatalogue">
-              <MappingFragment StoreEntitySet="StichIncCatalogue">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
-                <ScalarProperty Name="StitchInch" ColumnName="StitchInch" />
-                <ScalarProperty Name="IdStitchInch" ColumnName="IdStitchInch" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoTela">
-            <EntityTypeMapping TypeName="AuditoriaModel.TipoTela">
-              <MappingFragment StoreEntitySet="TipoTela">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdTela" ColumnName="IdTela" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Caliber1" ColumnName="Caliber" />
+                <ScalarProperty Name="IdCaliber" ColumnName="IdCaliber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2159,13 +1892,119 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Caliber">
-            <EntityTypeMapping TypeName="AuditoriaModel.Caliber">
-              <MappingFragment StoreEntitySet="Caliber">
+          <EntitySetMapping Name="CodigoGSD">
+            <EntityTypeMapping TypeName="AuditoriaModel.CodigoGSD">
+              <MappingFragment StoreEntitySet="CodigoGSD">
+                <ScalarProperty Name="Tmus" ColumnName="Tmus" />
+                <ScalarProperty Name="CodigoGSD1" ColumnName="CodigoGSD" />
+                <ScalarProperty Name="IdCodGSD" ColumnName="IdCodGSD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorCorte">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorCorte">
+              <MappingFragment StoreEntitySet="FactorCorte">
+                <ScalarProperty Name="PonerTape" ColumnName="PonerTape" />
+                <ScalarProperty Name="HacerOrificio" ColumnName="HacerOrificio" />
+                <ScalarProperty Name="Piquetes" ColumnName="Piquetes" />
+                <ScalarProperty Name="Esquinas" ColumnName="Esquinas" />
+                <ScalarProperty Name="Curva" ColumnName="Curva" />
+                <ScalarProperty Name="Linearecta" ColumnName="Linearecta" />
+                <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorDetalleCorte">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorDetalleCorte">
+              <MappingFragment StoreEntitySet="FactorDetalleCorte">
+                <ScalarProperty Name="TotalCorners" ColumnName="TotalCorners" />
+                <ScalarProperty Name="TotalNotches" ColumnName="TotalNotches" />
+                <ScalarProperty Name="TotalPerimeter" ColumnName="TotalPerimeter" />
+                <ScalarProperty Name="CurvedPerimeter" ColumnName="CurvedPerimeter" />
+                <ScalarProperty Name="StraightPerimeter" ColumnName="StraightPerimeter" />
+                <ScalarProperty Name="TotalPieces" ColumnName="TotalPieces" />
+                <ScalarProperty Name="LayLimits" ColumnName="LayLimits" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="Componente" ColumnName="Componente" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="IdFactorCorte" ColumnName="IdFactorCorte" />
+                <ScalarProperty Name="IdFactorDetalleCorte" ColumnName="IdFactorDetalleCorte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorTendido">
+            <EntityTypeMapping TypeName="AuditoriaModel.FactorTendido">
+              <MappingFragment StoreEntitySet="FactorTendido">
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
+                <ScalarProperty Name="IdFactor" ColumnName="IdFactor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Family">
+            <EntityTypeMapping TypeName="AuditoriaModel.Family">
+              <MappingFragment StoreEntitySet="Family">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="Components" ColumnName="Components" />
+                <ScalarProperty Name="IdFamily" ColumnName="IdFamily" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedDog">
+            <EntityTypeMapping TypeName="AuditoriaModel.FeedDog">
+              <MappingFragment StoreEntitySet="FeedDog">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Caliber1" ColumnName="Caliber" />
-                <ScalarProperty Name="IdCaliber" ColumnName="IdCaliber" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="ReferenceModel" ColumnName="ReferenceModel" />
+                <ScalarProperty Name="ReferenceBrand" ColumnName="ReferenceBrand" />
+                <ScalarProperty Name="MachineType" ColumnName="MachineType" />
+                <ScalarProperty Name="Part" ColumnName="Part" />
+                <ScalarProperty Name="IdFeedDog" ColumnName="IdFeedDog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Folder">
+            <EntityTypeMapping TypeName="AuditoriaModel.Folder">
+              <MappingFragment StoreEntitySet="Folder">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="Part" ColumnName="Part" />
+                <ScalarProperty Name="IdFolder" ColumnName="IdFolder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoleoDatos">
+            <EntityTypeMapping TypeName="AuditoriaModel.FoleoDatos">
+              <MappingFragment StoreEntitySet="FoleoDatos">
+                <ScalarProperty Name="Pieza_doble" ColumnName="Pieza_doble" />
+                <ScalarProperty Name="Shell" ColumnName="Shell" />
+                <ScalarProperty Name="Pieza_pequena" ColumnName="Pieza_pequena" />
+                <ScalarProperty Name="Pieza_grande" ColumnName="Pieza_grande" />
+                <ScalarProperty Name="Estilo" ColumnName="Estilo" />
+                <ScalarProperty Name="IdFoleoDato" ColumnName="IdFoleoDato" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoleoFactor">
+            <EntityTypeMapping TypeName="AuditoriaModel.FoleoFactor">
+              <MappingFragment StoreEntitySet="FoleoFactor">
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="IdProcesoFoleo" ColumnName="IdProcesoFoleo" />
+                <ScalarProperty Name="IdProcesoFoleoDet" ColumnName="IdProcesoFoleoDet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoleoProceso">
+            <EntityTypeMapping TypeName="AuditoriaModel.FoleoProceso">
+              <MappingFragment StoreEntitySet="FoleoProceso">
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="Proceso" ColumnName="Proceso" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdProcesoFoleo" ColumnName="IdProcesoFoleo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2184,57 +2023,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FeedDog">
-            <EntityTypeMapping TypeName="AuditoriaModel.FeedDog">
-              <MappingFragment StoreEntitySet="FeedDog">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="ReferenceModel" ColumnName="ReferenceModel" />
-                <ScalarProperty Name="ReferenceBrand" ColumnName="ReferenceBrand" />
-                <ScalarProperty Name="MachineType" ColumnName="MachineType" />
-                <ScalarProperty Name="Part" ColumnName="Part" />
-                <ScalarProperty Name="IdFeedDog" ColumnName="IdFeedDog" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PresserFoot">
-            <EntityTypeMapping TypeName="AuditoriaModel.PresserFoot">
-              <MappingFragment StoreEntitySet="PresserFoot">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ReferenceModel" ColumnName="ReferenceModel" />
-                <ScalarProperty Name="ReferenceBrand" ColumnName="ReferenceBrand" />
-                <ScalarProperty Name="MachineType" ColumnName="MachineType" />
-                <ScalarProperty Name="Part" ColumnName="Part" />
-                <ScalarProperty Name="IdPresserFoot" ColumnName="IdPresserFoot" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Folder">
-            <EntityTypeMapping TypeName="AuditoriaModel.Folder">
-              <MappingFragment StoreEntitySet="Folder">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Operation" ColumnName="Operation" />
-                <ScalarProperty Name="Part" ColumnName="Part" />
-                <ScalarProperty Name="IdFolder" ColumnName="IdFolder" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Manufacturing">
             <EntityTypeMapping TypeName="AuditoriaModel.Manufacturing">
               <MappingFragment StoreEntitySet="Manufacturing">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdManufacturing" ColumnName="IdManufacturing" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RpmCatalogue">
-            <EntityTypeMapping TypeName="AuditoriaModel.RpmCatalogue">
-              <MappingFragment StoreEntitySet="RpmCatalogue">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Rpm" ColumnName="Rpm" />
-                <ScalarProperty Name="IdRpm" ColumnName="IdRpm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2301,7 +2095,213 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="MethodAnalysisDetalle">
+            <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysisDetalle">
+              <MappingFragment StoreEntitySet="MethodAnalysisDetalle">
+                <ScalarProperty Name="Sam" ColumnName="Sam" />
+                <ScalarProperty Name="Sec" ColumnName="Sec" />
+                <ScalarProperty Name="Tmus" ColumnName="Tmus" />
+                <ScalarProperty Name="Freq" ColumnName="Freq" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo4" ColumnName="Codigo4" />
+                <ScalarProperty Name="Codigo3" ColumnName="Codigo3" />
+                <ScalarProperty Name="Codigo2" ColumnName="Codigo2" />
+                <ScalarProperty Name="Codigo1" ColumnName="Codigo1" />
+                <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
+                <ScalarProperty Name="IdDetMethodAnalysis" ColumnName="IdDetMethodAnalysis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NeedleType">
+            <EntityTypeMapping TypeName="AuditoriaModel.NeedleType">
+              <MappingFragment StoreEntitySet="NeedleType">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="NeedleType1" ColumnName="NeedleType" />
+                <ScalarProperty Name="IdNeedle" ColumnName="IdNeedle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partes">
+            <EntityTypeMapping TypeName="AuditoriaModel.Partes">
+              <MappingFragment StoreEntitySet="Partes">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdParte" ColumnName="IdParte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PresserFoot">
+            <EntityTypeMapping TypeName="AuditoriaModel.PresserFoot">
+              <MappingFragment StoreEntitySet="PresserFoot">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ReferenceModel" ColumnName="ReferenceModel" />
+                <ScalarProperty Name="ReferenceBrand" ColumnName="ReferenceBrand" />
+                <ScalarProperty Name="MachineType" ColumnName="MachineType" />
+                <ScalarProperty Name="Part" ColumnName="Part" />
+                <ScalarProperty Name="IdPresserFoot" ColumnName="IdPresserFoot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcesosTendido">
+            <EntityTypeMapping TypeName="AuditoriaModel.ProcesosTendido">
+              <MappingFragment StoreEntitySet="ProcesosTendido">
+                <ScalarProperty Name="NoFactor" ColumnName="NoFactor" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdProcesoTendido" ColumnName="IdProcesoTendido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RpmCatalogue">
+            <EntityTypeMapping TypeName="AuditoriaModel.RpmCatalogue">
+              <MappingFragment StoreEntitySet="RpmCatalogue">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Rpm" ColumnName="Rpm" />
+                <ScalarProperty Name="IdRpm" ColumnName="IdRpm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Secuence">
+            <EntityTypeMapping TypeName="AuditoriaModel.Secuence">
+              <MappingFragment StoreEntitySet="Secuence">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Secuence1" ColumnName="Secuence" />
+                <ScalarProperty Name="IdSecuence" ColumnName="IdSecuence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sewing">
+            <EntityTypeMapping TypeName="AuditoriaModel.Sewing">
+              <MappingFragment StoreEntitySet="Sewing">
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="IdSewing" ColumnName="IdSewing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SewingAccuracy">
+            <EntityTypeMapping TypeName="AuditoriaModel.SewingAccuracy">
+              <MappingFragment StoreEntitySet="SewingAccuracy">
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="IdSewingAccuracy" ColumnName="IdSewingAccuracy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StichIncCatalogue">
+            <EntityTypeMapping TypeName="AuditoriaModel.StichIncCatalogue">
+              <MappingFragment StoreEntitySet="StichIncCatalogue">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="StitchInch" ColumnName="StitchInch" />
+                <ScalarProperty Name="IdStitchInch" ColumnName="IdStitchInch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StichTypeCatalogue">
+            <EntityTypeMapping TypeName="AuditoriaModel.StichTypeCatalogue">
+              <MappingFragment StoreEntitySet="StichTypeCatalogue">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TypeStitch" ColumnName="TypeStitch" />
+                <ScalarProperty Name="IdStitchType" ColumnName="IdStitchType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoTela">
+            <EntityTypeMapping TypeName="AuditoriaModel.TipoTela">
+              <MappingFragment StoreEntitySet="TipoTela">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdTela" ColumnName="IdTela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="AuditoriaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="CodBar" ColumnName="CodBar" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioPerfil">
+            <EntityTypeMapping TypeName="AuditoriaModel.UsuarioPerfil">
+              <MappingFragment StoreEntitySet="UsuarioPerfil">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="NombreLink" ColumnName="NombreLink" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="NombreEsquema" ColumnName="NombreEsquema" />
+                <ScalarProperty Name="Esquema" ColumnName="Esquema" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioPerfil" ColumnName="IdUsuarioPerfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POrder">
+            <EntityTypeMapping TypeName="AuditoriaModel.POrder">
+              <MappingFragment StoreEntitySet="POrder">
+                <ScalarProperty Name="washed" ColumnName="washed" />
+                <ScalarProperty Name="POrderClient" ColumnName="POrderClient" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AfterIntex" ColumnName="AfterIntex" />
+                <ScalarProperty Name="Describir" ColumnName="Describir" />
+                <ScalarProperty Name="Id_Linea2" ColumnName="Id_Linea2" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Semana" ColumnName="Semana" />
+                <ScalarProperty Name="Id_Linea" ColumnName="Id_Linea" />
+                <ScalarProperty Name="Id_Planta" ColumnName="Id_Planta" />
+                <ScalarProperty Name="Bundles" ColumnName="Bundles" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="POrder1" ColumnName="POrder" />
+                <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Style">
+            <EntityTypeMapping TypeName="AuditoriaModel.Style">
+              <MappingFragment StoreEntitySet="Style">
+                <ScalarProperty Name="idtipoTendido" ColumnName="idtipoTendido" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="washed" ColumnName="washed" />
+                <ScalarProperty Name="Style1" ColumnName="Style" />
+                <ScalarProperty Name="Id_Style" ColumnName="Id_Style" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bundle">
+            <EntityTypeMapping TypeName="AuditoriaModel.Bundle">
+              <MappingFragment StoreEntitySet="Bundle">
+                <ScalarProperty Name="Controlconcurrencia" ColumnName="Controlconcurrencia" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Bld" ColumnName="Bld" />
+                <ScalarProperty Name="NSeq" ColumnName="NSeq" />
+                <ScalarProperty Name="Id_Order" ColumnName="Id_Order" />
+                <ScalarProperty Name="Id_Bundle" ColumnName="Id_Bundle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="AuditoriaModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Cliente1" ColumnName="Cliente" />
+                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -17,8 +17,8 @@ namespace RocedesAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
-            this.POrder = new HashSet<POrder>();
             this.PlanningSwing = new HashSet<PlanningSwing>();
+            this.POrder = new HashSet<POrder>();
         }
     
         public int Id_Cliente { get; set; }
@@ -26,8 +26,8 @@ namespace RocedesAPI.Models
         public Nullable<bool> Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<POrder> POrder { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlanningSwing> PlanningSwing { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<POrder> POrder { get; set; }
     }
 }
