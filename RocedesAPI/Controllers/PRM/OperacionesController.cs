@@ -27,7 +27,7 @@ namespace RocedesAPI.Controllers.INV
         public string GetAutoComplete(string valor, string evento)
         {
             string json = string.Empty;
-
+            if (valor == null) valor = string.Empty;
             try
             {
 
@@ -41,8 +41,8 @@ namespace RocedesAPI.Controllers.INV
                         case "Manufacturing":
 
                             var lst_lvl_1 = (from q in _Conexion.Manufacturing
-                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower())
-                                                           orderby q.Name, q.Name.Length
+                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Name)
+                                             orderby q.Name, q.Name.Length
                                                            select new
                                                            {
                                                                Id = q.IdManufacturing,
@@ -59,8 +59,8 @@ namespace RocedesAPI.Controllers.INV
                         case "Product":
 
                             var lst_lvl_2 = (from q in _Conexion.Product
-                                                        where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower())
-                                                        orderby q.Nombre, q.Nombre.Length
+                                                        where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Nombre)
+                                             orderby q.Nombre, q.Nombre.Length
                                                         select new
                                                         {
                                                             Id = q.IdProducto,
@@ -78,7 +78,7 @@ namespace RocedesAPI.Controllers.INV
                         case "Family":
 
                             var lst_lvl_3 = (from q in _Conexion.Family
-                                             where q.Components.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             where q.Components.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Components)
                                              orderby q.Components, q.Components.Length
                                              select new
                                              {
@@ -97,7 +97,7 @@ namespace RocedesAPI.Controllers.INV
                         case "Secuence":
 
                             var lst_lvl_4 = (from q in _Conexion.Secuence
-                                             where q.Secuence1.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             where q.Secuence1.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Secuence1.ToString())
                                              orderby q.Secuence1.ToString(), q.Secuence1.ToString().Length
                                              select new
                                              {
@@ -117,8 +117,8 @@ namespace RocedesAPI.Controllers.INV
                         case "MachineData":
 
                             var lst_lvl_5 = (from q in _Conexion.MachineData
-                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower())
-                                                           orderby q.Name, q.Name.Length
+                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Name)
+                                             orderby q.Name, q.Name.Length
                                                            select new
                                                            {
                                                                Id = q.IdDataMachine,
@@ -136,7 +136,7 @@ namespace RocedesAPI.Controllers.INV
                         case "StitchType":
 
                             var lst_lvl_6 = (from q in _Conexion.StichTypeCatalogue
-                                             where q.TypeStitch.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             where q.TypeStitch.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.TypeStitch)
                                              orderby q.TypeStitch, q.TypeStitch.Length
                                              select new
                                              {
@@ -157,7 +157,7 @@ namespace RocedesAPI.Controllers.INV
                         case "Needle":
 
                             var lst_lvl_7 = (from q in _Conexion.NeedleType
-                                             where q.NeedleType1.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             where q.NeedleType1.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.NeedleType1)
                                              orderby q.NeedleType1, q.NeedleType1.Length
                                              select new
                                              {
@@ -176,7 +176,7 @@ namespace RocedesAPI.Controllers.INV
                         case "Rpm":
 
                             var lst_lvl_8 = (from q in _Conexion.RpmCatalogue
-                                             where q.Rpm.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             where q.Rpm.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Rpm.ToString())
                                              orderby q.Rpm.ToString(), q.Rpm.ToString().Length
                                              select new
                                              {
@@ -195,7 +195,7 @@ namespace RocedesAPI.Controllers.INV
                         case "StitchInch":
 
                             var lst_lvl_9 = (from q in _Conexion.StichIncCatalogue
-                                             where q.StitchInch.ToString().ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                             where q.StitchInch.ToString().ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.StitchInch.ToString())
                                              orderby q.StitchInch.ToString(), q.StitchInch.ToString().Length
                                              select new
                                              {
@@ -217,8 +217,8 @@ namespace RocedesAPI.Controllers.INV
                         case "FabricType":
 
                             var lst_lvl_10 = (from q in _Conexion.TipoTela
-                                             where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower())
-                                             orderby q.Nombre, q.Nombre.Length
+                                             where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Nombre)
+                                              orderby q.Nombre, q.Nombre.Length
                                              select new
                                              {
                                                  Id = q.IdTela,
@@ -236,7 +236,7 @@ namespace RocedesAPI.Controllers.INV
                         case "FabricWeight":
 
                             var lst_lvl_11 = (from q in _Conexion.ClassOunce
-                                              where q.Ounce.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              where q.Ounce.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Ounce.ToString())
                                               orderby q.Ounce.ToString(), q.Ounce.ToString().Length
                                               select new
                                               {
@@ -256,7 +256,7 @@ namespace RocedesAPI.Controllers.INV
                         case "Caliber":
 
                             var lst_lvl_12 = (from q in _Conexion.Caliber
-                                              where q.Caliber1.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              where q.Caliber1.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Caliber1)
                                               orderby q.Caliber1, q.Caliber1.Length
                                               select new
                                               {
@@ -277,11 +277,11 @@ namespace RocedesAPI.Controllers.INV
                         case "FeedDog":
 
                             var lst_lvl_13 = (from q in _Conexion.FeedDog
-                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
                                               orderby q.Part, q.Part.Length
                                               select new
                                               {
-                                                  Id = q.Part,
+                                                  Id = q.IdFeedDog,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
                                                   Code = q.Code
@@ -296,11 +296,11 @@ namespace RocedesAPI.Controllers.INV
                         case "PresserFoot":
 
                             var lst_lvl_14 = (from q in _Conexion.PresserFoot
-                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
                                               orderby q.Part, q.Part.Length
                                               select new
                                               {
-                                                  Id = q.Part,
+                                                  Id = q.IdPresserFoot,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
                                                   Code = q.Code
@@ -316,11 +316,11 @@ namespace RocedesAPI.Controllers.INV
                         case "Folder":
 
                             var lst_lvl_15 = (from q in _Conexion.Folder
-                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower())
+                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
                                               orderby q.Part, q.Part.Length
                                               select new
                                               {
-                                                  Id = q.Part,
+                                                  Id = q.IdFolder,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
                                                   Code = q.Code
@@ -2985,47 +2985,58 @@ namespace RocedesAPI.Controllers.INV
                     List<MethodAnalysis> lstMethod = _Conexion.MethodAnalysis.Where(w => DbFunctions.TruncateTime(w.FechaRegistro) >= Inicio.Date && DbFunctions.TruncateTime(w.FechaRegistro) <= Fin.Date).ToList();
                
 
-                  /*  var lst = (from q in lstMethod
-                               join t in _Conexion.TipoTela on q.IdTela equals t.IdTela
+                    var lst = (from q in lstMethod
                                join m in _Conexion.MachineData on q.IdDataMachine equals m.IdDataMachine
-                               join o in _Conexion.ClassOunce on q.Onza equals o.Ounce into unionO
-                               from u_o in unionO.DefaultIfEmpty()
-
                                select new
                                {
                                    IdMethodAnalysis = q.IdMethodAnalysis,
                                    Codigo = q.Codigo,
-                                   ProcesoManufact = q.ProcesoManufact,
-                                   IdProducto = q.IdProducto,
-                                   TipoProducto = q.TipoProducto,
                                    Operacion = q.Operacion,
+                                   Rate = q.Rate,
+                                   JornadaLaboral = q.JornadaLaboral,
+                                   IdManufacturing = q.IdManufacturing,
+                                   Manufacturing = q.Manufacturing,
+                                   IdProducto = q.IdProducto,
+                                   Producto = q.Producto,
+                                   IdFamily = q.IdFamily,
+                                   Family = q.Family,
+                                   IdSecuence = q.IdSecuence,
+                                   Secuence = q.Secuence,
                                    IdDataMachine = q.IdDataMachine,
                                    DataMachine = q.DataMachine,
-                                   Stitch = q.Stitch,
+                                   Machine = m.Machine,
                                    Delay = q.Delay,
                                    Personal = q.Personal,
                                    Fatigue = q.Fatigue,
+                                   IdStitchType = q.IdStitchType,
+                                   TypeStitch = q.TypeStitch,
+                                   IdNeedle = q.IdNeedle,
+                                   NeedleType = q.NeedleType,
+                                   IdRpm = q.IdRpm,
                                    Rpm = q.Rpm,
-                                   Sewing = q.Sewing,
-                                   Puntadas = q.Puntadas,
-                                   ManejoPaquete = q.ManejoPaquete,
-                                   Rate = q.Rate,
-                                   JornadaLaboral = q.JornadaLaboral,
+                                   IdStitchInch = q.IdStitchInch,
+                                   StitchInch = q.StitchInch,
                                    IdTela = q.IdTela,
-                                   Tela = t.Nombre,
-                                   Onza = q.Onza,
+                                   Tela = q.Tela,
+                                   IdOunce = q.IdOunce,
+                                   Ounce = q.Ounce,
+                                   IdCaliber = q.IdCaliber,
+                                   Caliber = q.Caliber,
+                                   IdFeedDog = q.IdFeedDog,
+                                   FeedDog = q.FeedDog,
+                                   IdPresserFoot = q.IdPresserFoot,
+                                   PresserFoot = q.PresserFoot,
+                                   IdFolder = q.IdFolder,
+                                   Folder = q.Folder,
                                    MateriaPrima_1 = q.MateriaPrima_1,
                                    MateriaPrima_2 = q.MateriaPrima_2,
                                    MateriaPrima_3 = q.MateriaPrima_3,
-                                   MateriaPrima_4 = q.MateriaPrima_4,
-                                   MateriaPrima_5 = q.MateriaPrima_5,
-                                   MateriaPrima_6 = q.MateriaPrima_6,
-                                   MateriaPrima_7 = q.MateriaPrima_7,
-                                   Familia = q.Familia,
-                                   TipoConstruccion = q.TipoConstruccion,
                                    FechaRegistro = q.FechaRegistro,
                                    IdUsuario = q.IdUsuario,
                                    Usuario = _Conexion.Usuario.First(u => u.IdUsuario == q.IdUsuario).Login,
+                                   FactorSewing = q.FactorSewing,
+                                   FactorSewingAccuracy = q.FactorSewingAccuracy,
+                                   Sewing = q.Sewing,
                                    Tmus_Mac = q.Tmus_Mac,
                                    Tmus_MinL = q.Tmus_MinL,
                                    Min_Mac = q.Min_Mac,
@@ -3038,18 +3049,10 @@ namespace RocedesAPI.Controllers.INV
                                    IdUsuarioModifica = q.IdUsuarioModifica,
                                    UsuarioModifica = (q.IdUsuarioModifica == null ? string.Empty : _Conexion.Usuario.First(u => u.IdUsuario == (int)q.IdUsuarioModifica).Login),
                                    FechaModifica = q.FechaModifica,
-                                   UbicacionSecuencia = string.Empty,
-                                   Machine = m.Machine,
-                                   Needle = "",//m.Needle,
-                                   Caliber = "",//(u_o == null) ? string.Empty : u_o.Caliber,
-                                   FeedDog = "",//(u_o == null) ? string.Empty : u_o.FeedDog,
-                                   CodPrensatela = string.Empty,
-                                   TipoFolder = string.Empty
-
                                }).ToList();
-                  */
+                  
 
-                   // json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
 
 
                 }
