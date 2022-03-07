@@ -27,7 +27,12 @@ namespace RocedesAPI.Controllers.INV
         public string GetAutoComplete(string valor, string evento)
         {
             string json = string.Empty;
-            if (valor == null) valor = string.Empty;
+            int t = 20;
+            if (valor == null)
+            {
+                valor = string.Empty;
+                t = 99999;
+            }
             try
             {
 
@@ -42,14 +47,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_1 = (from q in _Conexion.Manufacturing
                                                            where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Name)
-                                             orderby q.Name, q.Name.Length
                                                            select new
                                                            {
                                                                Id = q.IdManufacturing,
                                                                Valor = q.Name,
                                                                Otros = string.Empty,
                                                                Code = q.Code
-                                                           }).Take(20).ToList();
+                                                           }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_1, lst_lvl_1.Count, string.Empty, string.Empty, 0);
 
@@ -60,14 +64,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_2 = (from q in _Conexion.Product
                                                         where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Nombre)
-                                             orderby q.Nombre, q.Nombre.Length
                                                         select new
                                                         {
                                                             Id = q.IdProducto,
                                                             Valor = q.Nombre,
                                                             Otros = string.Empty,
                                                             Code = q.Code
-                                                        }).Take(20).ToList();
+                                                        }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_2, lst_lvl_2.Count, string.Empty, string.Empty, 0);
 
@@ -79,14 +82,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_3 = (from q in _Conexion.Family
                                              where q.Components.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Components)
-                                             orderby q.Components, q.Components.Length
                                              select new
                                              {
                                                  Id = q.IdFamily,
                                                  Valor = q.Components,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_3, lst_lvl_3.Count, string.Empty, string.Empty, 0);
 
@@ -98,14 +100,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_4 = (from q in _Conexion.Secuence
                                              where q.Secuence1.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Secuence1.ToString())
-                                             orderby q.Secuence1.ToString(), q.Secuence1.ToString().Length
                                              select new
                                              {
                                                  Id = q.IdSecuence,
                                                  Valor = q.Secuence1,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_4, lst_lvl_4.Count, string.Empty, string.Empty, 0);
 
@@ -118,14 +119,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_5 = (from q in _Conexion.MachineData
                                                            where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Name)
-                                             orderby q.Name, q.Name.Length
                                                            select new
                                                            {
                                                                Id = q.IdDataMachine,
                                                                Valor = string.Concat(q.Name, " ", q.Machine, " ", q.Description),
                                                                Otros = string.Concat(q.Delay, ";", q.Personal, ";", q.Fatigue),
                                                                Code = q.Code
-                                                           }).Take(20).ToList();
+                                                           }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_5, lst_lvl_5.Count, string.Empty, string.Empty, 0);
 
@@ -137,14 +137,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_6 = (from q in _Conexion.StichTypeCatalogue
                                              where q.TypeStitch.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.TypeStitch)
-                                             orderby q.TypeStitch, q.TypeStitch.Length
                                              select new
                                              {
                                                  Id = q.IdStitchType,
                                                  Valor = q.TypeStitch,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_6, lst_lvl_6.Count, string.Empty, string.Empty, 0);
 
@@ -158,14 +157,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_7 = (from q in _Conexion.NeedleType
                                              where q.NeedleType1.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.NeedleType1)
-                                             orderby q.NeedleType1, q.NeedleType1.Length
                                              select new
                                              {
                                                  Id = q.IdNeedle,
                                                  Valor = q.NeedleType1,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_7, lst_lvl_7.Count, string.Empty, string.Empty, 0);
 
@@ -177,14 +175,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_8 = (from q in _Conexion.RpmCatalogue
                                              where q.Rpm.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Rpm.ToString())
-                                             orderby q.Rpm.ToString(), q.Rpm.ToString().Length
                                              select new
                                              {
                                                  Id = q.IdRpm,
                                                  Valor = q.Rpm,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_8, lst_lvl_8.Count, string.Empty, string.Empty, 0);
 
@@ -196,14 +193,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_9 = (from q in _Conexion.StichIncCatalogue
                                              where q.StitchInch.ToString().ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.StitchInch.ToString())
-                                             orderby q.StitchInch.ToString(), q.StitchInch.ToString().Length
                                              select new
                                              {
                                                  Id = q.IdStitchInch,
                                                  Valor = q.StitchInch,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_9, lst_lvl_9.Count, string.Empty, string.Empty, 0);
 
@@ -218,14 +214,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_10 = (from q in _Conexion.TipoTela
                                              where q.Nombre.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Nombre)
-                                              orderby q.Nombre, q.Nombre.Length
                                              select new
                                              {
                                                  Id = q.IdTela,
                                                  Valor = q.Nombre,
                                                  Otros = string.Empty,
                                                  Code = q.Code
-                                             }).Take(20).ToList();
+                                             }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_10, lst_lvl_10.Count, string.Empty, string.Empty, 0);
 
@@ -237,14 +232,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_11 = (from q in _Conexion.ClassOunce
                                               where q.Ounce.ToString().ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Ounce.ToString())
-                                              orderby q.Ounce.ToString(), q.Ounce.ToString().Length
                                               select new
                                               {
                                                   Id = q.IdOunce,
                                                   Valor = q.Ounce,
                                                   Otros = string.Empty,
                                                   Code = q.Code
-                                              }).Take(20).ToList();
+                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_11, lst_lvl_11.Count, string.Empty, string.Empty, 0);
 
@@ -257,14 +251,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_12 = (from q in _Conexion.Caliber
                                               where q.Caliber1.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Caliber1)
-                                              orderby q.Caliber1, q.Caliber1.Length
                                               select new
                                               {
                                                   Id = q.IdCaliber,
                                                   Valor = q.Caliber1,
                                                   Otros = string.Empty,
                                                   Code = q.Code
-                                              }).Take(20).ToList();
+                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_12, lst_lvl_12.Count, string.Empty, string.Empty, 0);
 
@@ -278,14 +271,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_13 = (from q in _Conexion.FeedDog
                                               where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
-                                              orderby q.Part, q.Part.Length
                                               select new
                                               {
                                                   Id = q.IdFeedDog,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
                                                   Code = q.Code
-                                              }).Take(20).ToList();
+                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_13, lst_lvl_13.Count, string.Empty, string.Empty, 0);
 
@@ -297,14 +289,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_14 = (from q in _Conexion.PresserFoot
                                               where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
-                                              orderby q.Part, q.Part.Length
                                               select new
                                               {
                                                   Id = q.IdPresserFoot,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
                                                   Code = q.Code
-                                              }).Take(20).ToList();
+                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_14, lst_lvl_14.Count, string.Empty, string.Empty, 0);
 
@@ -317,14 +308,13 @@ namespace RocedesAPI.Controllers.INV
 
                             var lst_lvl_15 = (from q in _Conexion.Folder
                                               where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
-                                              orderby q.Part, q.Part.Length
                                               select new
                                               {
                                                   Id = q.IdFolder,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
                                                   Code = q.Code
-                                              }).Take(20).ToList();
+                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_15, lst_lvl_15.Count, string.Empty, string.Empty, 0);
 
