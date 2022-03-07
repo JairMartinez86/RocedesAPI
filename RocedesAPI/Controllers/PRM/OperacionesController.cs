@@ -52,7 +52,8 @@ namespace RocedesAPI.Controllers.INV
                                                                Id = q.IdManufacturing,
                                                                Valor = q.Name,
                                                                Otros = string.Empty,
-                                                               Code = q.Code
+                                                               Code = q.Code,
+                                                               Seleccionar = false
                                                            }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_1, lst_lvl_1.Count, string.Empty, string.Empty, 0);
@@ -69,7 +70,8 @@ namespace RocedesAPI.Controllers.INV
                                                             Id = q.IdProducto,
                                                             Valor = q.Nombre,
                                                             Otros = string.Empty,
-                                                            Code = q.Code
+                                                            Code = q.Code,
+                                                            Seleccionar = false
                                                         }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_2, lst_lvl_2.Count, string.Empty, string.Empty, 0);
@@ -87,7 +89,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdFamily,
                                                  Valor = q.Components,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_3, lst_lvl_3.Count, string.Empty, string.Empty, 0);
@@ -105,7 +108,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdSecuence,
                                                  Valor = q.Secuence1,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_4, lst_lvl_4.Count, string.Empty, string.Empty, 0);
@@ -123,8 +127,9 @@ namespace RocedesAPI.Controllers.INV
                                                            {
                                                                Id = q.IdDataMachine,
                                                                Valor = string.Concat(q.Name, " ", q.Machine, " ", q.Description),
-                                                               Otros = string.Concat(q.Delay, ";", q.Personal, ";", q.Fatigue),
-                                                               Code = q.Code
+                                                               Otros = string.Concat(q.Delay, ";", q.Personal, ";", q.Fatigue, ";", q.Machine),
+                                                               Code = q.Code,
+                                                               Seleccionar = false
                                                            }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_5, lst_lvl_5.Count, string.Empty, string.Empty, 0);
@@ -142,7 +147,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdStitchType,
                                                  Valor = q.TypeStitch,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_6, lst_lvl_6.Count, string.Empty, string.Empty, 0);
@@ -162,7 +168,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdNeedle,
                                                  Valor = q.NeedleType1,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_7, lst_lvl_7.Count, string.Empty, string.Empty, 0);
@@ -180,7 +187,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdRpm,
                                                  Valor = q.Rpm,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_8, lst_lvl_8.Count, string.Empty, string.Empty, 0);
@@ -198,7 +206,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdStitchInch,
                                                  Valor = q.StitchInch,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_9, lst_lvl_9.Count, string.Empty, string.Empty, 0);
@@ -219,7 +228,8 @@ namespace RocedesAPI.Controllers.INV
                                                  Id = q.IdTela,
                                                  Valor = q.Nombre,
                                                  Otros = string.Empty,
-                                                 Code = q.Code
+                                                 Code = q.Code,
+                                                 Seleccionar = false
                                              }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_10, lst_lvl_10.Count, string.Empty, string.Empty, 0);
@@ -237,7 +247,8 @@ namespace RocedesAPI.Controllers.INV
                                                   Id = q.IdOunce,
                                                   Valor = q.Ounce,
                                                   Otros = string.Empty,
-                                                  Code = q.Code
+                                                  Code = q.Code,
+                                                  Seleccionar = false
                                               }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_11, lst_lvl_11.Count, string.Empty, string.Empty, 0);
@@ -256,7 +267,8 @@ namespace RocedesAPI.Controllers.INV
                                                   Id = q.IdCaliber,
                                                   Valor = q.Caliber1,
                                                   Otros = string.Empty,
-                                                  Code = q.Code
+                                                  Code = q.Code,
+                                                  Seleccionar = false
                                               }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_12, lst_lvl_12.Count, string.Empty, string.Empty, 0);
@@ -270,13 +282,14 @@ namespace RocedesAPI.Controllers.INV
                         case "FeedDog":
 
                             var lst_lvl_13 = (from q in _Conexion.FeedDog
-                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
+                                              where q.MachineType == valor
                                               select new
                                               {
                                                   Id = q.IdFeedDog,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
-                                                  Code = q.Code
+                                                  Code = q.Code,
+                                                  Seleccionar = false
                                               }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_13, lst_lvl_13.Count, string.Empty, string.Empty, 0);
@@ -288,13 +301,14 @@ namespace RocedesAPI.Controllers.INV
                         case "PresserFoot":
 
                             var lst_lvl_14 = (from q in _Conexion.PresserFoot
-                                              where q.Part.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Part)
+                                              where q.MachineType == valor
                                               select new
                                               {
                                                   Id = q.IdPresserFoot,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
-                                                  Code = q.Code
+                                                  Code = q.Code,
+                                                  Seleccionar = false
                                               }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_14, lst_lvl_14.Count, string.Empty, string.Empty, 0);
@@ -313,7 +327,8 @@ namespace RocedesAPI.Controllers.INV
                                                   Id = q.IdFolder,
                                                   Valor = q.Part,
                                                   Otros = string.Empty,
-                                                  Code = q.Code
+                                                  Code = q.Code,
+                                                  Seleccionar = false
                                               }).Take(t).ToList();
 
                             json = Cls.Cls_Mensaje.Tojson(lst_lvl_15, lst_lvl_15.Count, string.Empty, string.Empty, 0);
