@@ -2982,7 +2982,8 @@ namespace RocedesAPI.Controllers.INV
             {
                 using (AuditoriaEntities _Conexion = new AuditoriaEntities())
                 {
-                    IdMethodAnalysis = _Conexion.MethodAnalysis.Where(w => w.IdDataMachine == IdDataMachine).Max( m => m.IdMethodAnalysis);
+                    if (_Conexion.MethodAnalysis.Where(w => w.IdDataMachine == IdDataMachine).ToList().Count > 0) IdMethodAnalysis = _Conexion.MethodAnalysis.Where(w => w.IdDataMachine == IdDataMachine).Max(m => m.IdMethodAnalysis);
+
 
 
                     var lst = (from q in _Conexion.MethodAnalysis
