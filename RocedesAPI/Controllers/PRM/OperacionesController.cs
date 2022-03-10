@@ -2970,7 +2970,7 @@ namespace RocedesAPI.Controllers.INV
 
 
         #region "METOD ANALYSIS"
-        [Route("api/Premium/Operaciones/GetMethodAnalysis")]
+        [Route("api/Premium/Operaciones/GetLastMethodAnalysis")]
         [HttpGet]
         public string GetLastMethodAnalysis(int IdDataMachine)
         {
