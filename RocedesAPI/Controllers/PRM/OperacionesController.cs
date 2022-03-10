@@ -122,7 +122,7 @@ namespace RocedesAPI.Controllers.INV
                         case "MachineData":
 
                             var lst_lvl_5 = (from q in _Conexion.MachineData
-                                                           where q.Name.ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Name)
+                                                           where string.Concat(q.Name, " ", q.Machine, " ", q.Description).ToLower().StartsWith(valor.TrimEnd().ToLower()) || valor == (valor == string.Empty ? valor : q.Name)
                                                            select new
                                                            {
                                                                Id = q.IdDataMachine,
@@ -357,6 +357,7 @@ namespace RocedesAPI.Controllers.INV
         }
 
         #endregion
+
 
         #region "CODIGO GSD"
 
@@ -2969,6 +2970,104 @@ namespace RocedesAPI.Controllers.INV
 
 
         #region "METOD ANALYSIS"
+        [Route("api/Premium/Operaciones/GetMethodAnalysis")]
+        [HttpGet]
+        public string GetLastMethodAnalysis(int IdDataMachine)
+        {
+            string json = string.Empty;
+            int IdMethodAnalysis = 0;
+
+
+            try
+            {
+                using (AuditoriaEntities _Conexion = new AuditoriaEntities())
+                {
+                    IdMethodAnalysis = _Conexion.MethodAnalysis.Where(w => w.IdDataMachine == IdDataMachine).Max( m => m.IdMethodAnalysis);
+
+
+                    var lst = (from q in _Conexion.MethodAnalysis
+                               join m in _Conexion.MachineData on q.IdDataMachine equals m.IdDataMachine
+                               where q.IdMethodAnalysis == 0
+                               select new
+                               {
+                                   IdMethodAnalysis = q.IdMethodAnalysis,
+                                   Codigo = q.Codigo,
+                                   Operacion = q.Operacion,
+                                   Rate = q.Rate,
+                                   JornadaLaboral = q.JornadaLaboral,
+                                   IdManufacturing = q.IdManufacturing,
+                                   Manufacturing = q.Manufacturing,
+                                   IdProducto = q.IdProducto,
+                                   Producto = q.Producto,
+                                   IdFamily = q.IdFamily,
+                                   Family = q.Family,
+                                   IdSecuence = q.IdSecuence,
+                                   Secuence = q.Secuence,
+                                   IdDataMachine = q.IdDataMachine,
+                                   DataMachine = q.DataMachine,
+                                   Machine = m.Machine,
+                                   Delay = q.Delay,
+                                   Personal = q.Personal,
+                                   Fatigue = q.Fatigue,
+                                   IdStitchType = q.IdStitchType,
+                                   TypeStitch = q.TypeStitch,
+                                   IdNeedle = q.IdNeedle,
+                                   NeedleType = q.NeedleType,
+                                   IdRpm = q.IdRpm,
+                                   Rpm = q.Rpm,
+                                   IdStitchInch = q.IdStitchInch,
+                                   StitchInch = q.StitchInch,
+                                   IdTela = q.IdTela,
+                                   Tela = q.Tela,
+                                   IdOunce = q.IdOunce,
+                                   Ounce = q.Ounce,
+                                   IdCaliber = q.IdCaliber,
+                                   Caliber = q.Caliber,
+                                   IdFeedDog = q.IdFeedDog,
+                                   FeedDog = q.FeedDog,
+                                   IdPresserFoot = q.IdPresserFoot,
+                                   PresserFoot = q.PresserFoot,
+                                   IdFolder = q.IdFolder,
+                                   Folder = q.Folder,
+                                   MateriaPrima_1 = q.MateriaPrima_1,
+                                   MateriaPrima_2 = q.MateriaPrima_2,
+                                   MateriaPrima_3 = q.MateriaPrima_3,
+                                   FechaRegistro = q.FechaRegistro,
+                                   IdUsuario = q.IdUsuario,
+                                   Usuario = _Conexion.Usuario.First(u => u.IdUsuario == q.IdUsuario).Login,
+                                   FactorSewing = q.FactorSewing,
+                                   FactorSewingAccuracy = q.FactorSewingAccuracy,
+                                   Sewing = q.Sewing,
+                                   Tmus_Mac = q.Tmus_Mac,
+                                   Tmus_MinL = q.Tmus_MinL,
+                                   Min_Mac = q.Min_Mac,
+                                   Min_NML = q.Min_NML,
+                                   Min_Mac_CC = q.Min_Mac_CC,
+                                   Min_NML_CC = q.Min_NML_CC,
+                                   Sam = q.Sam,
+                                   ProducJL = q.ProducJL,
+                                   Precio = q.Precio,
+                                   IdUsuarioModifica = q.IdUsuarioModifica,
+                                   UsuarioModifica = (q.IdUsuarioModifica == null ? string.Empty : _Conexion.Usuario.First(u => u.IdUsuario == (int)q.IdUsuarioModifica).Login),
+                                   FechaModifica = q.FechaModifica,
+                               }).ToList();
+
+
+                    json = Cls.Cls_Mensaje.Tojson(lst, lst.Count, string.Empty, string.Empty, 0);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                json = Cls.Cls_Mensaje.Tojson(null, 0, "1", ex.Message, 1);
+            }
+
+
+
+
+            return json;
+        }
 
         [Route("api/Premium/Operaciones/GetMethodAnalysis")]
         [HttpGet]
