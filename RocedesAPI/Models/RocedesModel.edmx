@@ -360,6 +360,7 @@
           <Property Name="Nomenclature" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Machine" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ref" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="3" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturing">
@@ -859,7 +860,6 @@
           <EntitySet Name="FoleoDatos" EntityType="AuditoriaModel.FoleoDatos" />
           <EntitySet Name="FoleoFactor" EntityType="AuditoriaModel.FoleoFactor" />
           <EntitySet Name="FoleoProceso" EntityType="AuditoriaModel.FoleoProceso" />
-          <EntitySet Name="MachineData" EntityType="AuditoriaModel.MachineData" />
           <EntitySet Name="Manufacturing" EntityType="AuditoriaModel.Manufacturing" />
           <EntitySet Name="MethodAnalysis" EntityType="AuditoriaModel.MethodAnalysis" />
           <EntitySet Name="MethodAnalysisDetalle" EntityType="AuditoriaModel.MethodAnalysisDetalle" />
@@ -904,10 +904,6 @@
             <End Role="FoleoProceso" EntitySet="FoleoProceso" />
             <End Role="FoleoFactor" EntitySet="FoleoFactor" />
           </AssociationSet>
-          <AssociationSet Name="FK_MethodAnalysis_MachineData" Association="AuditoriaModel.FK_MethodAnalysis_MachineData">
-            <End Role="MachineData" EntitySet="MachineData" />
-            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
-          </AssociationSet>
           <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="AuditoriaModel.FK_MethodAnalysis_TipoTela">
             <End Role="TipoTela" EntitySet="TipoTela" />
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
@@ -935,6 +931,11 @@
           <AssociationSet Name="FK_POrder_Cliente" Association="AuditoriaModel.FK_POrder_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="POrder" EntitySet="POrder" />
+          </AssociationSet>
+          <EntitySet Name="MachineData" EntityType="AuditoriaModel.MachineData" />
+          <AssociationSet Name="FK_MethodAnalysis_MachineData" Association="AuditoriaModel.FK_MethodAnalysis_MachineData">
+            <End Role="MachineData" EntitySet="MachineData" />
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BundleBoxing">
@@ -1236,21 +1237,6 @@
           <Property Name="NoFactor" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FoleoFactor" Relationship="AuditoriaModel.FK_FoleoFactor_FoleoProceso" FromRole="FoleoProceso" ToRole="FoleoFactor" />
         </EntityType>
-        <EntityType Name="MachineData">
-          <Key>
-            <PropertyRef Name="IdDataMachine" />
-          </Key>
-          <Property Name="IdDataMachine" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Delay" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Personal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Fatigue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Nomenclature" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Machine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MachineData" ToRole="MethodAnalysis" />
-        </EntityType>
         <EntityType Name="Manufacturing">
           <Key>
             <PropertyRef Name="IdManufacturing" />
@@ -1320,9 +1306,9 @@
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
           <Property Name="IdUsuarioModifica" Type="Int32" />
           <Property Name="FechaModifica" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
           <NavigationProperty Name="TipoTela" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="MethodAnalysis" ToRole="TipoTela" />
           <NavigationProperty Name="MethodAnalysisDetalle" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysis" ToRole="MethodAnalysisDetalle" />
+          <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
         </EntityType>
         <EntityType Name="MethodAnalysisDetalle">
           <Key>
@@ -1547,18 +1533,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MethodAnalysis_MachineData">
-          <End Type="AuditoriaModel.MachineData" Role="MachineData" Multiplicity="1" />
-          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MachineData">
-              <PropertyRef Name="IdDataMachine" />
-            </Principal>
-            <Dependent Role="MethodAnalysis">
-              <PropertyRef Name="IdDataMachine" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MethodAnalysis_TipoTela">
           <End Type="AuditoriaModel.TipoTela" Role="TipoTela" Multiplicity="1" />
           <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
@@ -1690,6 +1664,34 @@
             </Principal>
             <Dependent Role="POrder">
               <PropertyRef Name="Id_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MachineData">
+          <Key>
+            <PropertyRef Name="IdDataMachine" />
+          </Key>
+          <Property Name="IdDataMachine" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Delay" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Personal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Fatigue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Nomenclature" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Machine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ref" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MachineData" ToRole="MethodAnalysis" />
+        </EntityType>
+        <Association Name="FK_MethodAnalysis_MachineData">
+          <End Type="AuditoriaModel.MachineData" Role="MachineData" Multiplicity="1" />
+          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MachineData">
+              <PropertyRef Name="IdDataMachine" />
+            </Principal>
+            <Dependent Role="MethodAnalysis">
+              <PropertyRef Name="IdDataMachine" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2008,21 +2010,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MachineData">
-            <EntityTypeMapping TypeName="AuditoriaModel.MachineData">
-              <MappingFragment StoreEntitySet="MachineData">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Machine" ColumnName="Machine" />
-                <ScalarProperty Name="Nomenclature" ColumnName="Nomenclature" />
-                <ScalarProperty Name="Fatigue" ColumnName="Fatigue" />
-                <ScalarProperty Name="Personal" ColumnName="Personal" />
-                <ScalarProperty Name="Delay" ColumnName="Delay" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Manufacturing">
             <EntityTypeMapping TypeName="AuditoriaModel.Manufacturing">
               <MappingFragment StoreEntitySet="Manufacturing">
@@ -2298,6 +2285,22 @@
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Cliente1" ColumnName="Cliente" />
                 <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MachineData">
+            <EntityTypeMapping TypeName="AuditoriaModel.MachineData">
+              <MappingFragment StoreEntitySet="MachineData">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Ref" ColumnName="Ref" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Machine" ColumnName="Machine" />
+                <ScalarProperty Name="Nomenclature" ColumnName="Nomenclature" />
+                <ScalarProperty Name="Fatigue" ColumnName="Fatigue" />
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+                <ScalarProperty Name="Delay" ColumnName="Delay" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

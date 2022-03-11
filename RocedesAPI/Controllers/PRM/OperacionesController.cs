@@ -127,7 +127,7 @@ namespace RocedesAPI.Controllers.INV
                                                            {
                                                                Id = q.IdDataMachine,
                                                                Valor = string.Concat(q.Name, " ", q.Machine, " ", q.Description),
-                                                               Otros = string.Concat(q.Delay, ";", q.Personal, ";", q.Fatigue, ";", q.Machine),
+                                                               Otros = string.Concat(q.Delay, ";", q.Personal, ";", q.Fatigue, ";", q.Machine, ";", q.Ref),
                                                                Code = q.Code,
                                                                Seleccionar = false
                                                            }).Take(t).ToList();
@@ -282,7 +282,7 @@ namespace RocedesAPI.Controllers.INV
                         case "FeedDog":
 
                             var lst_lvl_13 = (from q in _Conexion.FeedDog
-                                              where q.MachineType == valor
+                                              where q.MachineType == valor || valor == (q.MachineType == "N/A" ? valor: q.MachineType)
                                               select new
                                               {
                                                   Id = q.IdFeedDog,
@@ -301,7 +301,7 @@ namespace RocedesAPI.Controllers.INV
                         case "PresserFoot":
 
                             var lst_lvl_14 = (from q in _Conexion.PresserFoot
-                                              where q.MachineType == valor
+                                              where q.MachineType == valor || valor == (q.MachineType == "N/A" ? valor : q.MachineType)
                                               select new
                                               {
                                                   Id = q.IdPresserFoot,
@@ -952,6 +952,7 @@ namespace RocedesAPI.Controllers.INV
                                                        Nomenclature = q.Nomenclature,
                                                        Machine = q.Machine,
                                                        Description = q.Description,
+                                                       Ref = q.Ref,
                                                        Code = q.Code
                                                    }).ToList();
 
@@ -1024,6 +1025,7 @@ namespace RocedesAPI.Controllers.INV
                                 Nomenclature = Datos.Nomenclature.ToUpper(),
                                 Machine = Datos.Machine.ToUpper(),
                                 Description = Datos.Description.ToUpper(),
+                                Ref = Datos.Ref.ToUpper(),
                                 Code = Datos.Code.ToUpper()
                             };
                             _Conexion.MachineData.Add(Registro);
@@ -1064,6 +1066,7 @@ namespace RocedesAPI.Controllers.INV
                                 Registro.Nomenclature = Datos.Nomenclature.ToUpper();
                                 Registro.Machine = Datos.Machine.ToUpper();
                                 Registro.Description = Datos.Description.ToUpper();
+                                Registro.Ref = Datos.Ref.ToUpper();
                                 Registro.Code = Datos.Code.ToUpper();
 
 
@@ -3120,6 +3123,7 @@ namespace RocedesAPI.Controllers.INV
                                    Delay = q.Delay,
                                    Personal = q.Personal,
                                    Fatigue = q.Fatigue,
+                                   Ref = m.Ref,
                                    IdStitchType = q.IdStitchType,
                                    TypeStitch = q.TypeStitch,
                                    IdNeedle = q.IdNeedle,

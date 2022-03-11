@@ -28,6 +28,7 @@ namespace RocedesAPI.Models
         public string Nomenclature { get; set; }
         public string Machine { get; set; }
         public string Description { get; set; }
+        public string Ref { get; set; }
         public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
