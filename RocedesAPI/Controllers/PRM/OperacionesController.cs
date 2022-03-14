@@ -28,9 +28,9 @@ namespace RocedesAPI.Controllers.INV
         {
             string json = string.Empty;
             int t = 20;
+            if (valor == null) valor = string.Empty;
             if (evento == "ventana")
             {
-                if(valor == null) valor = string.Empty;
                 t = 99999;
             }
 

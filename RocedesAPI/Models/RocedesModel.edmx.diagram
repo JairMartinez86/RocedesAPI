@@ -27,7 +27,6 @@
         <EntityTypeShape EntityType="AuditoriaModel.FoleoFactor" Width="1.5" PointX="13" PointY="10.875" />
         <EntityTypeShape EntityType="AuditoriaModel.FoleoProceso" Width="1.5" PointX="10.75" PointY="10.875" />
         <EntityTypeShape EntityType="AuditoriaModel.Manufacturing" Width="1.5" PointX="17.75" PointY="9.75" />
-        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysis" Width="1.5" PointX="8" PointY="1.5" />
         <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysisDetalle" Width="1.5" PointX="10.25" PointY="6.125" />
         <EntityTypeShape EntityType="AuditoriaModel.NeedleType" Width="1.5" PointX="17.75" PointY="12.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Partes" Width="1.5" PointX="12.75" PointY="8.75" />
@@ -49,8 +48,6 @@
         <AssociationConnector Association="AuditoriaModel.FK_FactorDetalleCorte_FactorCorte" />
         <AssociationConnector Association="AuditoriaModel.FK_FactorTendido_ProcesosTendido" />
         <AssociationConnector Association="AuditoriaModel.FK_FoleoFactor_FoleoProceso" />
-        <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_TipoTela" />
-        <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" />
         <EntityTypeShape EntityType="AuditoriaModel.POrder" Width="1.5" PointX="10.375" PointY="19.75" />
         <EntityTypeShape EntityType="AuditoriaModel.Style" Width="1.5" PointX="8.125" PointY="22.875" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Style" />
@@ -60,8 +57,10 @@
         <AssociationConnector Association="AuditoriaModel.FK_PlaningSwing_Cliente" />
         <AssociationConnector Association="AuditoriaModel.FK_POrder_Cliente" />
         <EntityTypeShape EntityType="AuditoriaModel.MachineData" Width="1.5" PointX="20.375" PointY="10" />
+        <EntityTypeShape EntityType="AuditoriaModel.MethodAnalysis" Width="1.5" PointX="22.625" PointY="5.375" />
         <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysis_MachineData" />
-      </Diagram>
+        <AssociationConnector Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

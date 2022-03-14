@@ -78,9 +78,8 @@ namespace RocedesAPI.Models
         public Nullable<int> IdUsuarioModifica { get; set; }
         public Nullable<System.DateTime> FechaModifica { get; set; }
     
-        public virtual TipoTela TipoTela { get; set; }
+        public virtual MachineData MachineData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
-        public virtual MachineData MachineData { get; set; }
     }
 }

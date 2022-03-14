@@ -377,19 +377,19 @@
           </Key>
           <Property Name="IdMethodAnalysis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Operacion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Operacion" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="JornadaLaboral" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IdManufacturing" Type="int" Nullable="false" />
-          <Property Name="Manufacturing" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Manufacturing" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IdProducto" Type="int" Nullable="false" />
-          <Property Name="Producto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Producto" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IdFamily" Type="int" Nullable="false" />
-          <Property Name="Family" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IdSecuence" Type="int" Nullable="false" />
           <Property Name="Secuence" Type="int" Nullable="false" />
           <Property Name="IdDataMachine" Type="int" Nullable="false" />
-          <Property Name="DataMachine" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DataMachine" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Delay" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Personal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Fatigue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -402,20 +402,20 @@
           <Property Name="IdStitchInch" Type="int" Nullable="false" />
           <Property Name="StitchInch" Type="int" Nullable="false" />
           <Property Name="IdTela" Type="int" Nullable="false" />
-          <Property Name="Tela" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tela" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IdOunce" Type="int" Nullable="false" />
           <Property Name="Ounce" Type="int" Nullable="false" />
           <Property Name="IdCaliber" Type="int" Nullable="false" />
-          <Property Name="Caliber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Caliber" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IdFeedDog" Type="int" Nullable="false" />
           <Property Name="FeedDog" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IdPresserFoot" Type="int" Nullable="false" />
           <Property Name="PresserFoot" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IdFolder" Type="int" Nullable="false" />
           <Property Name="Folder" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="MateriaPrima_1" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="MateriaPrima_2" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="MateriaPrima_3" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrima_1" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="MateriaPrima_2" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="MateriaPrima_3" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="FactorSewing" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -674,18 +674,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MethodAnalysis_TipoTela">
-          <End Role="TipoTela" Type="Self.TipoTela" Multiplicity="1" />
-          <End Role="MethodAnalysis" Type="Self.MethodAnalysis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoTela">
-              <PropertyRef Name="IdTela" />
-            </Principal>
-            <Dependent Role="MethodAnalysis">
-              <PropertyRef Name="IdTela" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
           <End Role="MethodAnalysis" Type="Self.MethodAnalysis" Multiplicity="1" />
           <End Role="MethodAnalysisDetalle" Type="Self.MethodAnalysisDetalle" Multiplicity="*" />
@@ -813,10 +801,6 @@
             <End Role="MachineData" EntitySet="MachineData" />
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
           </AssociationSet>
-          <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="Self.FK_MethodAnalysis_TipoTela">
-            <End Role="TipoTela" EntitySet="TipoTela" />
-            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
-          </AssociationSet>
           <AssociationSet Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle" Association="Self.FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
             <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
@@ -861,7 +845,6 @@
           <EntitySet Name="FoleoFactor" EntityType="AuditoriaModel.FoleoFactor" />
           <EntitySet Name="FoleoProceso" EntityType="AuditoriaModel.FoleoProceso" />
           <EntitySet Name="Manufacturing" EntityType="AuditoriaModel.Manufacturing" />
-          <EntitySet Name="MethodAnalysis" EntityType="AuditoriaModel.MethodAnalysis" />
           <EntitySet Name="MethodAnalysisDetalle" EntityType="AuditoriaModel.MethodAnalysisDetalle" />
           <EntitySet Name="NeedleType" EntityType="AuditoriaModel.NeedleType" />
           <EntitySet Name="Partes" EntityType="AuditoriaModel.Partes" />
@@ -904,14 +887,6 @@
             <End Role="FoleoProceso" EntitySet="FoleoProceso" />
             <End Role="FoleoFactor" EntitySet="FoleoFactor" />
           </AssociationSet>
-          <AssociationSet Name="FK_MethodAnalysis_TipoTela" Association="AuditoriaModel.FK_MethodAnalysis_TipoTela">
-            <End Role="TipoTela" EntitySet="TipoTela" />
-            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle" Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
-            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
-            <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
-          </AssociationSet>
           <EntitySet Name="POrder" EntityType="AuditoriaModel.POrder" />
           <EntitySet Name="Style" EntityType="AuditoriaModel.Style" />
           <AssociationSet Name="FK_POrder_Style" Association="AuditoriaModel.FK_POrder_Style">
@@ -933,9 +908,14 @@
             <End Role="POrder" EntitySet="POrder" />
           </AssociationSet>
           <EntitySet Name="MachineData" EntityType="AuditoriaModel.MachineData" />
+          <EntitySet Name="MethodAnalysis" EntityType="AuditoriaModel.MethodAnalysis" />
           <AssociationSet Name="FK_MethodAnalysis_MachineData" Association="AuditoriaModel.FK_MethodAnalysis_MachineData">
             <End Role="MachineData" EntitySet="MachineData" />
             <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle" Association="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
+            <End Role="MethodAnalysis" EntitySet="MethodAnalysis" />
+            <End Role="MethodAnalysisDetalle" EntitySet="MethodAnalysisDetalle" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BundleBoxing">
@@ -1245,71 +1225,6 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="MethodAnalysis">
-          <Key>
-            <PropertyRef Name="IdMethodAnalysis" />
-          </Key>
-          <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Operacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="JornadaLaboral" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="IdManufacturing" Type="Int32" Nullable="false" />
-          <Property Name="Manufacturing" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="Producto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdFamily" Type="Int32" Nullable="false" />
-          <Property Name="Family" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdSecuence" Type="Int32" Nullable="false" />
-          <Property Name="Secuence" Type="Int32" Nullable="false" />
-          <Property Name="IdDataMachine" Type="Int32" Nullable="false" />
-          <Property Name="DataMachine" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Delay" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Personal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Fatigue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="IdStitchType" Type="Int32" Nullable="false" />
-          <Property Name="TypeStitch" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="IdNeedle" Type="Int32" Nullable="false" />
-          <Property Name="NeedleType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdRpm" Type="Int32" Nullable="false" />
-          <Property Name="Rpm" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="IdStitchInch" Type="Int32" Nullable="false" />
-          <Property Name="StitchInch" Type="Int32" Nullable="false" />
-          <Property Name="IdTela" Type="Int32" Nullable="false" />
-          <Property Name="Tela" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdOunce" Type="Int32" Nullable="false" />
-          <Property Name="Ounce" Type="Int32" Nullable="false" />
-          <Property Name="IdCaliber" Type="Int32" Nullable="false" />
-          <Property Name="Caliber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdFeedDog" Type="Int32" Nullable="false" />
-          <Property Name="FeedDog" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IdPresserFoot" Type="Int32" Nullable="false" />
-          <Property Name="PresserFoot" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IdFolder" Type="Int32" Nullable="false" />
-          <Property Name="Folder" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MateriaPrima_1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MateriaPrima_2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MateriaPrima_3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="FactorSewing" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="FactorSewingAccuracy" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Sewing" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Tmus_Mac" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Tmus_MinL" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Min_Mac" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Min_NML" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Min_Mac_CC" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Min_NML_CC" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="ProducJL" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
-          <Property Name="IdUsuarioModifica" Type="Int32" />
-          <Property Name="FechaModifica" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="TipoTela" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="MethodAnalysis" ToRole="TipoTela" />
-          <NavigationProperty Name="MethodAnalysisDetalle" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysis" ToRole="MethodAnalysisDetalle" />
-          <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
-        </EntityType>
         <EntityType Name="MethodAnalysisDetalle">
           <Key>
             <PropertyRef Name="IdDetMethodAnalysis" />
@@ -1420,7 +1335,6 @@
           <Property Name="IdTela" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_TipoTela" FromRole="TipoTela" ToRole="MethodAnalysis" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -1530,30 +1444,6 @@
             </Principal>
             <Dependent Role="FoleoFactor">
               <PropertyRef Name="IdProcesoFoleo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MethodAnalysis_TipoTela">
-          <End Type="AuditoriaModel.TipoTela" Role="TipoTela" Multiplicity="1" />
-          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoTela">
-              <PropertyRef Name="IdTela" />
-            </Principal>
-            <Dependent Role="MethodAnalysis">
-              <PropertyRef Name="IdTela" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
-          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="1" />
-          <End Type="AuditoriaModel.MethodAnalysisDetalle" Role="MethodAnalysisDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MethodAnalysis">
-              <PropertyRef Name="IdMethodAnalysis" />
-            </Principal>
-            <Dependent Role="MethodAnalysisDetalle">
-              <PropertyRef Name="IdMethodAnalysis" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1683,6 +1573,70 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MethodAnalysis" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MachineData" ToRole="MethodAnalysis" />
         </EntityType>
+        <EntityType Name="MethodAnalysis">
+          <Key>
+            <PropertyRef Name="IdMethodAnalysis" />
+          </Key>
+          <Property Name="IdMethodAnalysis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Operacion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="JornadaLaboral" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IdManufacturing" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturing" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Producto" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdFamily" Type="Int32" Nullable="false" />
+          <Property Name="Family" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdSecuence" Type="Int32" Nullable="false" />
+          <Property Name="Secuence" Type="Int32" Nullable="false" />
+          <Property Name="IdDataMachine" Type="Int32" Nullable="false" />
+          <Property Name="DataMachine" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Delay" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Personal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Fatigue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IdStitchType" Type="Int32" Nullable="false" />
+          <Property Name="TypeStitch" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IdNeedle" Type="Int32" Nullable="false" />
+          <Property Name="NeedleType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdRpm" Type="Int32" Nullable="false" />
+          <Property Name="Rpm" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IdStitchInch" Type="Int32" Nullable="false" />
+          <Property Name="StitchInch" Type="Int32" Nullable="false" />
+          <Property Name="IdTela" Type="Int32" Nullable="false" />
+          <Property Name="Tela" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdOunce" Type="Int32" Nullable="false" />
+          <Property Name="Ounce" Type="Int32" Nullable="false" />
+          <Property Name="IdCaliber" Type="Int32" Nullable="false" />
+          <Property Name="Caliber" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IdFeedDog" Type="Int32" Nullable="false" />
+          <Property Name="FeedDog" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdPresserFoot" Type="Int32" Nullable="false" />
+          <Property Name="PresserFoot" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdFolder" Type="Int32" Nullable="false" />
+          <Property Name="Folder" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MateriaPrima_3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="FactorSewing" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FactorSewingAccuracy" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Sewing" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Tmus_Mac" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Tmus_MinL" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Min_Mac" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Min_NML" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Min_Mac_CC" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Min_NML_CC" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="Sam" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="ProducJL" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="IdUsuarioModifica" Type="Int32" />
+          <Property Name="FechaModifica" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="MachineData" Relationship="AuditoriaModel.FK_MethodAnalysis_MachineData" FromRole="MethodAnalysis" ToRole="MachineData" />
+          <NavigationProperty Name="MethodAnalysisDetalle" Relationship="AuditoriaModel.FK_MethodAnalysisDetalle_MethodAnalysisDetalle" FromRole="MethodAnalysis" ToRole="MethodAnalysisDetalle" />
+        </EntityType>
         <Association Name="FK_MethodAnalysis_MachineData">
           <End Type="AuditoriaModel.MachineData" Role="MachineData" Multiplicity="1" />
           <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="*" />
@@ -1692,6 +1646,18 @@
             </Principal>
             <Dependent Role="MethodAnalysis">
               <PropertyRef Name="IdDataMachine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MethodAnalysisDetalle_MethodAnalysisDetalle">
+          <End Type="AuditoriaModel.MethodAnalysis" Role="MethodAnalysis" Multiplicity="1" />
+          <End Type="AuditoriaModel.MethodAnalysisDetalle" Role="MethodAnalysisDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MethodAnalysis">
+              <PropertyRef Name="IdMethodAnalysis" />
+            </Principal>
+            <Dependent Role="MethodAnalysisDetalle">
+              <PropertyRef Name="IdMethodAnalysis" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2019,69 +1985,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MethodAnalysis">
-            <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysis">
-              <MappingFragment StoreEntitySet="MethodAnalysis">
-                <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
-                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="ProducJL" ColumnName="ProducJL" />
-                <ScalarProperty Name="Sam" ColumnName="Sam" />
-                <ScalarProperty Name="Min_NML_CC" ColumnName="Min_NML_CC" />
-                <ScalarProperty Name="Min_Mac_CC" ColumnName="Min_Mac_CC" />
-                <ScalarProperty Name="Min_NML" ColumnName="Min_NML" />
-                <ScalarProperty Name="Min_Mac" ColumnName="Min_Mac" />
-                <ScalarProperty Name="Tmus_MinL" ColumnName="Tmus_MinL" />
-                <ScalarProperty Name="Tmus_Mac" ColumnName="Tmus_Mac" />
-                <ScalarProperty Name="Sewing" ColumnName="Sewing" />
-                <ScalarProperty Name="FactorSewingAccuracy" ColumnName="FactorSewingAccuracy" />
-                <ScalarProperty Name="FactorSewing" ColumnName="FactorSewing" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="MateriaPrima_3" ColumnName="MateriaPrima_3" />
-                <ScalarProperty Name="MateriaPrima_2" ColumnName="MateriaPrima_2" />
-                <ScalarProperty Name="MateriaPrima_1" ColumnName="MateriaPrima_1" />
-                <ScalarProperty Name="Folder" ColumnName="Folder" />
-                <ScalarProperty Name="IdFolder" ColumnName="IdFolder" />
-                <ScalarProperty Name="PresserFoot" ColumnName="PresserFoot" />
-                <ScalarProperty Name="IdPresserFoot" ColumnName="IdPresserFoot" />
-                <ScalarProperty Name="FeedDog" ColumnName="FeedDog" />
-                <ScalarProperty Name="IdFeedDog" ColumnName="IdFeedDog" />
-                <ScalarProperty Name="Caliber" ColumnName="Caliber" />
-                <ScalarProperty Name="IdCaliber" ColumnName="IdCaliber" />
-                <ScalarProperty Name="Ounce" ColumnName="Ounce" />
-                <ScalarProperty Name="IdOunce" ColumnName="IdOunce" />
-                <ScalarProperty Name="Tela" ColumnName="Tela" />
-                <ScalarProperty Name="IdTela" ColumnName="IdTela" />
-                <ScalarProperty Name="StitchInch" ColumnName="StitchInch" />
-                <ScalarProperty Name="IdStitchInch" ColumnName="IdStitchInch" />
-                <ScalarProperty Name="Rpm" ColumnName="Rpm" />
-                <ScalarProperty Name="IdRpm" ColumnName="IdRpm" />
-                <ScalarProperty Name="NeedleType" ColumnName="NeedleType" />
-                <ScalarProperty Name="IdNeedle" ColumnName="IdNeedle" />
-                <ScalarProperty Name="TypeStitch" ColumnName="TypeStitch" />
-                <ScalarProperty Name="IdStitchType" ColumnName="IdStitchType" />
-                <ScalarProperty Name="Fatigue" ColumnName="Fatigue" />
-                <ScalarProperty Name="Personal" ColumnName="Personal" />
-                <ScalarProperty Name="Delay" ColumnName="Delay" />
-                <ScalarProperty Name="DataMachine" ColumnName="DataMachine" />
-                <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
-                <ScalarProperty Name="Secuence" ColumnName="Secuence" />
-                <ScalarProperty Name="IdSecuence" ColumnName="IdSecuence" />
-                <ScalarProperty Name="Family" ColumnName="Family" />
-                <ScalarProperty Name="IdFamily" ColumnName="IdFamily" />
-                <ScalarProperty Name="Producto" ColumnName="Producto" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Manufacturing" ColumnName="Manufacturing" />
-                <ScalarProperty Name="IdManufacturing" ColumnName="IdManufacturing" />
-                <ScalarProperty Name="JornadaLaboral" ColumnName="JornadaLaboral" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Operacion" ColumnName="Operacion" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MethodAnalysisDetalle">
             <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysisDetalle">
               <MappingFragment StoreEntitySet="MethodAnalysisDetalle">
@@ -2301,6 +2204,69 @@
                 <ScalarProperty Name="Delay" ColumnName="Delay" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MethodAnalysis">
+            <EntityTypeMapping TypeName="AuditoriaModel.MethodAnalysis">
+              <MappingFragment StoreEntitySet="MethodAnalysis">
+                <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+                <ScalarProperty Name="IdUsuarioModifica" ColumnName="IdUsuarioModifica" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="ProducJL" ColumnName="ProducJL" />
+                <ScalarProperty Name="Sam" ColumnName="Sam" />
+                <ScalarProperty Name="Min_NML_CC" ColumnName="Min_NML_CC" />
+                <ScalarProperty Name="Min_Mac_CC" ColumnName="Min_Mac_CC" />
+                <ScalarProperty Name="Min_NML" ColumnName="Min_NML" />
+                <ScalarProperty Name="Min_Mac" ColumnName="Min_Mac" />
+                <ScalarProperty Name="Tmus_MinL" ColumnName="Tmus_MinL" />
+                <ScalarProperty Name="Tmus_Mac" ColumnName="Tmus_Mac" />
+                <ScalarProperty Name="Sewing" ColumnName="Sewing" />
+                <ScalarProperty Name="FactorSewingAccuracy" ColumnName="FactorSewingAccuracy" />
+                <ScalarProperty Name="FactorSewing" ColumnName="FactorSewing" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="MateriaPrima_3" ColumnName="MateriaPrima_3" />
+                <ScalarProperty Name="MateriaPrima_2" ColumnName="MateriaPrima_2" />
+                <ScalarProperty Name="MateriaPrima_1" ColumnName="MateriaPrima_1" />
+                <ScalarProperty Name="Folder" ColumnName="Folder" />
+                <ScalarProperty Name="IdFolder" ColumnName="IdFolder" />
+                <ScalarProperty Name="PresserFoot" ColumnName="PresserFoot" />
+                <ScalarProperty Name="IdPresserFoot" ColumnName="IdPresserFoot" />
+                <ScalarProperty Name="FeedDog" ColumnName="FeedDog" />
+                <ScalarProperty Name="IdFeedDog" ColumnName="IdFeedDog" />
+                <ScalarProperty Name="Caliber" ColumnName="Caliber" />
+                <ScalarProperty Name="IdCaliber" ColumnName="IdCaliber" />
+                <ScalarProperty Name="Ounce" ColumnName="Ounce" />
+                <ScalarProperty Name="IdOunce" ColumnName="IdOunce" />
+                <ScalarProperty Name="Tela" ColumnName="Tela" />
+                <ScalarProperty Name="IdTela" ColumnName="IdTela" />
+                <ScalarProperty Name="StitchInch" ColumnName="StitchInch" />
+                <ScalarProperty Name="IdStitchInch" ColumnName="IdStitchInch" />
+                <ScalarProperty Name="Rpm" ColumnName="Rpm" />
+                <ScalarProperty Name="IdRpm" ColumnName="IdRpm" />
+                <ScalarProperty Name="NeedleType" ColumnName="NeedleType" />
+                <ScalarProperty Name="IdNeedle" ColumnName="IdNeedle" />
+                <ScalarProperty Name="TypeStitch" ColumnName="TypeStitch" />
+                <ScalarProperty Name="IdStitchType" ColumnName="IdStitchType" />
+                <ScalarProperty Name="Fatigue" ColumnName="Fatigue" />
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+                <ScalarProperty Name="Delay" ColumnName="Delay" />
+                <ScalarProperty Name="DataMachine" ColumnName="DataMachine" />
+                <ScalarProperty Name="IdDataMachine" ColumnName="IdDataMachine" />
+                <ScalarProperty Name="Secuence" ColumnName="Secuence" />
+                <ScalarProperty Name="IdSecuence" ColumnName="IdSecuence" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="IdFamily" ColumnName="IdFamily" />
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Manufacturing" ColumnName="Manufacturing" />
+                <ScalarProperty Name="IdManufacturing" ColumnName="IdManufacturing" />
+                <ScalarProperty Name="JornadaLaboral" ColumnName="JornadaLaboral" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Operacion" ColumnName="Operacion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdMethodAnalysis" ColumnName="IdMethodAnalysis" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

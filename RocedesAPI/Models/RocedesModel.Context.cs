@@ -47,7 +47,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<FoleoFactor> FoleoFactor { get; set; }
         public virtual DbSet<FoleoProceso> FoleoProceso { get; set; }
         public virtual DbSet<Manufacturing> Manufacturing { get; set; }
-        public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
         public virtual DbSet<MethodAnalysisDetalle> MethodAnalysisDetalle { get; set; }
         public virtual DbSet<NeedleType> NeedleType { get; set; }
         public virtual DbSet<Partes> Partes { get; set; }
@@ -67,5 +66,6 @@ namespace RocedesAPI.Models
         public virtual DbSet<Bundle> Bundle { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<MachineData> MachineData { get; set; }
+        public virtual DbSet<MethodAnalysis> MethodAnalysis { get; set; }
     }
 }
