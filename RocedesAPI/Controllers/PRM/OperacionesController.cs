@@ -24,15 +24,18 @@ namespace RocedesAPI.Controllers.INV
         #region "AUTO"
         [Route("api/Premium/Operaciones/GetAutoComplete")]
         [HttpGet]
-        public string GetAutoComplete(string valor, string evento)
+        public string GetAutoComplete(string valor, string campo, string evento)
         {
             string json = string.Empty;
             int t = 20;
-            if (valor == null)
+            if (evento == "ventana")
             {
-                valor = string.Empty;
+                if(valor == null) valor = string.Empty;
                 t = 99999;
             }
+
+            valor = valor.TrimStart().TrimEnd();
+
             try
             {
 
@@ -41,7 +44,7 @@ namespace RocedesAPI.Controllers.INV
                 {
 
 
-                    switch(evento)
+                    switch(campo)
                     {
                         case "Manufacturing":
 
@@ -281,18 +284,39 @@ namespace RocedesAPI.Controllers.INV
 
                         case "FeedDog":
 
-                            var lst_lvl_13 = (from q in _Conexion.FeedDog
-                                              where q.MachineType == valor || valor == (q.MachineType == "N/A" ? valor: q.MachineType)
-                                              select new
-                                              {
-                                                  Id = q.IdFeedDog,
-                                                  Valor = q.Part,
-                                                  Otros = string.Empty,
-                                                  Code = q.Code,
-                                                  Seleccionar = false
-                                              }).Take(t).ToList();
+                            if(valor == "N/A")
+                            {
+                                var lst_lvl_13 = (from q in _Conexion.FeedDog
+                                                  select new
+                                                  {
+                                                      Id = q.IdFeedDog,
+                                                      Valor = q.Part,
+                                                      Otros = string.Empty,
+                                                      Code = q.Code,
+                                                      Seleccionar = false
+                                                  }).Take(t).ToList();
 
-                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_13, lst_lvl_13.Count, string.Empty, string.Empty, 0);
+                                json = Cls.Cls_Mensaje.Tojson(lst_lvl_13, lst_lvl_13.Count, string.Empty, string.Empty, 0);
+
+
+                            }
+                            else
+                            {
+                                var lst_lvl_13 = (from q in _Conexion.FeedDog
+                                                  where q.MachineType == valor
+                                                  select new
+                                                  {
+                                                      Id = q.IdFeedDog,
+                                                      Valor = q.Part,
+                                                      Otros = string.Empty,
+                                                      Code = q.Code,
+                                                      Seleccionar = false
+                                                  }).Take(t).ToList();
+
+                                json = Cls.Cls_Mensaje.Tojson(lst_lvl_13, lst_lvl_13.Count, string.Empty, string.Empty, 0);
+
+                            }
+
 
 
 
@@ -300,18 +324,37 @@ namespace RocedesAPI.Controllers.INV
 
                         case "PresserFoot":
 
-                            var lst_lvl_14 = (from q in _Conexion.PresserFoot
-                                              where q.MachineType == valor || valor == (q.MachineType == "N/A" ? valor : q.MachineType)
-                                              select new
-                                              {
-                                                  Id = q.IdPresserFoot,
-                                                  Valor = q.Part,
-                                                  Otros = string.Empty,
-                                                  Code = q.Code,
-                                                  Seleccionar = false
-                                              }).Take(t).ToList();
+                            if (valor == "N/A")
+                            {
+                                var lst_lvl_14 = (from q in _Conexion.PresserFoot
+                                                  select new
+                                                  {
+                                                      Id = q.IdPresserFoot,
+                                                      Valor = q.Part,
+                                                      Otros = string.Empty,
+                                                      Code = q.Code,
+                                                      Seleccionar = false
+                                                  }).Take(t).ToList();
 
-                            json = Cls.Cls_Mensaje.Tojson(lst_lvl_14, lst_lvl_14.Count, string.Empty, string.Empty, 0);
+                                json = Cls.Cls_Mensaje.Tojson(lst_lvl_14, lst_lvl_14.Count, string.Empty, string.Empty, 0);
+                            }
+                            else
+                            {
+                                var lst_lvl_14 = (from q in _Conexion.PresserFoot
+                                                  where q.MachineType == valor 
+                                                  select new
+                                                  {
+                                                      Id = q.IdPresserFoot,
+                                                      Valor = q.Part,
+                                                      Otros = string.Empty,
+                                                      Code = q.Code,
+                                                      Seleccionar = false
+                                                  }).Take(t).ToList();
+
+                                json = Cls.Cls_Mensaje.Tojson(lst_lvl_14, lst_lvl_14.Count, string.Empty, string.Empty, 0);
+                            }
+
+                             
 
 
 
